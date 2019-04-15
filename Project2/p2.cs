@@ -79,28 +79,34 @@ namespace Project2
         const int RAND_MAX = 1000;
         const int MIN_FACTOR = 2;
         const int MAX_FACTOR = 20;
-        const int ARR_SIZE = 2;
+        const int ARR_RANGE_SIZE = 2;
         const int MIN_FACTOR_IDX = 0;
         const int MAX_FACTOR_IDX = 1;
+        const int ARR_MULTIQ_SIZE = 5;
 
         static void Main(string[] args)
         {
             Random rand = new Random();
 
             ProgramIntro();
-            int[] factorArray = new int[ARR_SIZE];
-            range rangeObj = InitializeRangeObject(rand, factorArray);
+            int[] factorArray = new int[ARR_RANGE_SIZE];
+            range rangeObj = InitRangeObject(rand, factorArray);
             TestPingWithRandomNumber(rangeObj, factorArray, rand);
             ReplaceRangeFactor(rangeObj, factorArray, rand);
             TestPingWithRandomNumber(rangeObj, factorArray, rand);
 
+            multiQ multiQObj = InitMultiQObject();
+            InitFactorObject(rand, multiQObj);
+            TestQueryMultiQ(multiQObj, rand);
+
+
             Console.Write("Press any key to terminate program... ");
             Console.ReadKey(); 
         }
-        public static range InitializeRangeObject(Random rand, int[] factorArray)
+        public static range InitRangeObject(Random rand, int[] factorArray)
         {
             Console.WriteLine("\n");
-            Console.WriteLine("Initialize range class objects.");
+            Console.WriteLine("Initialize Range objects.");
             int factorValue1 = rand.Next(MIN_FACTOR, MAX_FACTOR);
             int factorValue2 = rand.Next(MIN_FACTOR, MAX_FACTOR);
             factorArray[MIN_FACTOR_IDX] = factorValue1;
@@ -108,6 +114,45 @@ namespace Project2
             range rangeObj = new range((uint)factorValue1, (uint)factorValue2);
             return rangeObj;
         }
+
+        public static multiQ InitMultiQObject()
+        {
+            Console.WriteLine("----------------------------------------------------");
+            Console.WriteLine("Initialize MultiQ objects.");
+            multiQ mObj = new multiQ();
+            return mObj;
+        }
+
+        public static void InitFactorObject(Random rand, multiQ obj)
+        {
+            Console.WriteLine("Initialize Factor objects.");
+
+            int randNum;
+            for (int i = 0; i < ARR_MULTIQ_SIZE; i++)
+            {
+                randNum = rand.Next(MIN_FACTOR, MAX_FACTOR);
+                factor factorObj = new factor((uint)randNum);
+                obj.AddFactorObj(factorObj);
+            }
+            Console.WriteLine(" Add Factor objects to MutliQ array.");
+        }
+
+        public static void TestQueryMultiQ(multiQ obj, Random rand)
+        {
+            Console.WriteLine("  Initialize test Query().");
+
+            int randNum;
+            uint queryCount;
+            for (int i = 0; i < ARR_MULTIQ_SIZE; i++)
+            {
+                randNum = rand.Next(RAND_MIN, RAND_MAX);
+                queryCount = obj.Query((uint)randNum);
+                Console.WriteLine("  Queried number: {0}", randNum);
+                Console.WriteLine("   Successful query count: {0}", queryCount);
+            }
+            
+        }
+
 
         public static void ProgramIntro()
         {
@@ -169,7 +214,7 @@ namespace Project2
             int factor1;
             int factor2;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < ARR_RANGE_SIZE; i++)
             {
                 randPing = rand.Next(RAND_MIN, RAND_MAX);
                 count = obj.Ping((uint)randPing);
