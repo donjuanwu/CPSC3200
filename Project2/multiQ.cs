@@ -8,6 +8,7 @@ namespace Project2
         private uint arrFactorSize;
         private int factorIndex;
         private factor[] arrFactorObject;
+        private int[] arrQueriedNumbers;
         private bool isObjActive;
         private uint queryCount;
         private const int INITIAL_QUERYCOUNT = 0;
@@ -17,13 +18,14 @@ namespace Project2
         public multiQ()
         {
             arrFactorObject = new factor[INITIAL_ARRAY_SIZE];
+            arrQueriedNumbers = new int[INITIAL_ARRAY_SIZE];
             isObjActive = true;
             arrFactorSize = INITIAL_ARRAY_SIZE;
             factorIndex = INITIAL_FACTOR_INDEX;
             queryCount = INITIAL_QUERYCOUNT;
         }
 
-        public bool AddFactorObj(factor obj)
+        public bool PushFactorObj(factor obj)
         {
            if (isObjActive)
             {
@@ -61,6 +63,7 @@ namespace Project2
                 {
                     for (int i = 0; i <= factorIndex; i++)
                     {
+                        int prevDivCount = arrFactorObject[i].GetDivCount();
                         int retDivCount = arrFactorObject[i].Div(num);
                         if (retDivCount == -1)
                         {
@@ -69,11 +72,19 @@ namespace Project2
                         }
                         else
                         {
-                            int prevDivCount = arrFactorObject[i].GetDivCount();
                             if (retDivCount > prevDivCount)
                             {
                                 queryCount++;
+                                arrQueriedNumbers[i] = (int)num;
 
+
+                                //for (int j = i; j < factorIndex; j++)
+                                //{
+                                //    if (arrQueriedNumbers[j] != (int)num && arrQueriedNumbers[j] != 0)
+                                //    {
+                                //        arrQueriedNumbers[j] = (int)num;
+                                //    }
+                                //}
                             }
                         }
 
@@ -83,7 +94,7 @@ namespace Project2
             return queryCount;
         }
 
-        public bool RemoveLastFactorObject()
+        public bool PopFactorObject()
         {
             if (isObjActive)
             {
@@ -96,6 +107,21 @@ namespace Project2
             }
             return false;
         }
+
+        public int GetQueryCount()
+        {
+            if (isObjActive)
+            {
+                return (int)queryCount;
+            }
+
+            return -1;
+        }
+        public int[] GetQueriedNumberList()
+        {
+            return arrQueriedNumbers;
+        }
+
 
         private void ResizeFactorArray(uint index)
         {

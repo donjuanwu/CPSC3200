@@ -79,38 +79,40 @@ namespace Project2
         const int RAND_MAX = 1000;
         const int MIN_FACTOR = 2;
         const int MAX_FACTOR = 20;
-        const int ARR_RANGE_SIZE = 2;
         const int MIN_FACTOR_IDX = 0;
         const int MAX_FACTOR_IDX = 1;
-        const int ARR_MULTIQ_SIZE = 5;
+        const int ARR_SIZE = 5;
 
         static void Main(string[] args)
         {
             Random rand = new Random();
 
             ProgramIntro();
-            int[] factorArray = new int[ARR_RANGE_SIZE];
-            range rangeObj = InitRangeObject(rand, factorArray);
-            TestPingWithRandomNumber(rangeObj, factorArray, rand);
-            ReplaceRangeFactor(rangeObj, factorArray, rand);
-            TestPingWithRandomNumber(rangeObj, factorArray, rand);
+            int[] arrFactorValues = new int[ARR_SIZE];
+            range rangeObj = InitRangeObject(rand, arrFactorValues);
+            TestPingWithRandomNumber(rangeObj, arrFactorValues, rand);
+            ReplaceRangeFactor(rangeObj, arrFactorValues, rand);
+            TestPingWithRandomNumber(rangeObj, arrFactorValues, rand);
 
-            multiQ multiQObj = InitMultiQObject();
-            InitFactorObject(rand, multiQObj);
-            TestQueryMultiQ(multiQObj, rand);
+            multiQ multiQObj = InitMultiQObject(); 
+           // InitStaticFactorObject(rand, multiQObj, arrFactorValues);
+            InitFactorObject(rand, multiQObj, arrFactorValues);
+            TestQueryMultiQ(multiQObj, rand, arrFactorValues);
+
+
 
 
             Console.Write("Press any key to terminate program... ");
             Console.ReadKey(); 
         }
-        public static range InitRangeObject(Random rand, int[] factorArray)
+        public static range InitRangeObject(Random rand, int[] arrFactorValues)
         {
             Console.WriteLine("\n");
             Console.WriteLine("Initialize Range objects.");
             int factorValue1 = rand.Next(MIN_FACTOR, MAX_FACTOR);
             int factorValue2 = rand.Next(MIN_FACTOR, MAX_FACTOR);
-            factorArray[MIN_FACTOR_IDX] = factorValue1;
-            factorArray[MAX_FACTOR_IDX] = factorValue2;
+            arrFactorValues[MIN_FACTOR_IDX] = factorValue1;
+            arrFactorValues[MAX_FACTOR_IDX] = factorValue2;
             range rangeObj = new range((uint)factorValue1, (uint)factorValue2);
             return rangeObj;
         }
@@ -123,36 +125,129 @@ namespace Project2
             return mObj;
         }
 
-        public static void InitFactorObject(Random rand, multiQ obj)
+        public static void InitFactorObject(Random rand, multiQ obj, int[] factors)
         {
             Console.WriteLine("Initialize Factor objects.");
 
             int randNum;
-            for (int i = 0; i < ARR_MULTIQ_SIZE; i++)
+            for (int i = 0; i < ARR_SIZE; i++)
             {
                 randNum = rand.Next(MIN_FACTOR, MAX_FACTOR);
+                factors[i] = (randNum);
                 factor factorObj = new factor((uint)randNum);
-                obj.AddFactorObj(factorObj);
+                obj.PushFactorObj(factorObj);
             }
-            Console.WriteLine(" Add Factor objects to MutliQ array.");
+            Console.WriteLine(" Push Factor objects to MutliQ.");
+            string strFactorValues = ConvertArrayToString(factors);
+            Console.WriteLine(" Object factor values: {0}", strFactorValues);
         }
 
-        public static void TestQueryMultiQ(multiQ obj, Random rand)
+        public static string ConvertArrayToString(int[] arr)
         {
-            Console.WriteLine("  Initialize test Query().");
+            string strValues = "";
+            if (arr.Length > 0)
+            {
+                strValues = Convert.ToString(arr[0]);
+                for (int i = 1; i < arr.Length; i++)
+                {
+                    strValues += "," + Convert.ToString(arr[i]);
+                }
+            }
+            return strValues;
+        }
+
+        public static string ParseArrayValuesToString(int[] arr)
+        {
+            string strValues = "";
+            if (arr.Length > 0)
+            {
+                if (arr[0] > 0)
+                {
+                    strValues = Convert.ToString(arr[0]);
+                    for (int i = 1; i < arr.Length; i++)
+                    {
+                        if (arr[i] > 0)
+                        {
+                            strValues += " " + Convert.ToString(arr[i]);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i < arr.Length; i++)
+                    {
+                        if (arr[i] > 0)
+                        {
+                            strValues += Convert.ToString(arr[i]) + " ";
+                        }
+                    }
+                }
+            }
+            return strValues;
+        }
+
+        public static void InitStaticFactorObject(Random rand, multiQ obj, int[] factors)
+        {
+            Console.WriteLine("Initialize Static Factor objects.");
+
+            int randNum = 2;
+            for (int i = 0; i < ARR_SIZE; i++)
+            {
+                factors[i] = (randNum + i);
+                factor factorObj = new factor((uint)(randNum + i));
+                obj.PushFactorObj(factorObj);
+            }
+            Console.WriteLine(" Push Factor objects to MutliQ.");
+            string strFactorValues = ConvertArrayToString(factors);
+            Console.WriteLine(" Object factor values: {0}", strFactorValues);
+        }
+
+        public static void TestQueryMultiQ(multiQ obj, Random rand, int[] factors)
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  Begin test Query().");
 
             int randNum;
             uint queryCount;
-            for (int i = 0; i < ARR_MULTIQ_SIZE; i++)
+            int[] arrQueryNumbers = new int[ARR_SIZE];
+            for (int i = 0; i < ARR_SIZE; i++)
             {
                 randNum = rand.Next(RAND_MIN, RAND_MAX);
+                arrQueryNumbers[i] = randNum;
                 queryCount = obj.Query((uint)randNum);
-                Console.WriteLine("  Queried number: {0}", randNum);
-                Console.WriteLine("   Successful query count: {0}", queryCount);
             }
-            
+            DisplayMultiQStat(obj, arrQueryNumbers, factors);
+
         }
 
+        public static void TestPopMultiQ(multiQ obj, Random rand, int[] factors)
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  Begin test Pop().");
+            Console.WriteLine("   Remove a factor object from MultiQ.");
+            obj.PopFactorObject();
+
+           
+          //  DisplayMultiQStat(obj, arrQueryNumbers, factors);
+
+        }
+
+
+
+        public static void DisplayMultiQStat(multiQ obj, int[] queriedNumbers, int[] factors)
+        {
+            string strFactorValues = ConvertArrayToString(factors);
+            string strQueryNumbers = ConvertArrayToString(queriedNumbers);
+            int[] arrSuccessQueriedNumbers = obj.GetQueriedNumberList();
+            string strSuccessQueriedNumbers = ParseArrayValuesToString(arrSuccessQueriedNumbers);
+           
+            Console.WriteLine("   Total queried numbers: {0}", strQueryNumbers);
+            Console.WriteLine("   Object factor values: {0}", strFactorValues);
+            Console.WriteLine("   Stats from MultiQ class");
+            Console.WriteLine("    Successful queried numbers: {0}", strSuccessQueriedNumbers);
+            Console.WriteLine("    Total successful queried count: {0}", obj.GetQueryCount());
+            Console.WriteLine("\n");
+        }
 
         public static void ProgramIntro()
         {
@@ -183,14 +278,14 @@ namespace Project2
             Console.WriteLine("Query value range: " + RAND_MIN + "-" + RAND_MAX);
 
         }
-        public static void ReplaceRangeFactor(range obj, int[] factorArray, Random rand)
+        public static void ReplaceRangeFactor(range obj, int[] arrFactorValues, Random rand)
         {
-            int cFactorValue1 = factorArray[MIN_FACTOR_IDX];
-            int cFactorValue2 = factorArray[MAX_FACTOR_IDX];
+            int cFactorValue1 = arrFactorValues[MIN_FACTOR_IDX];
+            int cFactorValue2 = arrFactorValues[MAX_FACTOR_IDX];
             int newFactor1 = rand.Next(MIN_FACTOR, MAX_FACTOR);
             int newFactor2 = rand.Next(MIN_FACTOR, MAX_FACTOR);
-            factorArray[MIN_FACTOR_IDX] = newFactor1;
-            factorArray[MAX_FACTOR_IDX] = newFactor2;
+            arrFactorValues[MIN_FACTOR_IDX] = newFactor1;
+            arrFactorValues[MAX_FACTOR_IDX] = newFactor2;
             obj.Replace((uint)newFactor1, (uint)newFactor2);
         
             Console.WriteLine("\n");
@@ -206,26 +301,24 @@ namespace Project2
             int[] factorArr, Random rand)
         {
             Console.WriteLine("\n");
-            Console.WriteLine("Begin test ping with random number.");
+            Console.WriteLine("Begin test Ping() with random number.");
             Console.WriteLine(" Count number of multiples that have exactly" +
                 " two factors.");
             int randPing; 
             uint count;
-            int factor1;
-            int factor2;
+            int factor1 = factorArr[MIN_FACTOR_IDX];
+            int factor2 = factorArr[MAX_FACTOR_IDX];
 
-            for (int i = 0; i < ARR_RANGE_SIZE; i++)
+            for (int i = 0; i < ARR_SIZE; i++)
             {
                 randPing = rand.Next(RAND_MIN, RAND_MAX);
                 count = obj.Ping((uint)randPing);
-                factor1 = factorArr[MIN_FACTOR_IDX];
-                factor2 = factorArr[MAX_FACTOR_IDX];
-
+               
                 Console.WriteLine("  Pinged number: {0}", randPing);
                 Console.WriteLine("  Factor values: {0}, {1}", factor1, factor2);
                 Console.WriteLine("  Minimum ping value: {0}", obj.GetMinPing());
                 Console.WriteLine("  Maximum ping value: {0}", obj.GetMaxPing());
-                Console.WriteLine("  Total ping count: {0}", count);
+                Console.WriteLine("  Successful pinged count: {0}", count);
                 Console.WriteLine("\n");
             }
         }
