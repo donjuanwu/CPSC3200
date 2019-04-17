@@ -6,66 +6,47 @@
 -- File Version : 1.0
 -- Due Date	    : 4/17/2019
 -- Course Name  : CPSC 3200
--- Data Members : 
---                Private
---                 int divFactor;      - passed in divisible factor
---                 int multiplesCount; - keep track of multiple count
---                 int lastNumber;     - use to compare current number
---                 bool isObjActive;   - keep track of object status
---                 const int INITIAL_FACTOR = 1;
---                 const int INITIAL_LAST_NUMBER = -1;
---                 const int INITIAL_MULTIPLESCOUNT = 0;
---                Public: 
---                  N/A
--- Methods      :  
---                Helper Utilities
---                  N/A
---                Private
---                  N/A
---                Public
---                  factor(int initialFactor)
---                  Div(int number)
---                  Reset()
---                  Accessors
---                    GetDivCount() 
---                  Mutators
---                    N/A
---                
--- Class Design :
---                 No Default Constructor, a factor value must be 
---                   provided
---                 Parameterized Constructor, factor value less 
---                   than 1 will be initialized to 1
---                 Constructor will initialized all private members
---                 Incoming number must be positive integer,
---                  number > 0
---                Div() 
---                  increment multiplescount variable by 1 ONLY when 
---                    object status is 'true' and the current incoming 
---                    number doesnt equals the lastNumber
---                  set isObjStatus to 'false', when lastNumber equals
---                    incoming number
---                  assign number to lastNumber
---                  return multiplescount
---                 Reset()
---                   reset all private members:
---                     isObjective, lastNumber and multiplesCount to initial value
---                 GetDivCount()
---                   return multiplescount
---
--- Interface Invariants 
-     Minimal    : illegal calls (unspecified behavior)
+----------------------------------------------------------------------------
+OVERVIEW: 
+   The factor object encapsulates its private data members 
+   A postive integer value passed into the Div() is check to
+   see if it's a multiple of the divFactor value.
+   If it's then increment the multipleCount
+
+Design Decisions and Assumptions:
+   Parameter to initialize the Factor Constructor must be positive integer
+   Parameter to Div() must be positive integer
+   If two consecutive passed in numbers are the same then the Factor
+     object will be set to inactive
+     a -1 will be returned
+   Reset() can be called regardless of Factor object state
+------------------------------------------------------------------------------
+Interface Invariants 
+    Minimal    : illegal calls (unspecified behavior)
      - Cannot Ping() with a non positive integer
      - 
    Problematic:
    Unncessary :
---				
---				
-----------------------------------------------------------------
+				
+			
+---------------------------------------------------------------------------------
+IMPLEMENTATION INVARIANTS:
+   Div()
+     Set factor object to inactive if prev passed in number equals current 
+      passed in number
+     Assign current passed in number to lastNumber
+     Check current passed in number is divisible by factor value
+     If yes, increment multiplescount by 1
+     Return multiplescount
+   Reset()
+     Reset factor object to initial values
+----------------------------------------------------------------------------------     
+CLASS INVARIANTS:
+   See below PRE & POST conditions 
+----------------------------------------------------------------------------------
 -- WHEN		WHO		WHAT
 -- 4/11/19	DD  	Added comments for Interface Invariants, 
 --                    Implementation Invariants, Class Invariants
---
 */
 
 
@@ -91,18 +72,16 @@ namespace Project2
             ping_Count = 0;
         }
 
+        //PRE : Factor object must be active
+        //POST: N/A
         public uint Ping(uint pNumber)
         {
              int retDivCount1 = factorObjOne.Div(pNumber);
              int retDivCount2 = factorObjTwo.Div(pNumber);
-
-              //reset the factor objects
               factorObjOne.Reset();
               factorObjTwo.Reset();
               if ((retDivCount1 == 1) && (retDivCount2 == 1))
               {
-                //increment ping count
-                //update min/max ping value
                 ping_Count++;
                 UpdateMinMaxPingRange(pNumber);
               }
@@ -110,23 +89,29 @@ namespace Project2
             return ping_Count;
         }
 
+        //PRE : Factor object must be active
+        //POST: N/A
         public uint GetMaxPing()
         {
             return max_Ping;
         }
 
+        //PRE : Factor object must be active
+        //POST: N/A
         public uint GetMinPing()
         {
             return min_Ping;
         }
 
+        //PRE : Factor object must be active
+        //POST: N/A
         public uint GetPingCount()
         {
             return ping_Count;
         }
-
-       
-
+ 
+        //PRE : Factor object must be active
+        //POST: N/A
         public void Replace(uint factorValue1, uint factorValue2)
         {
             factorObjOne = new factor(factorValue1);
@@ -136,6 +121,8 @@ namespace Project2
             ping_Count = 0;
         }
 
+        //PRE : Factor object must be active
+        //POST: N/A
         private void UpdateMinMaxPingRange(uint number)
         {
             if (max_Ping == 0 && min_Ping == 0)
@@ -147,13 +134,13 @@ namespace Project2
             {
                 if (number > max_Ping)
                 {
-                    max_Ping = number; //set max Ping
+                    max_Ping = number; 
                 }
                 else
                 {
                     if ((min_Ping == 0) || (number < min_Ping))
                     {
-                        min_Ping = number; //set min Ping
+                        min_Ping = number; 
                     }
                 }
             }
