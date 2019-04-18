@@ -8,41 +8,155 @@
 -- Course Name  : CPSC 3200
 ----------------------------------------------------------------------------
 OVERVIEW: 
-   The factor object encapsulates its private data members 
-   A postive integer value passed into the Div() is check to
-   see if it's a multiple of the divFactor value.
-   If it's then increment the multipleCount
+ The MultiQ class will accept two factor values and use them to initial two 
+  different Factor objects.
+ A passed-in ping number will be checked if it's a multiple of the factor
+  value. If Diverized then increment ping count
+ Every successful Div() called will invoke setting the min & max ping stats.
 
 Design Decisions and Assumptions:
-   Parameter to initialize the Factor Constructor must be positive integer
-   Parameter to Div() must be positive integer
-   If two consecutive passed in numbers are the same then the Factor
-     object will be set to inactive
-     a -1 will be returned
-   Reset() can be called regardless of Factor object state
+ The range class encapsulates its private data members.
+ There is no Default Constructor, a DEFALUT CONSTRUCTOR VALUE will be provided
+ Factor value can not be zero.
+   If factor values = 0, then they will get assign to DEFAULT CONSTRUCTOR VALUE.
+ DEFAULT CONSTRUCTOR VALUE will be postive integer greater than 1.
+ Factor values passed to constructors can be duplicated.
+ All public methods can be called regardless of Factor object status.
+ After every called to the Factor class's Div(), all Factor object will 
+  be set to active.
 ------------------------------------------------------------------------------
 Interface Invariants 
-    Minimal    : illegal calls (unspecified behavior)
-     - Cannot Ping() with a non positive integer
-     - 
-   Problematic:
-   Unncessary :
-				
-			
+PushFactorObj()
+ Only operate when MultiQ object is active
+ Accept a Factor object 
+ Return true when push operation is sucessful.
+ Else, return false.
+
+PopFactorObject()
+ Only operate when MultiQ object is active
+ Return true if pop is successful.
+ Else, return false.
+
+Query()
+ Only operate when MultiQ object is active
+  Return total successful query count
+
+GetQueryCount()
+ Accessor to return total successful queried count
+
+GetAvgQuery()
+ Accessor to return average queried count
+
+GetMaxQuery()
+ Accessor to return max successful queried count
+
+GetMinQuery()
+ Accessor to return min successful queried count
+       
+IsEmpty()
+ Accessor to return true when stack is emptied
+ Stack emptied implied Factor objects can not be pop
+
+GetQueriedNumberList()
+ Accessor to return an array of successful queried numbers
+
+Reset()
+ Reset all MultiQ private data members EXCEPT factor values.
+
+
 ---------------------------------------------------------------------------------
 IMPLEMENTATION INVARIANTS:
-   Div()
-     Set factor object to inactive if prev passed in number equals current 
-      passed in number
-     Assign current passed in number to lastNumber
-     Check current passed in number is divisible by factor value
-     If yes, increment multiplescount by 1
-     Return multiplescount
-   Reset()
-     Reset factor object to initial values
+ This is a Holds-a relationship between the MultiQ class and the Factor class.
+ The Driver can initialize both a MultiQ and a Factor object
+ Allow Default Constructor for MultiQ
+ Firing MultiQ's constructor will set all private data members to initial value
+ An array will be used to hold Factor objects. Array will be implemented like
+   a Stack.
+ The array can only hold 5 Factor objects. 
+ If more than 5 Factor objects pushed into the array then it will get resize
+   by 2 times the current size. 
+ Query number must be greater than 0.
+ All accessors can be called regardless of MultiQ object status.
+ Have a counter variable (factorIndex) to keep track of how large the Factor 
+  object array grow.
+ Each successful push will increment factorIndex by 1.
+ Each successful pop will decrement factorIndex by 1.
+
+
+PushFactorObj()
+ Only operate when MultiQ object is active
+ Accept a Factor object that is already initialized and met the 
+   Factor class requirement.
+ Push the Factor object into an array (simulated as a stack).
+ Increment the factorIndex by 1 before using it as a placeholder to insert the 
+   Factor object into the array.
+ By default the Factor array has length 5
+ Resize the array if the next available index (factorIndex base 0) is equals to the current array size
+ Return true when push operation is sucessful.
+ Else, return false.
+
+PopFactorObject()
+ Only operate when MultiQ object is active
+ Pop is enable when the stack is not empty
+ Simulate pop by decrementing 1 from a counter variable (factorIndex).
+ Return true if pop is successful.
+ Else, return false.
+
+Query()
+ Only operate when MultiQ object is active
+ Iterate through the Factor object array and call the Div function
+  and pass it the query number. 
+  Capture the prev divCount by calling the Factor class's accessor
+  Capture the current divCount returned by the Div()
+  If the current divCount = -1, set MultiQ object to inactive
+  Else, determine if current divCount is greater than prev divCount.
+    If yes, 1. update the summation of query
+            2. update the total successful query count
+            3. update the array that keep track of successful queried number
+ Return total successful query count
+
+GetQueryCount()
+ Accessor to return total successful queried count
+
+GetAvgQuery()
+ Accessor to return average queried count
+
+GetMaxQuery()
+ Accessor to return max successful queried count
+
+GetMinQuery()
+ Accessor to return min successful queried count
+       
+IsEmpty()
+ Accessor to return true when stack is emptied
+ Stack emptied implied Factor objects can not be pop
+
+GetQueriedNumberList()
+ Accessor to return an array of successful queried numbers
+
+IsDuplicate()
+ Private utility to GetQueriedNumberList(), check if 
+  number already existed in the array
+  
+ResizeArray()
+ Private utility to resize the Factor object.
+ Array new size is 2 times the current array size
+
+UpdateMinMaxQuery()
+ Private utility to update private member min & max queried number
+
+Reset()
+ Reset all MultiQ private data members EXCEPT factor values.
+ Call the Factor class's Reset() to  reset all Factor private data members
+   EXCEPT divCount
+
+        
 ----------------------------------------------------------------------------------     
 CLASS INVARIANTS:
-   See below PRE & POST conditions 
+ Only operate when MultiQ object is active.
+ Return true when the queried number is a multiple of all the factor values
+  initialized by each Factor object.
+
 ----------------------------------------------------------------------------------
 -- WHEN		WHO		WHAT
 -- 4/11/19	DD  	Added comments for Interface Invariants, 
@@ -84,7 +198,8 @@ namespace Project2
         }
 
         //PRE : Factor object must be active
-        //POST: N/A
+        //POST: Stack may not be empty
+        //      Stack may get resize
         public bool PushFactorObj(factor obj)
         {
            if (isObjActive)
@@ -106,7 +221,7 @@ namespace Project2
             return false;
         }
 
-        //PRE : Factor object must be active
+        //PRE : N/A
         //POST: N/A
         public bool IsEmpty()
         {
@@ -118,13 +233,12 @@ namespace Project2
         }
 
         //PRE : Factor object must be active
-        //POST: N/A
+        //POST: MultiQ object status may changed
+        //      Factor object status may changed
         public uint Query(uint num)
         {
             if (isObjActive)
             {
-                if (!IsEmpty())
-                {
                     for (int i = 0; i <= factorIndex; i++)
                     {
                         int prevDivCount = arrFactorObject[i].GetDivCount();
@@ -141,7 +255,7 @@ namespace Project2
                                 sum_Query += num;
                                 query_Count++;
                                 UpdateMinMaxQuery((uint)num);
-                                if (!IsDuplicate(arrQueriedNumbers, i, (int)num))
+                                if (!IsDuplicate(arrQueriedNumbers, (int)num))
                                 {
                                     arrQueriedNumbers[i] = (int)num;
                                 }
@@ -149,13 +263,13 @@ namespace Project2
                         }
 
                     }
-                }
             }
             return query_Count;
         }
 
         //PRE : Factor object must be active
-        //POST: N/A
+        //      Stack can not be emptied
+        //POST: Stack may be emptied
         public bool PopFactorObject()
         {
             if (isObjActive)
@@ -170,8 +284,9 @@ namespace Project2
             return false;
         }
 
-        //PRE : Factor object must be active
-        //POST: N/A
+        //PRE : N/A
+        //POST: MultiQ object status is active
+        //      Factor object status may changed
         public void Reset()
         {
             if (factorIndex > 0)
@@ -179,8 +294,18 @@ namespace Project2
                 for (int i = 0; i <= factorIndex; i++)
                 {
                     arrFactorObject[i].Reset();
+                    
                 }
             }
+
+            if (array_Size > 0)
+            {
+                for (int i = 0; i < array_Size; i++)
+                {
+                    arrQueriedNumbers[i] = 0;
+                }
+            }
+           
             min_Query = INITIAL_COUNT;
             max_Query = INITIAL_COUNT;
             query_Count = INITIAL_COUNT;
@@ -189,19 +314,14 @@ namespace Project2
            
         }
 
-        //PRE : Factor object must be active
+        //PRE : N/A
         //POST: N/A
         public int GetQueryCount()
         {
-            if (isObjActive)
-            {
-                return (int)query_Count;
-            }
-
-            return -1;
+            return (int)query_Count;
         }
 
-        //PRE : Factor object must be active
+        //PRE : N/A
         //POST: N/A
         public int GetAvgQuery()
         {
@@ -212,46 +332,44 @@ namespace Project2
             return 0;
         }
 
-        //PRE : Factor object must be active
+        //PRE : N/A
         //POST: N/A
         public uint GetMaxQuery()
         {
             return max_Query;
         }
 
-        //PRE : Factor object must be active
+        //PRE : N/A
         //POST: N/A
         public uint GetMinQuery()
         {
             return min_Query;
         }
 
-        //PRE : Factor object must be active
+        //PRE : N/A
         //POST: N/A
         public int[] GetQueriedNumberList()
         {
             return arrQueriedNumbers;
         }
 
-        //PRE : Factor object must be active
+        //PRE : Stack can not be emptied
         //POST: N/A
-        private bool IsDuplicate(int[] arr, int count, int num)
+        private bool IsDuplicate(int[] arr, int num)
         {
-            if (count != 0)
-            {
-                for (int i = 0; i <= count; i++)
+                for (int i = 0; i < array_Size; i++)
                 {
                     if (arr[i] == num)
                     {
                         return true;
                     }
                 }
-            }
             return false;
         }
 
-        //PRE : Factor object must be active
-        //POST: N/A
+        //PRE : Factor object must be active (validate by calling function)
+        //      Stack can not be emptied
+        //POST: Stack size will be larger
         private void ResizeArray(uint index)
         {
             factor[] temp = arrFactorObject;
@@ -267,7 +385,7 @@ namespace Project2
 
         }
 
-        //PRE : Factor object must be active
+        //PRE : N/A
         //POST: N/A
         private void UpdateMinMaxQuery(uint number)
         {

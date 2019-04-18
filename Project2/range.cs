@@ -8,41 +8,78 @@
 -- Course Name  : CPSC 3200
 ----------------------------------------------------------------------------
 OVERVIEW: 
-   The factor object encapsulates its private data members 
-   A postive integer value passed into the Div() is check to
-   see if it's a multiple of the divFactor value.
-   If it's then increment the multipleCount
+ The Range class will accept two factor values and use them to initial two 
+  different Factor objects.
+ A passed-in ping number will be checked if it's a multiple of the factor
+  value. If Diverized then increment ping count
+ Every successful Div() called will invoke setting the min & max ping stats.
 
 Design Decisions and Assumptions:
-   Parameter to initialize the Factor Constructor must be positive integer
-   Parameter to Div() must be positive integer
-   If two consecutive passed in numbers are the same then the Factor
-     object will be set to inactive
-     a -1 will be returned
-   Reset() can be called regardless of Factor object state
+ The range class encapsulates its private data members.
+ There is no Default Constructor, a DEFALUT CONSTRUCTOR VALUE will be provided
+ Factor value can not be zero.
+   If factor values = 0, then they will get assign to DEFAULT CONSTRUCTOR VALUE.
+ DEFAULT CONSTRUCTOR VALUE will be postive integer greater than 1.
+ Factor values passed to constructors can be duplicated.
+ All public methods can be called regardless of Factor object status.
+ After every called to the Factor class's Div(), all Factor object will 
+  be set to active.
 ------------------------------------------------------------------------------
 Interface Invariants 
-    Minimal    : illegal calls (unspecified behavior)
-     - Cannot Ping() with a non positive integer
-     - 
-   Problematic:
-   Unncessary :
-				
-			
+ Ping() 
+  Increment and return the ping count when the passed-in number is a multiple
+    of two factor values
+
+ GetMaxPing()
+  Return the greatest successful pinged number.
+  It could be a 0 if there is no successful pinged number
+
+ GetMinPing()
+  Return the lowest successful pinged number.
+  It could be a 0 if there is no successful pinged number
+ 
+ GetPingCount()
+  Return a count of successful pinged number.
+  It could be a 0 if there is no successful pinged number
+
+ Replace()
+  Replace the current two factor values with two new factor values
+
 ---------------------------------------------------------------------------------
 IMPLEMENTATION INVARIANTS:
-   Div()
-     Set factor object to inactive if prev passed in number equals current 
-      passed in number
-     Assign current passed in number to lastNumber
-     Check current passed in number is divisible by factor value
-     If yes, increment multiplescount by 1
-     Return multiplescount
-   Reset()
-     Reset factor object to initial values
+ Allow max two factor values can be passed into Range Constructor.
+ Allow factor values to be changed after firing constructor.
+
+ Ping() 
+  Determine if the passed-in number is a multiple of two factor values.
+  Validation is checked by comparing the returned value of divCount 
+   for each factor object.
+  If it is a successful multiple then, 
+   1. Increment ping count.
+   2. Update the min & max stats.
+  After every called to the Factor class's Div(), the Factor object get reset. This
+   means the Factor object will never be inactive.
+  Return ping count.
+
+ GetMaxPing()
+  Accessor to return max successful pinged value
+
+ GetMinPing()
+   Accessor to return min successful pinged value
+ 
+ GetPingCount()
+   Accessor to return total successful pinged count
+
+ Replace()
+  Accept two factor values
+  Separately used each passed-in factor value to initialize a new Factor object 
+   with passed-in factor value
+  Current Factor object's factor values will be replaced by new factor values
+  Reset all private stats data members to initial values
 ----------------------------------------------------------------------------------     
 CLASS INVARIANTS:
-   See below PRE & POST conditions 
+  Increment and return the ping count when the passed-in number is a multiple
+    of two factor values
 ----------------------------------------------------------------------------------
 -- WHEN		WHO		WHAT
 -- 4/11/19	DD  	Added comments for Interface Invariants, 
@@ -61,19 +98,33 @@ namespace Project2
         private uint ping_Count;
         private uint min_Ping;
         private uint max_Ping;
-    
-  
-        public range(uint factorValue1 = 2, uint factorValue2 = 4)
+        const int INITIAL_VALUE = 0;
+        const int DEFAULT_CONSTRUCTOR_FACTOR1 = 2;
+        const int DEFAULT_CONSTRUCTOR_FACTOR2 = 4;
+
+   
+        public range(uint factorValue1 = DEFAULT_CONSTRUCTOR_FACTOR1, 
+            uint factorValue2 = DEFAULT_CONSTRUCTOR_FACTOR2)
         {
+            if (factorValue1 == 0)
+            {
+                factorValue1 = DEFAULT_CONSTRUCTOR_FACTOR1;
+            }
+
+            if (factorValue2 == 0)
+            {
+                factorValue2 = DEFAULT_CONSTRUCTOR_FACTOR2;
+            }
+
             factorObjOne = new factor(factorValue1);
             factorObjTwo = new factor(factorValue2);
-            min_Ping = 0;
-            max_Ping = 0;
-            ping_Count = 0;
+            min_Ping = INITIAL_VALUE;
+            max_Ping = INITIAL_VALUE;
+            ping_Count = INITIAL_VALUE;
         }
 
-        //PRE : Factor object must be active
-        //POST: N/A
+        //PRE : N/A
+        //POST: Factor object will be active
         public uint Ping(uint pNumber)
         {
              int retDivCount1 = factorObjOne.Div(pNumber);
@@ -89,39 +140,39 @@ namespace Project2
             return ping_Count;
         }
 
-        //PRE : Factor object must be active
+        //PRE : N/A
         //POST: N/A
         public uint GetMaxPing()
         {
             return max_Ping;
         }
 
-        //PRE : Factor object must be active
+        //PRE : N/A
         //POST: N/A
         public uint GetMinPing()
         {
             return min_Ping;
         }
 
-        //PRE : Factor object must be active
+        //PRE : N/A
         //POST: N/A
         public uint GetPingCount()
         {
             return ping_Count;
         }
  
-        //PRE : Factor object must be active
-        //POST: N/A
+        //PRE : N/A
+        //POST: Factor object will be active
         public void Replace(uint factorValue1, uint factorValue2)
         {
             factorObjOne = new factor(factorValue1);
             factorObjTwo = new factor(factorValue2);
-            min_Ping = 0;
-            max_Ping = 0;
-            ping_Count = 0;
+            min_Ping = INITIAL_VALUE;
+            max_Ping = INITIAL_VALUE;
+            ping_Count = INITIAL_VALUE;
         }
 
-        //PRE : Factor object must be active
+        //PRE : N/A
         //POST: N/A
         private void UpdateMinMaxPingRange(uint number)
         {

@@ -8,16 +8,73 @@
 -- Course Name  : CPSC 3200
 ----------------------------------------------------------------------------
 OVERVIEW: 
-   This driver will sequentially test each class: 1) range.cs 2)multiQ.cs
+   This driver will sequentially test each class: 1) range.cs 2)multiQ.cs & factor.cs
    The first test will be the range.cs
-   Range's Class Test Cases:
+Range's Class Test Cases:
    1. Initialize Range objects
       Generate two random factor values and use them to initial Range object. 
-      The range of the factor value is from 2 - 10 (inclusive)
-      
+      Factor values will be tracked on Driver class to be used later for 
+        context
+   2. Test Ping function with random numbers
+      A succcessful pinged is when the random number is a multiple of
+       two factor values
+      There wil be 7 random generated numbers to test
+      After pinging each random number, a stat will be provided by the Range class:
+      - Successful minimum pinged value
+      - Successful maximum pinged value
+      - Total successful pinged count
+   3. Test replace current factor values with two new factor values
+      A successful test will show current factor values and replaced factor values.
+      Test Ping function again with new factor values.
+      New stats will be displayed base on new factor values.
 
+MultiQ & Factor Class's Test Cases:
+    1. Initialize MultiQ object with no parameters.
+    2. Initialize Factor objects 
+       Expect to created 7 Factor objects and initialized each Factor object
+        with a factor. These factor values are randomly generated. There may e
+        duplicate factor values. The Factor objects will be added into an array.
+       All factor values are stored in an array in the Driver to be used for
+         context when display stats from MutliQ.
+    3. Test PushFactorObject()
+       By design MultiQ class can only store 5 Factor objects. 
+       Push 7 Factor objects to MultiQ which will invoke the private
+         ResizeArray() to resize the Factor array in MultiQ.
+       Expect all 7 Factor object are saved in the MultiQ.
+       
+    4. Test QueryMutliQ()
+       Query 7 randomly generated numbers. Determine how many randomly
+         generated numbers are multiples of the factor value belong to 7 Factor object
+       Display the following stats from MultiQ for all of them:
+       - List of successfully queried numbers
+       - Maximum successful queried number
+       - Minimum successful queried number
+       - Average successful queried value
+       - Total successful queried count
+   5. PopFactorObjectFromMultiQ()
+      There are 7 Factor objects saved from TestPushFactor Object.
+      Expect 7 successful pop to display on Driver's console.
+   6. ResetMultiQObject()
+      All private data members of MultiQ should be reset to initial value
+      Stats from MultiQ should all be display 0
+       
+---------------------------------------------------------------------------------
 Design Decisions and Assumptions:
- 
+ The range of the factor value is randomly generated between 2 - 10 (inclusive).
+ The ping/query number is randomly generated between 1 - 10000 (inclusive).
+ All generated numbers are greater than 0.
+ Two factor values will be passed to the Range parameterized constructor
+ Seven Factor objects and seven factor values will be initialized for 
+   the Factor object.
+ Range object will be initialized by the InitRangeObject().
+ MultiQ object will be initialized by the InitMultiQObject().
+ Factor object will be initialized by the InitFactorObject().
+ All pinged and queried numbers will be tracked from the Driver to .
+  give context to the Stats returned from the Range and the MultiQ classes.
+ Range and MultiQ along with Factor will be tested separately.
+ The Range class will be tested first.
+ The MultiQ and Factor classes will follow.
+ Reset MultiQObject ONLY reset all MultiQ private data memebers to initial value.
 
 ----------------------------------------------------------------------------------
 -- WHEN     WHO		WHAT
@@ -27,9 +84,9 @@ Design Decisions and Assumptions:
    4/15/19  DD      Create function signatures for the multiQ.cs
                     Develop test cases for multiQ.cs
    4/16/19  DD      Added comments for p2.cs
-
+   4/17/19  DD      Added comments for range.cs, mutliQ.cs and factor.cs
                  
-*/		
+*/
 
 using System;
 
@@ -46,10 +103,7 @@ namespace Project2
         const int ARR_SIZE = 7;
         const int ARR_RESIZE_VALUE = 2;
 
-         /// <summary>
-         /// 
-         /// </summary>
-         /// <param name="args"></param>
+        
         static void Main(string[] args)
         {
             Random rand = new Random();
@@ -68,17 +122,18 @@ namespace Project2
           
             QueryMultiQ(multiQObj, rand, arrFactorValues);
             PopFactorObjectFromMultiQ(multiQObj);
-            ResetFactorObjects(multiQObj);
+            ResetMultiQObject(multiQObj);
 
             Console.Write("Press any key to terminate program... ");
             Console.ReadKey(); 
         }
 
         /// <summary>
-        /// 
+        /// Initialize a range object and return the range object 
+        /// to the calling function
         /// </summary>
-        /// <param name="rand"></param>
-        /// <param name="arrFactorValues"></param>
+        /// <param name="rand">initialized random object</param>
+        /// <param name="arrFactorValues">empty array to hold two factor values</param>
         /// <returns></returns>
         public static range InitRangeObject(Random rand, int[] arrFactorValues)
         {
@@ -93,7 +148,10 @@ namespace Project2
             return rangeObj;
         }
 
-        //SUMMARY:
+        /// <summary>
+        /// Initialize and return multiQ object
+        /// </summary>
+        /// <returns></returns>
         public static multiQ InitMultiQObject()
         {
             Console.WriteLine("----------------------------------------------------");
@@ -102,7 +160,13 @@ namespace Project2
             return mObj;
         }
 
-        //SUMMARY:
+        /// <summary>
+        /// Create, intialize and return factor object array
+        /// </summary>
+        /// <param name="rand">intialize random object</param>
+        /// <param name="obj">initialized mutliQ object</param>
+        /// <param name="factors">int array to hold factor values</param>
+        /// <returns></returns>
         public static factor[] InitFactorObject(Random rand, multiQ obj, int[] factors)
         {
             Console.WriteLine("Initialize Factor objects.");
@@ -117,7 +181,12 @@ namespace Project2
             return fObj;
         }
 
-        //SUMMARY:
+        /// <summary>
+        /// Push Factor objects to multiQ class
+        /// </summary>
+        /// <param name="qObj">initialized mutliQ object</param>
+        /// <param name="arrFactorObj">array contains Factor objects</param>
+        /// <param name="factors">array contains factor values</param>
         public static void PushFactorObjectsToMultiQ(multiQ qObj, factor[] arrFactorObj, int[] factors)
         {
             Console.WriteLine(" Begin push Factor objects to MultiQ.");
@@ -130,7 +199,12 @@ namespace Project2
             Console.WriteLine(" End push Factor objects to MultiQ.");
         }
 
-        //SUMMARY:
+        /// <summary>
+        /// Convert values in array and assign it to string
+        /// Return string
+        /// </summary>
+        /// <param name="arr">contain numbers</param>
+        /// <returns></returns>
         public static string ConvertArrayToString(int[] arr)
         {
             string strValues = "";
@@ -145,7 +219,12 @@ namespace Project2
             return strValues;
         }
 
-        //SUMMARY:
+        /// <summary>
+        /// Convert numbers in array to string
+        /// Return string
+        /// </summary>
+        /// <param name="arr">contains numbers</param>
+        /// <returns></returns>
         public static string ParseArrayValuesToString(int[] arr)
         {
             string strValues = "";
@@ -176,32 +255,21 @@ namespace Project2
             return strValues;
         }
 
-        //SUMMARY:
-        public static void InitStaticFactorObject(Random rand, multiQ obj, int[] factors, int arraySize = ARR_SIZE)
-        {
-            Console.WriteLine("Initialize Static Factor objects.");
-
-            int randNum = 2;
-            for (int i = 0; i < arraySize; i++)
-            {
-                factors[i] = (randNum + i);
-                factor factorObj = new factor((uint)(randNum + i));
-                obj.PushFactorObj(factorObj);
-            }
-            Console.WriteLine(" Begin push Factor objects to MutliQ.");
-            string strFactorValues = ConvertArrayToString(factors);
-            Console.WriteLine(" Factor values: {0}", strFactorValues);
-        }
-
-        //SUMMARY:
-        public static void QueryMultiQ(multiQ obj, Random rand, int[] factors, int arraySize = ARR_SIZE)
+        /// <summary>
+        /// Determine if number is multiple of factor value
+        /// </summary>
+        /// <param name="obj">multiQ object</param>
+        /// <param name="rand">Random object</param>
+        /// <param name="factors">contain factor values</param>
+        /// <param name="arraySize">array size</param>
+        public static void QueryMultiQ(multiQ obj, Random rand, int[] factors)
         {
             Console.WriteLine("\n");
             Console.WriteLine(" Begin query MultiQ.");
             int randNum;
             uint queryCount;
-            int[] arrQueryNumbers = new int[arraySize];
-            for (int i = 0; i < arraySize; i++)
+            int[] arrQueryNumbers = new int[ARR_SIZE];
+            for (int i = 0; i < ARR_SIZE; i++)
             {
                 randNum = rand.Next(RAND_MIN, RAND_MAX);
                 arrQueryNumbers[i] = randNum;
@@ -211,21 +279,28 @@ namespace Project2
             Console.WriteLine(" End query MultiQ.");
         }
 
-        //SUMMARY:
+        /// <summary>
+        /// Pop Factor objects from MultiQ
+        /// </summary>
+        /// <param name="obj">multiQ object</param>
         public static void PopFactorObjectFromMultiQ(multiQ obj)
         {
             Console.WriteLine("\n");
             Console.WriteLine(" Begin pop Factor objects from MutliQ.");
-            bool isPopped = true;
-            while(isPopped)
+            while(obj.PopFactorObject())
             {
-                isPopped = obj.PopFactorObject();
+                Console.WriteLine("   Factor object popped.");
             }
             Console.WriteLine(" End pop Factor objects from MutliQ.");
 
         }
 
-        //SUMMARY:
+       /// <summary>
+       /// Display MultiQ stats
+       /// </summary>
+       /// <param name="obj">multiQ object</param>
+       /// <param name="queriedNumbers">contain list of queried numbers</param>
+       /// <param name="factors">factor values</param>
         public static void DisplayMultiQStat(multiQ obj, int[] queriedNumbers, int[] factors)
         {
             string strFactorValues = ConvertArrayToString(factors);
@@ -244,7 +319,9 @@ namespace Project2
            
         }
 
-        //SUMMARY:
+        /// <summary>
+        /// Display Project 2 descriptions
+        /// </summary>
         public static void ProgramIntro()
         {
             Console.WriteLine("P2's goal is to design and implement");
@@ -275,7 +352,12 @@ namespace Project2
 
         }
 
-        //SUMMARY:
+        /// <summary>
+        /// Replace factor values in Range class
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="arrFactorValues"></param>
+        /// <param name="rand"></param>
         public static void ReplaceRangeFactor(range obj, int[] arrFactorValues, Random rand)
         {
             int cFactorValue1 = arrFactorValues[MIN_FACTOR_IDX];
@@ -287,24 +369,47 @@ namespace Project2
             obj.Replace((uint)newFactor1, (uint)newFactor2);
         
             Console.WriteLine("\n");
-            Console.WriteLine("Begin replace currrent factor values with " +
+            Console.WriteLine("Begin replace current factor values with " +
                 "new factor values.");
             Console.WriteLine(" Current factor values: {0},{1}", cFactorValue1,
                 cFactorValue2);
             Console.WriteLine(" Replaced factor values: {0},{1}", newFactor1,
                 newFactor2);
+            Console.WriteLine("End replace current factor values with " +
+                "new factor values.");
         }
 
-        //SUMMARY:
-        public static void ResetFactorObjects(multiQ qObj)
+        /// <summary>
+        /// Reset MultiQ private data members to initial value
+        /// </summary>
+        /// <param name="qObj"></param>
+        public static void ResetMultiQObject(multiQ qObj)
         {
+           
             Console.WriteLine("\n");
             Console.WriteLine(" Begin reset MultiQ object");
             qObj.Reset();
+            int[] arrSuccessQueriedNumbers = qObj.GetQueriedNumberList();
+            string strSuccessQueriedNumbers = ParseArrayValuesToString(arrSuccessQueriedNumbers);
+            Console.WriteLine("  Reset MultiQ object");
+
+            Console.WriteLine("  Stats from MultiQ class");
+            Console.WriteLine("    Successful queried numbers: {0}", strSuccessQueriedNumbers);
+            Console.WriteLine("    Max queried number: {0}", qObj.GetMaxQuery());
+            Console.WriteLine("    Min queried number: {0}", qObj.GetMinQuery());
+            Console.WriteLine("    Average queried number: {0}", qObj.GetAvgQuery());
+            Console.WriteLine("    Total successful queried count: {0}", qObj.GetQueryCount());
+
             Console.WriteLine(" End reset MultiQ object");
+            Console.WriteLine("\n");
         }
 
-        //SUMMARY:
+        /// <summary>
+        /// Determine if random number if multiple of factor values in range
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="factorArr"></param>
+        /// <param name="rand"></param>
         public static void TestPingWithRandomNumber(range obj,
             int[] factorArr, Random rand)
         {
@@ -330,6 +435,7 @@ namespace Project2
                 Console.WriteLine("   Successful pinged count: {0}", count);
                 Console.WriteLine("\n");
             }
+            Console.WriteLine("End test Ping() with random number.");
         }
     }
     
