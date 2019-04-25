@@ -96,7 +96,7 @@ namespace Project3
         protected readonly uint pwdLength;
         protected bool isObjectActive;
         protected uint countRequest;
-        protected const uint DEFAULT_PWD_Length = 4;
+        protected const uint DEFAULT_PWD_Length = 2;
       
         public pwdCheck(uint length)
         {
@@ -113,7 +113,11 @@ namespace Project3
         {
             if (TogglePwdObjectState())
             {
-                return !IsForbiddenCharacter(strAlphaNumeric);
+                if (IsPasswordLength(strAlphaNumeric))
+                {
+                    return !IsForbiddenCharacter(strAlphaNumeric);
+                }
+                
             }
             return false;
         }
@@ -131,6 +135,11 @@ namespace Project3
                 }
             }
             return false;
+        }
+
+        public virtual bool IsPasswordLength(string pWord)
+        {
+            return (pWord.Length >= pwdLength);
         }
 
         public virtual bool TogglePwdObjectState()
@@ -160,6 +169,11 @@ namespace Project3
         public int GetPasswordLength()
         {
             return (int)pwdLength;
+        }
+
+        public bool IsObjectActive()
+        {
+            return isObjectActive;
         }
     }
 }

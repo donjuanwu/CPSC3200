@@ -93,10 +93,9 @@ namespace Project3
     class p3
     {
         const int RAND_MIN = 2;
-        const int RAND_MAX = 20;
-        const int ARR_SIZE = 7;
+        const int RAND_MAX = 5;
+        const int ARR_SIZE = 3;
         const int REDUCED_LENGTH = 2;
-
         const string VALID_CHARS ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkl" +
             "mnopqrstuvwxyz0123456789#_<>!+*&@^=.?|\\";
         const string INVALID_CHARS = " ~(){}[]";
@@ -106,16 +105,15 @@ namespace Project3
             Random rand = new Random();
             ProgramIntro();
 
-
             pwdCheck[] arrPwdObj = InitPwdObject(rand);
-            //TestPwdClassWithValidPassword(arrPwdObj, rand);
-            TestPwdLenReq(arrPwdObj, rand);
+            TestPwdClassWithValidPassword(arrPwdObj, rand);
+            TestToggleObject(arrPwdObj, rand);
+           // TestPwdLenReq(arrPwdObj, rand);
 
             Console.WriteLine("");
             Console.WriteLine("Press any key to terminate...");
             Console.ReadKey();
         }
-
 
         /// <summary>
         /// Display Project 3 descriptions
@@ -167,7 +165,6 @@ namespace Project3
                // arr_PwdObj[i] = new pwdCheck((uint)num);
 
                // Console.WriteLine("Generated number: {0}", num);
-
               arr_PwdObj[i]= new pwdCheck((uint)rand.Next(RAND_MIN, RAND_MAX));
             }
             return arr_PwdObj;
@@ -180,9 +177,24 @@ namespace Project3
             for (int i = 0; i < size; i++)
             {
                 str += VALID_CHARS[rand.Next(VALID_CHARS.Length)];
+                str += INVALID_CHARS[rand.Next(INVALID_CHARS.Length)];
 
             }
-            //Console.WriteLine("Generate valid password: {0}", str);
+            return str;
+        }
+
+        public static string CreateRandomInValidString(Random rand)
+        {
+            int length = rand.Next(RAND_MIN, RAND_MAX);
+            string str = "";
+
+            for (int i = 0; i < length; i++)
+            {
+                str += VALID_CHARS[rand.Next(VALID_CHARS.Length)];
+                str += INVALID_CHARS[rand.Next(INVALID_CHARS.Length)];
+
+            }
+            Console.WriteLine("Generate invalid password: {0}", str);
             return str;
         }
 
@@ -202,24 +214,45 @@ namespace Project3
             Console.WriteLine("End test PwdCheck class with valid password.");
         }
 
-        public static void TestPwdLenReq(pwdCheck[] obj, Random rand)
+        public static void TestToggleObject(pwdCheck[] obj, Random rand)
         {
-            Console.WriteLine("Begin test password length requirement with valid password.");
+            Console.WriteLine("");
+            Console.WriteLine("Begin test toggle object.");
             for (int i = 0; i < ARR_SIZE; i++)
             {
-                int size = obj[i].GetPasswordLength();
-                Console.WriteLine("Generate a password of length: {0}", size - REDUCED_LENGTH);
-                string pWord = CreateRandomValidString(rand, size - REDUCED_LENGTH);
+                int length = obj[i].GetPasswordLength();
+                Console.WriteLine(" Object {0} will be toggled with {1} requests.",i,length);
+                string pWord = CreateRandomValidString(rand, length);
+               
+                    if (!obj[i].RequestPassword(pWord))
+                    {
+                        if (!obj[i].IsObjectActive())
+                        {
+                            Console.WriteLine(" Object at index {0} was toggled.", i);
+                            Console.WriteLine(" ");
+                        }
+                    }
+            }
+            Console.WriteLine("End test toggle object.");
+        }
+
+        public static void TestPwdClassWithInValidPassword(pwdCheck[] obj, Random rand)
+        {
+            Console.WriteLine("Begin test PwdCheck class with invalid password.");
+            for (int i = 0; i < ARR_SIZE; i++)
+            {
+
+                string pWord = CreateRandomInValidString(rand);
                 if (!obj[i].RequestPassword(pWord))
                 {
-                    Console.WriteLine(" Required password length: {0}", size);
-                    Console.WriteLine(" Created password length: {0}", size - REDUCED_LENGTH);
-                    Console.WriteLine(" Password length is not valid: {0}", pWord);
-                   
+                    if (obj[i].IsObjectActive())
+                    {
+                        Console.WriteLine(" Password is invalid: {0}", pWord);
+                    }
+                    
                 }
-              
             }
-            Console.WriteLine("End test password length requirement with valid password.");
+            Console.WriteLine("End test PwdCheck class with invalid password.");
         }
     }
 }
