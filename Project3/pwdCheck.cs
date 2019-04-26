@@ -93,7 +93,7 @@ namespace Project3
 {
     class pwdCheck
     {
-        protected readonly char[] strForbiddenChar = new char[] { ' ', '~', '(', ')', '{', '}', '[', ']'};
+        private char[] strForbiddenChar;
         private const int ASCII_NUM = 127;
         protected readonly uint pwdLength;
         protected bool isObjectActive;
@@ -109,6 +109,7 @@ namespace Project3
             isObjectActive = true;
             countValidation = 0;
             pwdLength = length;
+            strForbiddenChar = new char[] { ' ', '~', '(', ')', '{', '}', '[', ']' };
         }
 
         public virtual bool ValidatePassword(string strAlphaNumeric)
