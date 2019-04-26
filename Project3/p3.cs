@@ -83,22 +83,22 @@ Design Decisions and Assumptions:
 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Project3
 {
     class p3
     {
         const int RAND_MIN = 2;
-        const int RAND_MAX = 5;
-        const int ARR_SIZE = 3;
+        const int RAND_MAX = 10;
+        const int ARR_SIZE = 4;
+        const int ARR_MULTIPLIER = 3;
         const int REDUCED_LENGTH = 2;
         const string VALID_CHARS ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkl" +
             "mnopqrstuvwxyz0123456789#_<>!+*&@^=.?|\\";
         const string INVALID_CHARS = " ~(){}[]";
+       // const string MIXED_CHARS = "AB[CDEF~GHIJKLMNOPQ RSTUVWX)YZabcdefghijk]l" +
+         //   "m(nopqrs{tuvwxyz0123456789#_<>!+*&}@^=.?|\\";
 
         static void Main(string[] args)
         {
@@ -106,9 +106,12 @@ namespace Project3
             ProgramIntro();
 
             pwdCheck[] arrPwdObj = InitPwdObject(rand);
-            TestPwdClassWithValidPassword(arrPwdObj, rand);
-            TestToggleObject(arrPwdObj, rand);
-           // TestPwdLenReq(arrPwdObj, rand);
+           // TestForbiddenCharactersInPassword(arrPwdObj, rand);
+            //TestPwdClassWithValidPassword(arrPwdObj, rand);
+           // TestToggleObject(arrPwdObj, rand);
+           // TestPasswordLength(arrPwdObj, rand);
+           // TestPwdClassWithInValidPassword(arrPwdObj, rand);
+           
 
             Console.WriteLine("");
             Console.WriteLine("Press any key to terminate...");
@@ -158,32 +161,56 @@ namespace Project3
         {
             Console.WriteLine("");
             Console.WriteLine("Initialize PwdCheck objects.");
-            pwdCheck[] arr_PwdObj = new pwdCheck[ARR_SIZE];
-            for (int i = 0; i < ARR_SIZE; i++)
-            {
-               // int num = rand.Next(RAND_MIN, RAND_MAX);
-               // arr_PwdObj[i] = new pwdCheck((uint)num);
+            int arraySize = ARR_SIZE * ARR_MULTIPLIER;
 
-               // Console.WriteLine("Generated number: {0}", num);
-              arr_PwdObj[i]= new pwdCheck((uint)rand.Next(RAND_MIN, RAND_MAX));
+            pwdCheck[] arr_PwdObj = new pwdCheck[arraySize];
+            for (int i = 0; i < arraySize; i++)
+            {
+                if (i < (arraySize) / ARR_MULTIPLIER)
+                {
+                    Console.WriteLine(" Initialized pwdCheck object at index: {0} ", i);
+                    arr_PwdObj[i] = new pwdCheck((uint)rand.Next(RAND_MIN, RAND_MAX));
+                }
+                else if (i >= (arraySize / ARR_MULTIPLIER) && i < (arraySize - ARR_SIZE))
+                {
+                    Console.WriteLine(" Initialized compundC object at index: {0} ", i);
+                    arr_PwdObj[i] = new compundC((uint)rand.Next(RAND_MIN, RAND_MAX), (uint)rand.Next(RAND_MIN, RAND_MAX));
+                }
+                else
+                {
+                    Console.WriteLine(" Initialized excessC object at index: {0} ", i);
+                    arr_PwdObj[i] = new pwdCheck((uint)rand.Next(RAND_MIN, RAND_MAX));
+                }
             }
             return arr_PwdObj;
         }
 
-        public static string CreateRandomValidString(Random rand, int size)
+        public static string GenerateRandomMixedString(Random rand)
         {
             string str = "";
+            int length = rand.Next(RAND_MIN, RAND_MAX);
+            string mixedString = VALID_CHARS + INVALID_CHARS;
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < length; i++)
             {
-                str += VALID_CHARS[rand.Next(VALID_CHARS.Length)];
-                str += INVALID_CHARS[rand.Next(INVALID_CHARS.Length)];
-
+                str += mixedString[rand.Next(mixedString.Length)];
             }
             return str;
         }
 
-        public static string CreateRandomInValidString(Random rand)
+        public static string GenerateRandomValidString(Random rand)
+        {
+            string str = "";
+            int length = rand.Next(RAND_MIN, RAND_MAX);
+
+            for (int i = 0; i < length; i++)
+            {
+                str += VALID_CHARS[rand.Next(VALID_CHARS.Length)];
+            }
+            return str;
+        }
+
+        public static string GenerateRandomInValidString(Random rand)
         {
             int length = rand.Next(RAND_MIN, RAND_MAX);
             string str = "";
@@ -194,7 +221,7 @@ namespace Project3
                 str += INVALID_CHARS[rand.Next(INVALID_CHARS.Length)];
 
             }
-            Console.WriteLine("Generate invalid password: {0}", str);
+           // Console.WriteLine("Generate invalid password: {0}", str);
             return str;
         }
 
@@ -203,10 +230,10 @@ namespace Project3
             Console.WriteLine("Begin test PwdCheck class with valid password.");
             for (int i = 0; i < ARR_SIZE; i++)
             {
-                int size = obj[i].GetPasswordLength();
-                //Console.WriteLine("Retrieved password length from pwdCheck class: {0}", size);
-                string pWord = CreateRandomValidString(rand, size);
-                if (obj[i].RequestPassword(pWord))
+                //int size = obj[i].GetPasswordLength();
+                //Console.WriteLine("Retrieved password length from pwdCheck class: {0}", obj[i].GetPasswordLength());
+                string pWord = GenerateRandomValidString(rand);
+                if (obj[i].ValidatePassword(pWord))
                 {
                     Console.WriteLine(" Password is valid: {0}", pWord);
                 }
@@ -214,45 +241,119 @@ namespace Project3
             Console.WriteLine("End test PwdCheck class with valid password.");
         }
 
+        public static void TestForbiddenCharactersInPassword(pwdCheck[] obj, Random rand)
+        {
+            Console.WriteLine(" ");
+            Console.WriteLine("Begin test forbidden characters in password.");
+            for (int i = 0; i < ARR_SIZE; i++)
+            {
+                string pWord = GenerateRandomMixedString(rand);
+                if (!obj[i].ValidatePassword(pWord))
+                {
+                    if (obj[i].IsObjectActive())
+                    {
+                        if (pWord.Length >= obj[i].GetPasswordLength())
+                        {
+                            Console.WriteLine(" Object at index {0}'s has forbidden characters", i);
+                            Console.WriteLine("  password rejected: {0}", pWord);
+                        }
+                    }
+                }
+                //else
+                //{
+                //    Console.WriteLine(" Object at index {0}'s password is valid", i);
+                //    Console.WriteLine("  password: {0}", pWord);
+                //}
+            }
+            Console.WriteLine("End test forbidden characters in password");
+        }
+
         public static void TestToggleObject(pwdCheck[] obj, Random rand)
         {
             Console.WriteLine("");
             Console.WriteLine("Begin test toggle object.");
+            
             for (int i = 0; i < ARR_SIZE; i++)
             {
-                int length = obj[i].GetPasswordLength();
-                Console.WriteLine(" Object {0} will be toggled with {1} requests.",i,length);
-                string pWord = CreateRandomValidString(rand, length);
-               
-                    if (!obj[i].RequestPassword(pWord))
-                    {
-                        if (!obj[i].IsObjectActive())
-                        {
-                            Console.WriteLine(" Object at index {0} was toggled.", i);
-                            Console.WriteLine(" ");
-                        }
-                    }
+                while (obj[i].IsObjectActive())
+                {
+                    string pWord = GenerateRandomValidString(rand);
+                    obj[i].ValidatePassword(pWord);
+                }
+                Console.WriteLine(" Object at index {0} was toggled.", i);
+                string status = "inactive";
+                if (obj[i].IsObjectActive())
+                {
+                    status = "active";
+                }
+                Console.WriteLine("  Object's updated status: {0}.",status);
+            }
+            Console.WriteLine(" ");
+            for (int i = 0; i < ARR_SIZE; i++)
+            {
+                while (!obj[i].IsObjectActive())
+                {
+                    string pWord = GenerateRandomValidString(rand);
+                    obj[i].ValidatePassword(pWord);
+                }
+                Console.WriteLine(" Object at index {0} was toggled.", i);
+                string status = "inactive";
+                if (obj[i].IsObjectActive())
+                {
+                    status = "active";
+                }
+                Console.WriteLine("  Object's updated status: {0}.", status);
             }
             Console.WriteLine("End test toggle object.");
         }
 
         public static void TestPwdClassWithInValidPassword(pwdCheck[] obj, Random rand)
         {
+            Console.WriteLine(" ");
             Console.WriteLine("Begin test PwdCheck class with invalid password.");
             for (int i = 0; i < ARR_SIZE; i++)
             {
-
-                string pWord = CreateRandomInValidString(rand);
-                if (!obj[i].RequestPassword(pWord))
+                string pWord = GenerateRandomInValidString(rand);
+                if (!obj[i].ValidatePassword(pWord))
                 {
                     if (obj[i].IsObjectActive())
                     {
-                        Console.WriteLine(" Password is invalid: {0}", pWord);
+                        if (pWord.Length >= obj[i].GetPasswordLength())
+                        {
+                            Console.WriteLine(" Object at index {0}'s password is invalid", i);
+                            Console.WriteLine("  password contains invalid character(s): {0}", pWord);
+                        }
+                        
                     }
-                    
                 }
             }
             Console.WriteLine("End test PwdCheck class with invalid password.");
+        }
+
+        public static void TestPasswordLength(pwdCheck[] obj, Random rand)
+        {
+            //generate a string with mixed length
+            //get current password length
+            //determine if password length is valid
+            Console.WriteLine(" ");
+            Console.WriteLine("Begin test pwdCheck class password length.");
+            string str = GenerateRandomValidString(rand);
+            for (int i = 0; i < ARR_SIZE; i++)
+            {
+               if (!obj[i].ValidatePassword(str))
+                {
+                    if (obj[i].IsObjectActive())
+                    {
+                        int pwdLength = obj[i].GetPasswordLength();
+                        if (str.Length < pwdLength)
+                        {
+                            Console.WriteLine(" Object at index {0} password is invalid", i);
+                            Console.WriteLine("  password: {0} doesn't meet password length requirement", str);
+                        }
+                    }
+                }
+            }
+            Console.WriteLine("End test pwdCheck class password length.");
         }
     }
 }

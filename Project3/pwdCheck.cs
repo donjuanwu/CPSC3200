@@ -78,7 +78,9 @@ Design Decisions and Assumptions:
 
 ----------------------------------------------------------------------------------
 -- WHEN     WHO		WHAT
-   4/19/19	DD  	Created pwdCheck.cs           
+   4/19/19	DD  	Created pwdCheck.cs  
+   4/25/19  DD      Added IsPasswordLength()
+                    - Check for password length requirement
 */
 
 using System;
@@ -95,7 +97,7 @@ namespace Project3
         private const int ASCII_NUM = 127;
         protected readonly uint pwdLength;
         protected bool isObjectActive;
-        protected uint countRequest;
+        protected uint countValidation;
         protected const uint DEFAULT_PWD_Length = 2;
       
         public pwdCheck(uint length)
@@ -105,11 +107,11 @@ namespace Project3
                 length = DEFAULT_PWD_Length;
             }
             isObjectActive = true;
-            countRequest = 0;
+            countValidation = 0;
             pwdLength = length;
         }
 
-        public bool RequestPassword(string strAlphaNumeric)
+        public virtual bool ValidatePassword(string strAlphaNumeric)
         {
             if (TogglePwdObjectState())
             {
@@ -142,28 +144,31 @@ namespace Project3
             return (pWord.Length >= pwdLength);
         }
 
-        public virtual bool TogglePwdObjectState()
+        public bool TogglePwdObjectState()
         {
             if (isObjectActive)
             {
-                if (++countRequest == pwdLength)
+                if (++countValidation == pwdLength)
                 {
                     isObjectActive = false;
                     return false;
-                }   
+                }
+                return true;
             }
             else
             {
-                if (countRequest > 0)
+                if (countValidation > 0)
                 {
-                    if (pwdLength - (--countRequest) == pwdLength)
+                    if (pwdLength - (--countValidation) == pwdLength)
                     {
                         isObjectActive = true;
                         return true;
                     }
+                    else
+                    return false;
                 }          
             }
-            return true;
+           return true;
         }
         
         public int GetPasswordLength()
@@ -174,6 +179,11 @@ namespace Project3
         public bool IsObjectActive()
         {
             return isObjectActive;
+        }
+
+        protected int GetASCIINumber()
+        {
+            return ASCII_NUM;
         }
     }
 }
