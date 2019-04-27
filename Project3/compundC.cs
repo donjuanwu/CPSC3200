@@ -1,19 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Project3
 {
     class compundC: pwdCheck
     {
-        private uint countRequest;
-        private uint allowedReqest;
-        private int countStateChanged;
-        private int toggledMax;
+        private uint countCompCRequest;   //keep track of number of password request
+        private uint cycleToggledMax;  //number of cycle toggled max
+        private int isOneCycle;           //keep track of a complete cyle; odd = complete a cyle, even = half cycle
+        private bool isCharRepeated;
+        private bool isCompCActive;  //keep track of compundC status
+        private bool isCompCLocked; //indicate object is maxed out at toggle on/off limit
         private const int INIT_TOGGLE_LIMIT = 3;
         private const int INIT_PASSWORD_LENGTH = 4;
+        private const int INIT_CYCLE_POS = -1;
+        private const int DEFAULT_MOD_DIVISOR = 2;
 
         //public compundC(uint pwdLength = INIT_PASSWORD_LENGTH): base(pwdLength)
         //{
@@ -23,52 +24,61 @@ namespace Project3
         //    countStateChanged = 0;
         //}
 
-        public compundC (uint pwdLength = INIT_PASSWORD_LENGTH, uint reqMax = INIT_TOGGLE_LIMIT) : base(pwdLength)
+        public compundC (uint pwdLength = INIT_PASSWORD_LENGTH, uint toggleMax = INIT_TOGGLE_LIMIT) : base(pwdLength)
         {
-            if (reqMax < INIT_TOGGLE_LIMIT)
+            if (toggleMax < INIT_TOGGLE_LIMIT)
             {
-                reqMax = INIT_TOGGLE_LIMIT;
+                toggleMax = INIT_TOGGLE_LIMIT;
             }
 
-            toggledMax = INIT_TOGGLE_LIMIT;
-            countRequest = 0;
-            allowedReqest = reqMax;
-            countStateChanged = 0;
+            countCompCRequest = 0;
+            cycleToggledMax = toggleMax;
+            isOneCycle = INIT_CYCLE_POS;
+            isCompCActive = true;
+            isCompCLocked = false;
+            isCharRepeated = false;
         }
 
         //PRE :
         //POST: Password object status may changed
         public override bool ValidatePassword(string strPwd)
         {
-            return base.ValidatePassword(strPwd) && CheckToggleStatus() && IsRepeatedChar(strPwd);
+            return base.ValidatePassword(strPwd) && IsObjectLocked() && IsRepeatedChar(strPwd);
+           // return base.ValidatePassword(strPwd) && CheckToggleStatus() && IsRepeatedChar(strPwd);
         }
 
-        public int GetToggledCount()
+       private bool IsObjectLocked()
         {
-            return countStateChanged;
-        }
-
-       private bool CheckToggleStatus()
-        {
-            if (GetToggledCount() < (int)toggledMax)
+            if (!isCompCLocked)
             {
-                if (base.IsObjectActive())
+                //increment count compC request
+                countCompCRequest++;
+
+                if (countCompCRequest == base.GetPasswordLength())
                 {
-                    if (++countRequest == allowedReqest)
+                    if (isCompCActive ? false : true)
+
+                    isOneCycle++;
+                    countCompCRequest = 0;
+                    if (isOneCycle % DEFAULT_MOD_DIVISOR != 0)
                     {
-                        countStateChanged++; 
+                        cycleToggledMax--;
+                        if (cycleToggledMax == 0)
+                        {
+                            isCompCLocked = true;
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                            
                     }
+                    return false;
                 }
-                else
-                {
-                   if (allowedReqest - (--countRequest) == allowedReqest)
-                    {
-                        countRequest++;
-                    }
-                }
-                return true;
+                return false;
             }
-            return false;
+            return true;
         }
 
         private bool IsRepeatedChar(string str)
@@ -76,12 +86,31 @@ namespace Project3
             int[] arrChar = new int[base.GetASCIINumber()];
             for (int i = 0; i < str.Length; i++)
             {
-                if (++arrChar[i] > 1)
+                int index = (int)str[i];
+                if (++arrChar[index] > 1)
                 {
+                    isCharRepeated = true;
                     return true;
                 }
             }
             return false;
         }
+
+        public bool GetIsCharRepeated()
+        {
+            return isCharRepeated;
+        }
+
+        public bool GetLockedStatus()
+        {
+            return isCompCLocked;
+        }
+
+        public bool GetCompCStatus()
+        {
+            return isCompCActive;
+        }
+
     }
+   
 }

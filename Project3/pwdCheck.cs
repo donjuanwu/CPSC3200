@@ -97,6 +97,7 @@ namespace Project3
         private const int ASCII_NUM = 127;
         protected readonly uint pwdLength;
         protected bool isObjectActive;
+        private bool isCharForbidden; //need to reevaluate this data member & its public accessor
         protected uint countValidation;
         protected const uint DEFAULT_PWD_Length = 4;
       
@@ -110,6 +111,7 @@ namespace Project3
             countValidation = 0;
             pwdLength = length;
             strForbiddenChar = new char[] { ' ', '~', '(', ')', '{', '}', '[', ']' };
+            isCharForbidden = false; //need to reevaluate
         }
 
         public virtual bool ValidatePassword(string strAlphaNumeric)
@@ -133,6 +135,7 @@ namespace Project3
                 {
                     if ((int)strPwd[i] > ASCII_NUM || c.Equals(strPwd[i]))
                     {
+                        isCharForbidden = true;
                         return true;
                     }
                 }
@@ -185,6 +188,11 @@ namespace Project3
         protected int GetASCIINumber()
         {
             return ASCII_NUM;
+        }
+
+        public bool GetIsCharForbidden()
+        {
+            return isCharForbidden;
         }
     }
 }
