@@ -15,20 +15,21 @@ namespace Project3
         private const int INIT_TOGGLE_LIMIT = 3;
         private const int INIT_PASSWORD_LENGTH = 4;
 
-        public compundC(uint pwdLength = INIT_PASSWORD_LENGTH): base(pwdLength)
-        {
-            toggledMax = INIT_TOGGLE_LIMIT;
-            countRequest = 0;
-            allowedReqest = INIT_TOGGLE_LIMIT;
-            countStateChanged = 0;
-        }
+        //public compundC(uint pwdLength = INIT_PASSWORD_LENGTH): base(pwdLength)
+        //{
+        //    toggledMax = INIT_TOGGLE_LIMIT;
+        //    countRequest = 0;
+        //    allowedReqest = INIT_TOGGLE_LIMIT;
+        //    countStateChanged = 0;
+        //}
 
-        public compundC (uint pwdLength = INIT_PASSWORD_LENGTH, uint reqMax = INIT_TOGGLE_LIMIT) : this(pwdLength)
+        public compundC (uint pwdLength = INIT_PASSWORD_LENGTH, uint reqMax = INIT_TOGGLE_LIMIT) : base(pwdLength)
         {
             if (reqMax < INIT_TOGGLE_LIMIT)
             {
                 reqMax = INIT_TOGGLE_LIMIT;
             }
+
             toggledMax = INIT_TOGGLE_LIMIT;
             countRequest = 0;
             allowedReqest = reqMax;

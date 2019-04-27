@@ -98,7 +98,7 @@ namespace Project3
         protected readonly uint pwdLength;
         protected bool isObjectActive;
         protected uint countValidation;
-        protected const uint DEFAULT_PWD_Length = 2;
+        protected const uint DEFAULT_PWD_Length = 4;
       
         public pwdCheck(uint length)
         {

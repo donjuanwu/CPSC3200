@@ -100,13 +100,11 @@ namespace Project3
         const int ARR_SIZE = 1;
         const int ARR_MULTIPLIER = 3;
         const int REDUCED_LENGTH = 1;
-        const string ASTERISK = "********";
+        const string ASTERISK = "***************";
         const string VALID_CHARS ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkl" +
             "mnopqrstuvwxyz0123456789#_<>!+*&@^=.?|\\";
         const string INVALID_CHARS = " ~(){}[]";
-       // const string MIXED_CHARS = "AB[CDEF~GHIJKLMNOPQ RSTUVWX)YZabcdefghijk]l" +
-         //   "m(nopqrs{tuvwxyz0123456789#_<>!+*&}@^=.?|\\";
-
+     
         static void Main(string[] args)
         {
             Random rand = new Random();
@@ -115,7 +113,9 @@ namespace Project3
             pwdCheck[] arrPwdObj = InitPwdObject(rand);
             TestPasswordLength(arrPwdObj, rand);
             TestForbiddenCharactersInPassword(arrPwdObj, rand);
-            TestToggleObject(arrPwdObj, rand);
+            TestToggleObject(arrPwdObj,rand);
+
+           // TestToggleObject(arrPwdObj, rand);
             //TestPwdClassWithValidPassword(arrPwdObj, rand);
             // TestPasswordLength(arrPwdObj, rand);
             // TestPwdClassWithInValidPassword(arrPwdObj, rand);
@@ -176,18 +176,33 @@ namespace Project3
             {
                 if (i < (augmentedArraySize) / ARR_MULTIPLIER)
                 {
+                    
+                    uint randPwdLength = (uint)rand.Next(RAND_MIN, RAND_MAX);
+
+                    arr_PwdObj[i] = new pwdCheck(randPwdLength);
                     Console.WriteLine(" Initialized {0} object at index: {1} ", ObjectName.pwdClass, i);
-                    arr_PwdObj[i] = new pwdCheck((uint)rand.Next(RAND_MIN, RAND_MAX));
+                    Console.WriteLine(" -password length = {0}", arr_PwdObj[i].GetPasswordLength());
+                    Console.WriteLine(" -object status: {0}", (arr_PwdObj[i].IsObjectActive() ? "active" : "inactive"));
+                    
                 }
                 else if (i >= (augmentedArraySize / ARR_MULTIPLIER) && i < (augmentedArraySize - ARR_SIZE))
                 {
-                    Console.WriteLine(" Initialized {0} object at index: {1} ",ObjectName.compundC, i);
-                    arr_PwdObj[i] = new compundC((uint)rand.Next(RAND_MIN, RAND_MAX), (uint)rand.Next(RAND_MIN, RAND_MAX));
+                    uint pwdLength = (uint)rand.Next(RAND_MIN, RAND_MAX);
+                    uint toggleLimit = (uint)rand.Next(RAND_MIN, RAND_MAX);
+                    arr_PwdObj[i] = new pwdCheck(pwdLength);
+                    arr_PwdObj[i] = new compundC(pwdLength,toggleLimit);
+                    Console.WriteLine(" Initialized {0} object at index: {1} ", ObjectName.compundC, i);
+                    Console.WriteLine(" -password length = {0}", pwdLength);
+                    Console.WriteLine(" -toggle cycle limit = {0}", toggleLimit);
+                    Console.WriteLine(" -object status: {0}", (arr_PwdObj[i].IsObjectActive() ? "active" : "inactive"));
                 }
                 else
                 {
-                    Console.WriteLine(" Initialized {0} object at index: {1} ",ObjectName.excessC, i);
-                    arr_PwdObj[i] = new pwdCheck((uint)rand.Next(RAND_MIN, RAND_MAX));
+                    uint pwdLength = (uint)rand.Next(RAND_MIN, RAND_MAX);
+                    arr_PwdObj[i] = new pwdCheck(pwdLength);
+                    Console.WriteLine(" Initialized {0} object at index: {1} ", ObjectName.excessC, i);
+                    Console.WriteLine(" -password length = {0}", pwdLength);
+                    Console.WriteLine(" -object status: {0}", (arr_PwdObj[i].IsObjectActive() ? "active" : "inactive"));
                 }
             }
             Console.WriteLine(ASTERISK + "END INITIALIZED PWDCLASS OBJECTS" + ASTERISK);
@@ -280,17 +295,17 @@ namespace Project3
                             if (i < (augmentedArraySize) / ARR_MULTIPLIER)
                             {
                                 Console.WriteLine(" Object {0} at index: {1}'s has forbidden character(s) ", ObjectName.pwdClass, i);
-                                Console.WriteLine("  rejected password: {0}", pWord);
+                                Console.WriteLine(" -rejected password: {0}", pWord);
                             }
                             else if (i >= (augmentedArraySize / ARR_MULTIPLIER) && i < (augmentedArraySize - ARR_SIZE))
                             {
                                 Console.WriteLine(" Object {0} at index: {1}'s has forbidden character(s) ", ObjectName.compundC, i);
-                                Console.WriteLine("  rejected password: {0}", pWord);
+                                Console.WriteLine(" -rejected password: {0}", pWord);
                             }
                             else
                             {
                                 Console.WriteLine(" Object {0} at index: {1}'s has forbidden character(s)", ObjectName.excessC, i);
-                                Console.WriteLine("  rejected password: {0}", pWord);
+                                Console.WriteLine(" -rejected password: {0}", pWord);
                             }
                         }
                     }
@@ -316,29 +331,24 @@ namespace Project3
                     string pWord = GenerateRandomValidString(rand);
                     obj[i].ValidatePassword(pWord);
                 }
-                string status = "inactive";
-                if (obj[i].IsObjectActive())
-                {
-                    status = "active";
-                }
-
+              
                 if (i < (augmentedArraySize) / ARR_MULTIPLIER)
                 {
                     Console.WriteLine(" Object {0} at index: {1} was toggled ", ObjectName.pwdClass, i);
-                    Console.WriteLine("  toggled at {0} requests.", toggleReached);
-                    Console.WriteLine("  updated status: {0}.", status);
+                    Console.WriteLine(" -toggled at {0} requests.", toggleReached);
+                    Console.WriteLine(" -updated status: {0}.", (obj[i].IsObjectActive() ? "active" : "inactive"));
                 }
                 else if (i >= (augmentedArraySize / ARR_MULTIPLIER) && i < (augmentedArraySize - ARR_SIZE))
                 {
                     Console.WriteLine(" Object {0} at index: {1} was toggled ", ObjectName.compundC, i);
-                    Console.WriteLine("  toggled at {0} requests.", toggleReached);
-                    Console.WriteLine("  updated status: {0}.", status);
+                    Console.WriteLine(" -toggled at {0} requests.", toggleReached);
+                    Console.WriteLine(" -updated status: {0}.", (obj[i].IsObjectActive() ? "active" : "inactive"));
                 }
                 else
                 {
                     Console.WriteLine(" Object {0} at index: {1} was toggled ", ObjectName.pwdClass, i);
-                    Console.WriteLine("  toggled at {0} requests.", toggleReached);
-                    Console.WriteLine("  updated status: {0}.", status);
+                    Console.WriteLine(" -toggled at {0} requests.", toggleReached);
+                    Console.WriteLine(" -updated status: {0}.", (obj[i].IsObjectActive() ? "active" : "inactive"));
                 }
             }
 
@@ -388,21 +398,21 @@ namespace Project3
                             if (i < (augmentedArraySize) / ARR_MULTIPLIER)
                             {
                                 Console.WriteLine(" {0} object at index: {1} password is invalid ", ObjectName.pwdClass, i);
-                                Console.WriteLine("  password:{0} doesn't meet length requirement", str);
-                                Console.WriteLine("   required length = {0}, password length = {1}", pwdLength, str.Length);
+                                Console.WriteLine(" -password:{0} doesn't meet length requirement", str);
+                                Console.WriteLine(" -required length = {0}, password length = {1}", pwdLength, str.Length);
 
                             }
                             else if (i >= (augmentedArraySize / ARR_MULTIPLIER) && i < (augmentedArraySize - ARR_SIZE))
                             {
                                 Console.WriteLine(" {0} object at index: {1} is invalid ", ObjectName.compundC, i);
-                                Console.WriteLine("  password:{0} doesn't meet length requirement", str);
-                                Console.WriteLine("   required length = {0}, password length = {1}", pwdLength, str.Length);
+                                Console.WriteLine(" -password:{0} doesn't meet length requirement", str);
+                                Console.WriteLine(" -required length = {0}, password length = {1}", pwdLength, str.Length);
                             }
                             else
                             {
                                 Console.WriteLine(" {0} object at index: {1} is invalid ", ObjectName.excessC, i);
-                                Console.WriteLine("  password:{0} doesn't meet length requirement", str);
-                                Console.WriteLine("   required length = {0}, password length = {1}", pwdLength, str.Length);
+                                Console.WriteLine(" -password:{0} doesn't meet length requirement", str);
+                                Console.WriteLine(" -required length = {0}, password length = {1}", pwdLength, str.Length);
                             }
                         }
                     }
