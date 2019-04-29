@@ -103,22 +103,24 @@ namespace Project3
         const string ASTERISK = "***************";
         const string VALID_CHARS ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkl" +
             "mnopqrstuvwxyz0123456789#_<>!+*&@^=.?|\\";
-        const string INVALID_CHARS = " ~(){}[]";
+        const string INVALID_CHARS = " ~(){}[]Æ»ØøÅåß¶";
         const int ONECYLE = 2;
+        const string NON_ASCII = "ÆæØøÅåß¶";
      
-        static void Main(string[] args)
+
+    static void Main(string[] args)
         {
             Random rand = new Random();
             ProgramIntro();
 
             pwdCheck[] arrPwdObj = InitPwdObject(rand);
            // TestPasswordLength(arrPwdObj, rand);
-           // TestForbiddenCharactersInPassword(arrPwdObj, rand);
+           TestForbiddenCharsInPwd(arrPwdObj, rand, NON_ASCII);
  
-            TestToggleObject(arrPwdObj,rand);
+           // TestToggleObject(arrPwdObj,rand);
           //  TestToggleObject(arrPwdObj, rand);
             //TestToggleObject(arrPwdObj, rand);
-             TestCheckPassword2(arrPwdObj, rand);
+           //  TestCheckPassword2(arrPwdObj, rand);
 
             // TestToggleObject(arrPwdObj, rand);
             //TestPwdClassWithValidPassword(arrPwdObj, rand);
@@ -192,6 +194,7 @@ namespace Project3
                 else if (i >= (augmentedArraySize / ARR_MULTIPLIER) && i < (augmentedArraySize - ARR_SIZE))
                 {
                     Console.WriteLine("");
+                   // randPwdLength = 4;
                     randPwdLength = (uint)rand.Next(RAND_MIN, RAND_MAX);
                     uint toggleCycle = (uint)rand.Next(RAND_MIN, RAND_MAX);
                     arr_PwdObj[i] = new compundC(randPwdLength, toggleCycle);
@@ -285,7 +288,7 @@ namespace Project3
                             if (i < (augmentedArraySize) / ARR_MULTIPLIER)
                             {
                                 Console.WriteLine(" Object {0} at index: {1}'s has forbidden character(s) ", ObjectName.pwdClass, i);
-                                Console.WriteLine(" -rejected password:{0}", pWord);
+                                Console.WriteLine(" -rejected password '{0}'", pWord);
                                 Console.WriteLine(" -object status: {0}", obj[i].IsObjectActive() ? "active" : "inactive");
                             }
                             else if (i >= (augmentedArraySize / ARR_MULTIPLIER) && i < (augmentedArraySize - ARR_SIZE))
@@ -294,7 +297,7 @@ namespace Project3
                                 if (obj[i].GetIsCharForbidden())
                                 {
                                     Console.WriteLine(" Object {0} at index: {1}'s has forbidden character(s) ", ObjectName.compundC, i);
-                                    Console.WriteLine(" -rejected password:{0}", pWord);
+                                    Console.WriteLine(" -rejected password '{0}'", pWord);
                                     Console.WriteLine(" -object status: {0}", obj[i].IsObjectActive() ? "active" : "inactive");
                                 }
                                 else
@@ -302,7 +305,7 @@ namespace Project3
                                     //check isrepeated, istoggle
                                     Console.WriteLine(" Object {0} at index: {1} is invalid ", ObjectName.compundC, i);
                                     Console.WriteLine(" -there is no repeated character", pWord);
-                                    Console.WriteLine(" -rejected password:{0}", pWord);
+                                    Console.WriteLine(" -rejected password '{0}'", pWord);
                                     Console.WriteLine(" -object status: {0}", obj[i].IsObjectActive() ? "active" : "inactive");
                                 }
 
@@ -310,7 +313,7 @@ namespace Project3
                             else
                             {
                                 Console.WriteLine(" Object {0} at index: {1}'s has forbidden character(s)", ObjectName.excessC, i);
-                                Console.WriteLine(" -rejected password:{0}", pWord);
+                                Console.WriteLine(" -rejected password '{0}'", pWord);
                                 Console.WriteLine(" -object status: {0}", obj[i].IsObjectActive() ? "active" : "inactive");
                             }
                         }
@@ -319,7 +322,7 @@ namespace Project3
                             if (i < (augmentedArraySize) / ARR_MULTIPLIER)
                             {
                                 Console.WriteLine(" {0} object at index: {1} password is invalid ", ObjectName.pwdClass, i);
-                                Console.WriteLine(" -password:{0} doesn't meet length requirement", pWord);
+                                Console.WriteLine(" -password '{0}' doesn't meet length requirement", pWord);
                                 Console.WriteLine(" -required length = {0}, password length = {1}", obj[i].GetPasswordLength(), pWord.Length);
                                 Console.WriteLine(" -object status: {0}", obj[i].IsObjectActive() ? "active" : "inactive");
 
@@ -327,14 +330,14 @@ namespace Project3
                             else if (i >= (augmentedArraySize / ARR_MULTIPLIER) && i < (augmentedArraySize - ARR_SIZE))
                             {
                                 Console.WriteLine(" {0} object at index: {1} is invalid ", ObjectName.compundC, i);
-                                Console.WriteLine(" -password:{0} doesn't meet length requirement", pWord);
+                                Console.WriteLine(" -password '{0}' doesn't meet length requirement", pWord);
                                 Console.WriteLine(" -required length = {0}, password length = {1}", obj[i].GetPasswordLength(), pWord.Length);
                                 Console.WriteLine(" -object status: {0}", obj[i].IsObjectActive() ? "active" : "inactive");
                             }
                             else
                             {
                                 Console.WriteLine(" {0} object at index: {1} is invalid ", ObjectName.excessC, i);
-                                Console.WriteLine(" -password:{0} doesn't meet length requirement", pWord);
+                                Console.WriteLine(" -password '{0}' doesn't meet length requirement", pWord);
                                 Console.WriteLine(" -required length = {0}, password length = {1}", obj[i].GetPasswordLength(), pWord.Length);
                                 Console.WriteLine(" -object status: {0}", obj[i].IsObjectActive() ? "active" : "inactive");
                             }
@@ -363,7 +366,7 @@ namespace Project3
                     if (i < (augmentedArraySize) / ARR_MULTIPLIER)
                     {
                         Console.WriteLine(" {0} object at index: {1} password is valid ", ObjectName.pwdClass, i);
-                        Console.WriteLine(" -password:{0} meet requirements", pWord);
+                        Console.WriteLine(" -password '{0}' meet requirements", pWord);
                         Console.WriteLine(" -required length = {0}, password length = {1}", obj[i].GetPasswordLength(), pWord.Length);
                         Console.WriteLine(" -contains no forbidden character(s)");
                         Console.WriteLine(" -object is {0}", obj[i].IsObjectActive() ? "active" : "inactive");
@@ -373,7 +376,7 @@ namespace Project3
                     {
 
                         Console.WriteLine(" {0} object at index: {1} password is valid ", ObjectName.compundC, i);
-                        Console.WriteLine(" -password:{0} meet requirements", pWord);
+                        Console.WriteLine(" -password '{0}' meet requirements", pWord);
                         Console.WriteLine(" -required length = {0}, password length = {1}", obj[i].GetPasswordLength(), pWord.Length);
                         Console.WriteLine(" -contains no forbidden character(s)");
                         Console.WriteLine(" -contains repeated character(s)");
@@ -382,7 +385,7 @@ namespace Project3
                     else
                     {
                         Console.WriteLine(" {0} object at index: {1} is invalid ", ObjectName.excessC, i);
-                        Console.WriteLine(" -password:{0} doesn't meet length requirement", pWord);
+                        Console.WriteLine(" -password '{0}' doesn't meet length requirement", pWord);
                         Console.WriteLine(" -required length = {0}, password length = {1}", obj[i].GetPasswordLength(), pWord.Length);
                     }
 
@@ -410,7 +413,7 @@ namespace Project3
                         if (cObj.ValidatePassword(pWord))
                         {
                             Console.WriteLine(" {0} object at index: {1} is valid ", ObjectName.excessC, i);
-                            Console.WriteLine(" -password:{0} has an integer at location {1}, " +
+                            Console.WriteLine(" -password '{0}' has an integer at location {1}, " +
                                 "has mixed case and has $", pWord, cObj.GetPasswordLength());
                             Console.WriteLine(" -object status: {0}", exStatus ? "active" : "inactive");
                             continue;
@@ -426,14 +429,14 @@ namespace Project3
                                     if (cObj.GetIsMixedCase())
                                     {
                                         Console.WriteLine(" {0} object at index: {1} is invalid ", ObjectName.excessC, i);
-                                        Console.WriteLine(" -password:{0} doesn't contain dollar sign symbol", pWord);
+                                        Console.WriteLine(" -password '{0}' doesn't contain dollar sign symbol", pWord);
                                         Console.WriteLine(" -object status: {0}", exStatus ? "active" : "inactive");
                                         continue;
                                     }
                                     else
                                     {
                                         Console.WriteLine(" {0} object at index: {1} is invalid ", ObjectName.excessC, i);
-                                        Console.WriteLine(" -password:{0} doesn't contain mixed case", pWord);
+                                        Console.WriteLine(" -password '{0}' doesn't contain mixed case", pWord);
                                         Console.WriteLine(" -object status: {0}", exStatus ? "active" : "inactive");
                                         continue;
                                     }
@@ -441,7 +444,7 @@ namespace Project3
                                 else
                                 {
                                     Console.WriteLine(" {0} object at index: {1} is invalid ", ObjectName.excessC, i);
-                                    Console.WriteLine(" -password:{0} doesn't contain an integer at location {1}",pWord, cObj.GetPasswordLength());
+                                    Console.WriteLine(" -password '{0}' doesn't contain an integer at location {1}",pWord, cObj.GetPasswordLength());
                                     Console.WriteLine(" -object status: {0}", exStatus ? "active" : "inactive");
                                     continue;
                                 }
@@ -449,7 +452,7 @@ namespace Project3
                             else
                             {
                                 Console.WriteLine(" {0} object at index: {1} is invalid ", ObjectName.excessC, i);
-                                Console.WriteLine(" -password:{0} doesn't meet length requirement", pWord);
+                                Console.WriteLine(" -password '{0}' doesn't meet length requirement", pWord);
                                 Console.WriteLine(" -required length = {0}, password length = {1}", cObj.GetPasswordLength(), pWord.Length);
                                 Console.WriteLine(" -object status: {0}", exStatus ? "active" : "inactive");
                                 continue;
@@ -481,7 +484,7 @@ namespace Project3
                             if (i < (augmentedArraySize) / ARR_MULTIPLIER)
                             {
                                 Console.WriteLine(" Object {0} at index: {1}'s has forbidden character(s) ", ObjectName.pwdClass, i);
-                                Console.WriteLine(" -rejected password:{0}", pWord);
+                                Console.WriteLine(" -rejected password '{0}'", pWord);
                                 Console.WriteLine(" -object status: {0}", obj[i].IsObjectActive() ? "active" : "inactive");
                             }
                             else if (i >= (augmentedArraySize / ARR_MULTIPLIER) && i < (augmentedArraySize - ARR_SIZE))
@@ -490,7 +493,7 @@ namespace Project3
                                 if (obj[i].GetIsCharForbidden())
                                 {
                                     Console.WriteLine(" Object {0} at index: {1}'s has forbidden character(s) ", ObjectName.compundC, i);
-                                    Console.WriteLine(" -rejected password:{0}", pWord);
+                                    Console.WriteLine(" -rejected password '{0}'", pWord);
                                     Console.WriteLine(" -object status: {0}", obj[i].IsObjectActive() ? "active" : "inactive");
                                 }
                                 else
@@ -498,7 +501,7 @@ namespace Project3
                                     //check isrepeated, istoggle
                                     Console.WriteLine(" Object {0} at index: {1} is invalid ", ObjectName.compundC, i);
                                     Console.WriteLine(" -there is no repeated character", pWord);
-                                    Console.WriteLine(" -rejected password:{0}", pWord);
+                                    Console.WriteLine(" -rejected password '{0}'", pWord);
                                     Console.WriteLine(" -object status: {0}", obj[i].IsObjectActive() ? "active" : "inactive");
                                 }
 
@@ -506,7 +509,7 @@ namespace Project3
                             else
                             {
                                 Console.WriteLine(" Object {0} at index: {1}'s has forbidden character(s)", ObjectName.excessC, i);
-                                Console.WriteLine(" -rejected password:{0}", pWord);
+                                Console.WriteLine(" -rejected password '{0}'", pWord);
                                 Console.WriteLine(" -object status: {0}", obj[i].IsObjectActive() ? "active" : "inactive");
                             }
                         }
@@ -515,7 +518,7 @@ namespace Project3
                             if (i < (augmentedArraySize) / ARR_MULTIPLIER)
                             {
                                 Console.WriteLine(" {0} object at index: {1} password is invalid ", ObjectName.pwdClass, i);
-                                Console.WriteLine(" -password:{0} doesn't meet length requirement", pWord);
+                                Console.WriteLine(" -password '{0}' doesn't meet length requirement", pWord);
                                 Console.WriteLine(" -required length = {0}, password length = {1}", obj[i].GetPasswordLength(), pWord.Length);
                                 Console.WriteLine(" -object status: {0}", obj[i].IsObjectActive() ? "active" : "inactive");
 
@@ -523,7 +526,7 @@ namespace Project3
                             else if (i >= (augmentedArraySize / ARR_MULTIPLIER) && i < (augmentedArraySize - ARR_SIZE))
                             {
                                 Console.WriteLine(" {0} object at index: {1} is invalid ", ObjectName.compundC, i);
-                                Console.WriteLine(" -password:{0} doesn't meet length requirement", pWord);
+                                Console.WriteLine(" -password '{0}' doesn't meet length requirement", pWord);
                                 Console.WriteLine(" -required length = {0}, password length = {1}", obj[i].GetPasswordLength(), pWord.Length);
                                 Console.WriteLine(" -object status: {0}", obj[i].IsObjectActive() ? "active" : "inactive");
                             }
@@ -531,7 +534,7 @@ namespace Project3
                             {
 
                                 Console.WriteLine(" {0} object at index: {1} is invalid ", ObjectName.excessC, i);
-                                Console.WriteLine(" -password:{0} doesn't meet length requirement", pWord);
+                                Console.WriteLine(" -password '{0}' doesn't meet length requirement", pWord);
                                 Console.WriteLine(" -required length = {0}, password length = {1}", obj[i].GetPasswordLength(), pWord.Length);
                                 Console.WriteLine(" -object status: {0}", obj[i].IsObjectActive() ? "active" : "inactive");
                             }
@@ -560,7 +563,7 @@ namespace Project3
                     if (i < (augmentedArraySize) / ARR_MULTIPLIER)
                     {
                         Console.WriteLine(" {0} object at index: {1} password is valid ", ObjectName.pwdClass, i);
-                        Console.WriteLine(" -password:{0} meet requirements", pWord);
+                        Console.WriteLine(" -password '{0}' meet requirements", pWord);
                         Console.WriteLine(" -required length = {0}, password length = {1}", obj[i].GetPasswordLength(), pWord.Length);
                         Console.WriteLine(" -contains no forbidden character(s)");
                         Console.WriteLine(" -object is {0}", obj[i].IsObjectActive() ? "active" : "inactive");
@@ -570,7 +573,7 @@ namespace Project3
                     {
 
                         Console.WriteLine(" {0} object at index: {1} password is valid ", ObjectName.compundC, i);
-                        Console.WriteLine(" -password:{0} meet requirements", pWord);
+                        Console.WriteLine(" -password '{0}' meet requirements", pWord);
                         Console.WriteLine(" -required length = {0}, password length = {1}", obj[i].GetPasswordLength(), pWord.Length);
                         Console.WriteLine(" -contains no forbidden character(s)");
                         Console.WriteLine(" -contains repeated character(s)");
@@ -579,7 +582,7 @@ namespace Project3
                     else
                     {
                         Console.WriteLine(" {0} object at index: {1} is invalid ", ObjectName.excessC, i);
-                        Console.WriteLine(" -password:{0} doesn't meet length requirement", pWord);
+                        Console.WriteLine(" -password '{0}' doesn't meet length requirement", pWord);
                         Console.WriteLine(" -required length = {0}, password length = {1}", obj[i].GetPasswordLength(), pWord.Length);
                     }
 
@@ -590,15 +593,19 @@ namespace Project3
             Console.WriteLine(ASTERISK + "END TEST PASSWORD" + ASTERISK);
         }
 
-        public static void TestForbiddenCharactersInPassword(pwdCheck[] obj, Random rand)
+        public static void TestForbiddenCharsInPwd(pwdCheck[] obj, Random rand, string strForbidden)
         {
+            char[] cForbidden = strForbidden.ToCharArray();
             Console.WriteLine(" ");
-            Console.WriteLine(ASTERISK + "BEGIN TEST FORBIDDEN CHARACTERS" + ASTERISK);
+            Console.WriteLine(ASTERISK + "BEGIN TEST PASSWORD WITH UPDATED FORBIDDEN CHARACTERS" + ASTERISK);
+            Console.WriteLine("Non ASCII forbidden characters = {0}", strForbidden );
+
             int augmentedArraySize = ARR_SIZE * ARR_MULTIPLIER;
             for (int i = 0; i < augmentedArraySize; i++)
             {
                 int pwdLength = obj[i].GetPasswordLength();
                 string pWord = GenRandStrWithPredefinedLen(rand, pwdLength);
+                obj[i].SetForbiddenCharacters(cForbidden);
                 if (!obj[i].ValidatePassword(pWord))
                 {
                     if (obj[i].IsObjectActive())
@@ -608,14 +615,14 @@ namespace Project3
 
                             if (i < (augmentedArraySize) / ARR_MULTIPLIER)
                             {
-                                Console.WriteLine(" Object {0} at index: {1}'s has forbidden character(s) ", ObjectName.pwdClass, i);
-                                Console.WriteLine(" -rejected password: {0}", pWord);
+                                Console.WriteLine(" {0} object at index {1} has forbidden character(s) ", ObjectName.pwdClass, i);
+                                Console.WriteLine(" -rejected password '{0}'", pWord);
                                 Console.WriteLine(" -object status: {0}", obj[i].IsObjectActive() ? "active" : "inactive");
                             }
                             else if (i >= (augmentedArraySize / ARR_MULTIPLIER) && i < (augmentedArraySize - ARR_SIZE))
                             {
-                                Console.WriteLine(" Object {0} at index: {1}'s has forbidden character(s) ", ObjectName.compundC, i);
-                                Console.WriteLine(" -rejected password: {0}", pWord);
+                                Console.WriteLine(" {0} object at index {1} has forbidden character(s) ", ObjectName.compundC, i);
+                                Console.WriteLine(" -rejected password '{0}'", pWord);
                                 Console.WriteLine(" -object status: {0}", obj[i].IsObjectActive() ? "active" : "inactive");
                             }
                             else
@@ -623,8 +630,8 @@ namespace Project3
                                 if (obj[i] is excessC)
                                 {
                                     excessC  c = (excessC)obj[i];
-                                    Console.WriteLine(" Object {0} at index: {1}'s has forbidden character(s)", ObjectName.excessC, i);
-                                    Console.WriteLine(" -rejected password: {0}", pWord);
+                                    Console.WriteLine(" {0} object at index {1} has forbidden character(s)", ObjectName.excessC, i);
+                                    Console.WriteLine(" -rejected password '{0}'", pWord);
                                     Console.WriteLine(" -object status: {0}", c.GetExObjectStatus() ? "active" : "inactive");
                                 }
                             }
@@ -632,7 +639,7 @@ namespace Project3
                     }
                 }
             }
-            Console.WriteLine(ASTERISK + "END TEST FORBIDDEN CHARACTERS" + ASTERISK);
+            Console.WriteLine(ASTERISK + "END TEST PASSWORD WITH UPDATED FORBIDDEN CHARACTERS" + ASTERISK);
          
         }
 
@@ -843,7 +850,7 @@ namespace Project3
                         if (pWord.Length >= obj[i].GetPasswordLength())
                         {
                             Console.WriteLine(" Object at index {0}'s password is invalid", i);
-                            Console.WriteLine("  password contains invalid character(s): {0}", pWord);
+                            Console.WriteLine("  password '{0}' contains invalid character(s)", pWord);
                         }
                         
                     }
@@ -872,7 +879,7 @@ namespace Project3
                             if (i < (augmentedArraySize) / ARR_MULTIPLIER)
                             {
                                 Console.WriteLine(" {0} object at index: {1} password is invalid ", ObjectName.pwdClass, i);
-                                Console.WriteLine(" -password:{0} doesn't meet length requirement", str);
+                                Console.WriteLine(" -password '{0}' doesn't meet length requirement", str);
                                 Console.WriteLine(" -required length = {0}, password length = {1}", pwdLength, str.Length);
                                 Console.WriteLine(" -object status: {0}", obj[i].IsObjectActive() ? "active" : "inactive");
 
@@ -880,7 +887,7 @@ namespace Project3
                             else if (i >= (augmentedArraySize / ARR_MULTIPLIER) && i < (augmentedArraySize - ARR_SIZE))
                             {
                                 Console.WriteLine(" {0} object at index: {1} is invalid ", ObjectName.compundC, i);
-                                Console.WriteLine(" -password:{0} doesn't meet length requirement", str);
+                                Console.WriteLine(" -password '{0}' doesn't meet length requirement", str);
                                 Console.WriteLine(" -required length = {0}, password length = {1}", pwdLength, str.Length);
                                 Console.WriteLine(" -object status: {0}", obj[i].IsObjectActive() ? "active" : "inactive");
                             }
@@ -891,14 +898,11 @@ namespace Project3
                                 {
                                     c = (excessC)obj[i];
                                     Console.WriteLine(" {0} object at index: {1} is invalid ", ObjectName.excessC, i);
-                                    Console.WriteLine(" -password:{0} doesn't meet length requirement", str);
+                                    Console.WriteLine(" -password '{0}' doesn't meet length requirement", str);
                                     Console.WriteLine(" -required length = {0}, password length = {1}", pwdLength, str.Length);
                                     Console.WriteLine(" -object status: {0}", c.GetExObjectStatus() ? "active" : "inactive");
                                 }
-                                //Console.WriteLine(" {0} object at index: {1} is invalid ", ObjectName.excessC, i);
-                                //Console.WriteLine(" -password:{0} doesn't meet length requirement", str);
-                                //Console.WriteLine(" -required length = {0}, password length = {1}", pwdLength, str.Length);
-                                //Console.WriteLine(" -object status: {0}", c.GetExObjectStatus() ? "active" : "inactive");
+                              
                             }
                         }
                     }
