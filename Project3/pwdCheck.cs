@@ -20,7 +20,8 @@ Design Decisions and Assumptions:
  - A default forbidden characters array will be initialized during constructor firing
  - The forbidden characters can be changed with a mutator
  - Private data members are exposed with accessors/mutators
-Private Data Dictionary
+
+DATA MEMBERS DICTIONARY:
 char[] charForBidden      - hold forbidden characters
 const int ASCII_NUM = 127 - indicate max value of ASCII
 readonly uint pwdLength   - hold P value

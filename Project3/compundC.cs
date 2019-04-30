@@ -28,7 +28,7 @@ Design Decisions and Assumptions:
  2.If not, pass the password to pwdCheck.ValidatePassword()
 If both steps above are true then return true
 
-Private Data Dictionary
+DATA MEMBERS DICTIONARY:
 uint countCompCRequest    - keep track of number of password request
 uint toggleMax            - max toggle limit
 bool isCompCLocked        - indicate object is maxed out at toggle on/off limit

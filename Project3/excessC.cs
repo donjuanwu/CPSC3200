@@ -12,56 +12,86 @@ OVERVIEW:
  - This class inherit from pwdCheck class
  - When this object is in the 'Off' state, it will acts like pwdCheck class
  - When this object is 'ON':
-   1. it requires the password Pth character be a digit
+   1. it requires the Pth character in the password to be a digit
    2. password is mixed case
    3. password contains a '$'
+- If these three conditions are valid then return true
+- Else, return false
+
 
  
 ---------------------------------------------------------------------------------------------
 Design Decisions and Assumptions:
- - K cycle value = pwdCheck pwdLength * toggledMax * 2
- - When toggled = K cycle limit then this class object cannot be toggled
-   the object status will be stayed static.
- - Evoking override ValidatePassword() will peform the following steps:
- 1.If this object is LOCKED
-    if Locked, return true
+ - Pth character is the required minimum length for a password defined during firing constructor
+ - If Pth length is less than 4, then assign 4 to Pth length.
+ - During firing constructor all data members will be initialized
+ - call the pwdCheck constructor and pass it the Pth lenght
      
- 2.If not, pass the password to pwdCheck.ValidatePassword()
-If both steps above are true then return true
 
-Private Data Dictionary
-uint countCompCRequest    - keep track of number of password request
-uint toggleMax            - max toggle limit
-bool isCompCLocked        - indicate object is maxed out at toggle on/off limit
-const int INIT_TOGGLE_MAX = 3;
-const int INIT_PASSWORD_LENGTH = 4;
-const uint ONECYCLE = 2;  
 
-------------------------------------------------------------------------------
+DATA MEMBERS DICTIONARY:
+private uint exPwdLength;         - keep track of excessC object length
+bool exActiveStatus { get; set; } - keept rack of excessC object status
+bool isInteger;                   - keep track of password contains a digit
+bool isMixedCase;                 - keep track of password contains mixed case
+const uint INIT_PASSWORD_LENGTH = 4;
+const uint ASCII_ZERO = 0;
+const uint ASCII_NINE = 9;
+const char DOLLAR_SIGN = '$'; 
+
+----------------------------------------------------------------------------------
 INTERFACE INVARIANTS:
-IsObjectLocked()
- - Validate a password
- - If return true if object is not locked and password meets all requirements
+override ValidatePassword()
+- Determine if password meet requirements
+- If yes, return true
+- Else, return false
 
-GetLockedStatus()
-- accessor to return object locked status
+GetExObjectStatus()
+- accessor return object status
 
----------------------------------------------------------------------------------
+GetIsInteger()
+- accessor return is password contain an integer
+
+GetIsMixedCase()
+- accessor return is password contains mixed case
+
+----------------------------------------------------------------------------------
 IMPLEMENTATION INVARIANTS:
-IsObjectLocked()
-- Invoking this function will increment the countCompundC password request.
-- countCompundC will be check agains the max K toggled cycle.
-- The max K toggled cycle is derived by (pwdCheck pwdLength * toggledMax * 2)
-- If countCompundC eqauls max K toggled cycle, this object will be LOCKED forever
-- Once the object is LOCKED, the password will always be returned false
-- When object is not LOCKED, then password requirement will follow pwdCheck rules 
-  and password must contain a repeated character
+ValidatePassword()
+- Determine if object is ON/OFF
+- If ON call helper function IsPasswordValid(). Password validation will be on 
+these conditions:
+1. Password contains an integer
+2. Password contains mixedcase
+3. Password contains dollar sign
+Return true if all conditions are met
+- If OFF, then call base.ValidatePassword(). Password validation will depend on 
+base validation conditions.
+Return result from base validation to calling function
 
-IsRepeatedChar()
-- helper function to return if password contains a repeated character
+IsPasswordValid()
+- invoke this function when object status is ON
+- this function will call three helper functions to validate if password is valid
+- called helper functions in the following orders:
+1. IsInteger()
+2. IsStringMixedCase()
+3. IsDollarSign
 
-GetLockedStatus()
-- helpfer function to object locked status
+IsInteger()
+- helper function to determine if password contain an integer
+- if true, update isInteger variable
+
+
+IsStringMixedCase()
+- helper function to determine if password has mixed case
+- if true, update isMixedCase variable
+
+IsDollarSign()
+- helper to determine if password contains $ sign
+
+GetIsMixedCase()
+- accessor return password has mixed case
+
 ----------------------------------------------------------------------------------     
 CLASS INVARIANTS:
 Return true when password meets following requirements:
@@ -71,9 +101,8 @@ Return true when password meets following requirements:
 
 ----------------------------------------------------------------------------------
 -- WHEN     WHO     WHAT
-   4/20/19	DD      Created compundC.cs  
-   4/22/19  DD      Added IsRepeatedChar()
-                    - Check repeated characters
+   4/25/19	DD      Created excessC.cs  
+   4/26/19  DD      Added IsInteger(), IsMixedCase (), IsDollarSign()
    4/29/19  DD      Added comments
 */
 
@@ -86,7 +115,7 @@ namespace Project3
 {
     class excessC : pwdCheck
     {
-        private uint cPwdLength;
+        private uint exPwdLength;
         public bool exActiveStatus { get; set; }
         private bool isInteger;
         private bool isMixedCase;
@@ -101,15 +130,15 @@ namespace Project3
             {
                 length = INIT_PASSWORD_LENGTH;
             }
-            cPwdLength = length;
+            exPwdLength = length;
             exActiveStatus = isOn;
             isInteger = false;
             isMixedCase = false;
 
         }
 
-        //PRE :
-        //POST: 
+        //PRE : Object status is assigned
+        //POST: N/A
         public override bool ValidatePassword(string pwd)
         {
            
@@ -121,17 +150,21 @@ namespace Project3
             return base.ValidatePassword(pwd);
         }
 
+        //PRE : N/A
+        //POST: N/A
         private bool IsPasswordValid(string str)
         {
 
             return IsInteger(str) && IsStringMixedCase(str) && IsDollarSign(str);
         }
 
+        //PRE : N/A
+        //POST: N/A
         private bool IsInteger(string str)
         {
-            if (str.Length >= cPwdLength)
+            if (str.Length >= exPwdLength)
             {
-              if (char.IsDigit(str[(int)cPwdLength - 1]))
+              if (char.IsDigit(str[(int)exPwdLength - 1]))
                {
                     isInteger = true;
                     return true;
@@ -141,6 +174,8 @@ namespace Project3
             return false;
         }
 
+        //PRE : N/A
+        //POST: N/A
         private bool IsStringMixedCase(string str)
         {
             
@@ -161,6 +196,8 @@ namespace Project3
             return false;
         }
 
+        //PRE : N/A
+        //POST: N/A
         private bool IsDollarSign(string str)
         {
             foreach (char c in str)
@@ -171,15 +208,22 @@ namespace Project3
             return false;
         }
 
+        //PRE : Object status is assigned
+        //POST: N/A
         public bool GetExObjectStatus()
         {
             return exActiveStatus;
         }
+
+        //PRE : isInteger variable is already assigned
+        //POST: N/A
         public bool GetIsInteger()
         {
             return isInteger;
         }
 
+        //PRE : isMixedCase variable is already assigned
+        //POST: N/A
         public bool GetIsMixedCase()
         {
             return isMixedCase;
