@@ -1,9 +1,6 @@
 #include "pwdCheck.h"
 
 
-using namespace std;
-
-
 pwdCheck::pwdCheck(unsigned int length)
 {
 	if (length < DEFAULT_PWD_LENGTH)
@@ -19,14 +16,14 @@ pwdCheck::pwdCheck(unsigned int length)
 	
 }
 
-bool pwdCheck::ValidatePassword(string strAlphaNumeric)
+bool pwdCheck::ValidatePassword(string strAlphaNumeric) 
 {
 	ToggleObject();
 	if (isActive)
 	{
 		if (IsPasswordLength(strAlphaNumeric))
 		{
-			
+			return IsForbiddenCharacter(strAlphaNumeric);
 		}
 	}
 	return false;
@@ -69,16 +66,43 @@ bool pwdCheck::IsPasswordLength(string word)
 
 bool pwdCheck::IsForbiddenCharacter(string strPwd)
 {
-	//	string characters = ""
-	//	charForbidden[] = { ' ', '~', '(', ')', '{', '}', '[', ']' };
-	
+	for (int i = 0; i < strPwd.length(); i++)
+	{
+		for (int j = 0; j < strForBidden.length(); j++)
+		{
+			if (((int)strPwd[i] == (int)strForBidden[j]) || ((int)strPwd[i] > ASCII_NUM))
+			{
+				isCharForbidden = true;
+				return true;
+			}
+		}
+	}
 }
 
-void pwdCheck::InitForBiddenChar()
+int pwdCheck::GetPasswordLength()
 {
-	
+	return (int)pwdLength;
 }
 
+bool pwdCheck::GetObjectStatus()
+{
+	return isActive;
+}
+
+bool pwdCheck::GetIsCharForbidden()
+{
+	return isCharForbidden;
+}
+
+void pwdCheck::SetForbiddenCharacters(string newCharacters)
+{
+	strForBidden = newCharacters;
+}
+
+int pwdCheck::GetASCIINumber()
+{
+	return ASCII_NUM;
+}
 
 pwdCheck::~pwdCheck()
 {

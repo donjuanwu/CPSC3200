@@ -4,35 +4,36 @@
 
 #ifndef PWDCHECK_H
 #define PWDCHECK_H
-
+using namespace std;
 
 class pwdCheck
 {
-public:
-	pwdCheck(unsigned int length);
-
-	bool ValidatePassword(string strAlphaNumeric);
-	bool IsPasswordLength(string word);
-	
-
-	~pwdCheck();
-
-
 
 private:
-	char* charForbidden;
 	const int ASCII_NUM = 127;
 	unsigned int pwdLength;
 	bool isActive;
 	bool isCharForbidden;
 	unsigned int countValidation;
 	const unsigned int DEFAULT_PWD_LENGTH = 4;
-	const unsigned int DEFAULT_ARRAY_CHAR_LENGTH = 8;
 	string strForBidden;
 
 	void ToggleObject();
 	bool IsForbiddenCharacter(string strPwd);
-	void InitForBiddenChar();
+
+protected:
+	int GetASCIINumber();
+
+public:
+	pwdCheck(unsigned int length);
+	~pwdCheck();
+
+	bool virtual ValidatePassword(string strAlphaNumeric);
+	bool IsPasswordLength(string word);
+	int GetPasswordLength();
+	bool GetObjectStatus();
+	bool GetIsCharForbidden();
+	void SetForbiddenCharacters(string newCharacters);
 
 };
 

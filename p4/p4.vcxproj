@@ -75,9 +75,13 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClInclude Include="flip.h" />
+    <ClInclude Include="flipPwdCheck.h" />
     <ClInclude Include="pwdCheck.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="flip.cpp" />
+    <ClCompile Include="flipPwdCheck.cpp" />
     <ClCompile Include="p4.cpp" />
     <ClCompile Include="pwdCheck.cpp" />
   </ItemGroup>

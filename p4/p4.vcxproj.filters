@@ -12,6 +12,12 @@
     <ClInclude Include="pwdCheck.h">
       <Filter>headers</Filter>
     </ClInclude>
+    <ClInclude Include="flip.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="flipPwdCheck.h">
+      <Filter>headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pwdCheck.cpp">
@@ -20,5 +26,9 @@
     <ClCompile Include="p4.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="flip.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="flipPwdCheck.cpp" />
   </ItemGroup>
 </Project>
