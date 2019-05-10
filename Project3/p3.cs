@@ -41,6 +41,7 @@ Design Decisions and Assumptions:
 - This design applies to compundC
   Each toggle = K cycle * 2
   Max validation = password length * K cycle * 2
+- Initialization of excessC object status is inactive.
 
 
 DATA MEMBERS DICTIONARY:
