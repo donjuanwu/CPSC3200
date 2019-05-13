@@ -1,8 +1,17 @@
+/*
+-- Developer    : Don Dang
+-- Project      : Project 4
+-- Instructor   : Dr. Dingle
+-- File Name    : flip.h
+-- File Version : 1.0
+-- Due Date	    : 5/15/2019
+-- Course Name  : CPSC 3200
+*/
+#ifndef FLIP_H
+#define FLIP_H
 #include <stdlib.h>
 #include <string>
 
-
-#ifndef FLIP_H
 using namespace std;
 
 class flip
@@ -10,20 +19,13 @@ class flip
 
 private:
 	string strPhrase;
-	const string DEFAULT_PASSWORD = "password";
-	
-
 public:
+
 	flip(string password);
-	~flip();
-
-
 	string flipChar(unsigned int index);
 
 };
 
-
-#define FLIP_H
 #endif
 
 

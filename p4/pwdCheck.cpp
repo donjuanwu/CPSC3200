@@ -1,5 +1,14 @@
-#include "pwdCheck.h"
+/*
+-- Developer    : Don Dang
+-- Project      : Project 4
+-- Instructor   : Dr. Dingle
+-- File Name    : pwdCheck.cpp
+-- File Version : 1.0
+-- Due Date	    : 5/15/2019
+-- Course Name  : CPSC 3200
+*/
 
+#include "pwdCheck.h"
 
 pwdCheck::pwdCheck(unsigned int length)
 {
@@ -16,6 +25,7 @@ pwdCheck::pwdCheck(unsigned int length)
 	
 }
 
+
 bool pwdCheck::ValidatePassword(string strAlphaNumeric) 
 {
 	ToggleObject();
@@ -23,7 +33,7 @@ bool pwdCheck::ValidatePassword(string strAlphaNumeric)
 	{
 		if (IsPasswordLength(strAlphaNumeric))
 		{
-			return IsForbiddenCharacter(strAlphaNumeric);
+			return !IsForbiddenCharacter(strAlphaNumeric);
 		}
 	}
 	return false;
@@ -60,15 +70,15 @@ void pwdCheck::ToggleObject()
 
 bool pwdCheck::IsPasswordLength(string word)
 {
-	int count = word.length();
-	return (count >= pwdLength);
+	int count = (int)word.length();
+	return (count >= (int) pwdLength);
 }
 
 bool pwdCheck::IsForbiddenCharacter(string strPwd)
 {
-	for (int i = 0; i < strPwd.length(); i++)
+	for (int i = 0; i < (int)strPwd.length(); i++)
 	{
-		for (int j = 0; j < strForBidden.length(); j++)
+		for (int j = 0; j < (int)strForBidden.length(); j++)
 		{
 			if (((int)strPwd[i] == (int)strForBidden[j]) || ((int)strPwd[i] > ASCII_NUM))
 			{
@@ -77,6 +87,7 @@ bool pwdCheck::IsForbiddenCharacter(string strPwd)
 			}
 		}
 	}
+	return false;
 }
 
 int pwdCheck::GetPasswordLength()
@@ -104,7 +115,4 @@ int pwdCheck::GetASCIINumber()
 	return ASCII_NUM;
 }
 
-pwdCheck::~pwdCheck()
-{
 
-}

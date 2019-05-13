@@ -1,27 +1,33 @@
+/*
+-- Developer    : Don Dang
+-- Project      : Project 4
+-- Instructor   : Dr. Dingle
+-- File Name    : flipp.cpp
+-- File Version : 1.0
+-- Due Date	    : 5/15/2019
+-- Course Name  : CPSC 3200
+*/
+
 #include "flip.h"
+
 
 flip::flip(string password) 
 {
-	if (password == " ")
-	{
-		password = DEFAULT_PASSWORD;
-	}
 	strPhrase = password;
 }
 
 string flip::flipChar(unsigned int flipIndex)
 {
-	int strLen = strPhrase.length();
-	string modPassword;
+	unsigned int strLen = (unsigned int)strPhrase.length();
 
 	if (flipIndex > strLen)
 	{
-		return strPhrase;
+		flipIndex = strLen;
 	}
 
 	char* cArray = new char[strLen];
 
-	for (int i = 0; i < strLen; i++)
+	for (unsigned int i = 0; i < strLen; i++)
 	{
 		if (flipIndex > 0)
 		{
@@ -37,10 +43,6 @@ string flip::flipChar(unsigned int flipIndex)
 	delete[] cArray;
 	return strFlipped;
 
-
 }
 
-flip::~flip()
-{
 
-}

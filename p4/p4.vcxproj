@@ -75,12 +75,20 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClInclude Include="compundC.h" />
+    <ClInclude Include="excessC.h" />
     <ClInclude Include="flip.h" />
+    <ClInclude Include="flipCompundC.h" />
+    <ClInclude Include="flipExcessC.h" />
     <ClInclude Include="flipPwdCheck.h" />
     <ClInclude Include="pwdCheck.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="compundC.cpp" />
+    <ClCompile Include="excessC.cpp" />
     <ClCompile Include="flip.cpp" />
+    <ClCompile Include="flipCompundC.cpp" />
+    <ClCompile Include="flipExcessC.cpp" />
     <ClCompile Include="flipPwdCheck.cpp" />
     <ClCompile Include="p4.cpp" />
     <ClCompile Include="pwdCheck.cpp" />

@@ -18,6 +18,18 @@
     <ClInclude Include="flipPwdCheck.h">
       <Filter>headers</Filter>
     </ClInclude>
+    <ClInclude Include="excessC.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="flipExcessC.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="compundC.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="flipCompundC.h">
+      <Filter>headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pwdCheck.cpp">
@@ -29,6 +41,20 @@
     <ClCompile Include="flip.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="flipPwdCheck.cpp" />
+    <ClCompile Include="compundC.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="excessC.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="flipCompundC.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="flipExcessC.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="flipPwdCheck.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
