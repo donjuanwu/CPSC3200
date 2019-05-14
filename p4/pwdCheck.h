@@ -33,8 +33,8 @@ protected:
 	int GetASCIINumber();
 
 public:
-
-	pwdCheck(unsigned int length = DEFAULT_PWD_LENGTH);
+	pwdCheck();
+	pwdCheck(unsigned int length);
 
 	bool virtual ValidatePassword(string strAlphaNumeric);
 	bool IsPasswordLength(string word);

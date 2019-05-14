@@ -19,8 +19,9 @@ class flip
 
 private:
 	string strPhrase;
+	static const string DEFAULT_PASSWORD;
 public:
-
+	flip();
 	flip(string password);
 	string flipChar(unsigned int index);
 

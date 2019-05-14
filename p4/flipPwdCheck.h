@@ -20,7 +20,7 @@ using namespace std;
 class flipPwdCheck: public pwdCheck, public flip
 {
 public:
-
+	flipPwdCheck();
 	flipPwdCheck(unsigned int len, string password);
 	bool flipPwdCheckCharacter(unsigned int index);
 };

@@ -10,7 +10,12 @@
 
 #include "flip.h"
 
+const string flip::DEFAULT_PASSWORD = "password";
 
+flip::flip() 
+{ 
+	strPhrase = DEFAULT_PASSWORD;
+}
 flip::flip(string password) 
 {
 	strPhrase = password;

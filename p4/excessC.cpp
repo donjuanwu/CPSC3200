@@ -11,7 +11,13 @@
 
 #include "excessC.h"
 
-
+excessC::excessC() : pwdCheck() 
+{
+	exPwdLength = INIT_PASSWORD_LENGTH;
+	exActiveStatus = false;
+	isInteger = false;
+	isMixedCase = false;
+}
 excessC::excessC(unsigned int len, bool isOn) : pwdCheck(len) 
 {
 	if (len < INIT_PASSWORD_LENGTH)

@@ -9,8 +9,15 @@
 */
 
 #include "pwdCheck.h"
-
-pwdCheck::pwdCheck(unsigned int length)
+pwdCheck::pwdCheck()
+{
+	isActive = true;
+	pwdLength = DEFAULT_PWD_LENGTH;
+	countValidation = 0;
+	isCharForbidden = 0;
+	strForBidden = " ~(){}[]";
+}
+pwdCheck::pwdCheck(unsigned int length) //: pwdLength(DEFAULT_PWD_LENGTH)
 {
 	if (length < DEFAULT_PWD_LENGTH)
 	{
@@ -24,7 +31,6 @@ pwdCheck::pwdCheck(unsigned int length)
 	strForBidden = " ~(){}[]"; 
 	
 }
-
 
 bool pwdCheck::ValidatePassword(string strAlphaNumeric) 
 {

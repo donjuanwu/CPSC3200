@@ -91,34 +91,49 @@ Notes:
 using namespace std;
 
 void ProgramIntro();
-//flipPwdCheck* InitFlipPwdCheckObject();
+string GenerateRandomPassword(bool isValid);
 
 
-const int RAN_MIN = 10;
+void InitFlipPwdCheckObject(flipPwdCheck* obj);
+void TestFlipClass(flipPwdCheck* obj);
+void TestPwdCheckClass(flipPwdCheck* obj);
+
+void InitFlipExcessCObject(flipExcessC* obj);
+
+
+
+const int RAN_MIN = 2;
 const int RAN_MAX = 20;
 const int DEFAULT_ARR_SIZE = 3;
 const int ARR_MULTIPLIER = 3;
 const int REDUCED_LENGTH = 1;
-const string ASTERISK = "***************";
-const string CHARS1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkl";
-const string CHARS2 = "mnopqrstuvwxyz0123456789#_<>!+*&@^=.?|\\";
+const string ASTERISK = "******";
+const string VALID_CHARS1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkl";
+const string VALID_CHARS2 = "mnopqrstuvwxyz0123456789#_<>!+*&@^=.?|\\";
 const string INVALID_CHARS = " ~(){}[]∆ªÿ¯≈Âﬂ∂";
+const bool ISVALIDPWD = true;
 const int ONECYLE = 2;
 const string NON_ASCII = "∆Êÿ¯≈Âﬂ∂";
 
 
 int main()
 {
-//	srand(time(0));
-	//flipPwdCheck fpObj[DEFAULT_ARR_SIZE];
+	srand(static_cast<unsigned>(time(0)));
+
+  //flipPwdCheck fpObj[DEFAULT_ARR_SIZE];
+	//InitFlipPwdCheckObject(fpObj);
+	//TestFlipClass(fpObj);
+	//TestPwdCheckClass(fpObj);
+	
+	flipExcessC feObj[DEFAULT_ARR_SIZE];
+	InitFlipExcessCObject(feObj);
+
+
 
 
 	//ProgramIntro();
-/*****************PASSWORD AND  LENGTH TO BE USED FOR TEST****************/
-	string password = "ecli[";
-	int flipIndex = 4;
-	cout << "Sent in password: " << password << endl;
-	cout << "Length to reverse is: " << flipIndex << endl;
+
+
 	
 
 	//flipPwdCheck[] obj;
@@ -161,7 +176,7 @@ int main()
 	////////////////////////////////////////////////////////////////////////////////////
   /******************************TEST excessC class*********************************/
 	
-	excessC exObject(flipIndex, false);
+	/*excessC exObject(flipIndex, false);
 
 
 	bool isExCheck = exObject.ValidatePassword(password);
@@ -172,7 +187,7 @@ int main()
 	else
 	{
 		cout << "Password is not validated with exCessCheck" << endl;
-	}
+	}*/
 
 
 	return 0;
@@ -195,19 +210,141 @@ void ProgramIntro()
 
 }
 
-//
-//flipPwdCheck* InitFlipPwdCheckObject()
-//{
-//	//flipPwdCheck* obj[DEFAULT_ARR_SIZE];
-//
-//	flipPwdCheck fPwd(1, "test");
-//	flipPwdCheck obj[DEFAULT_ARR_SIZE]; // = new flipPwdCheck[DEFAULT_ARR_SIZE];
-//	string test = "test";
-//	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
-//	{
-//		//obj[i] = fPwd;
-//	}
-//
-//	return obj;
-//
-//}
+
+void InitFlipPwdCheckObject(flipPwdCheck* obj)
+{
+	cout << endl;
+	cout << ASTERISK + "Begin Initialize FLIP PWDCHECK OBJECTS" + ASTERISK << endl;
+	cout << " - Generated " << DEFAULT_ARR_SIZE << " FlipPwdCheck Objects" << endl;
+	cout << " - Store " << DEFAULT_ARR_SIZE << " FlipPwdCheck Objects in a stack array" << endl;
+	string pwd = GenerateRandomPassword(true);
+	int num; 
+	cout << " - Generated password " << "'" << pwd << "'" << " to pass to flip constructor" << endl;
+
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		obj[i] = flipPwdCheck(num, pwd);
+		cout << " - " << i + 1 << ")" << " random password length " << num << " to pass into pwdCheck constructor " << endl;
+	}
+	cout << ASTERISK + " End Initialize FLIP PWDCHECK OBJECTS" + ASTERISK << endl;
+
+}
+
+string GenerateRandomPassword(bool isValidPwd)
+{
+	string strGenPwd;
+	string strStringRepo = VALID_CHARS1 + VALID_CHARS2;
+	if (!isValidPwd)
+	{
+		strStringRepo = VALID_CHARS1 + VALID_CHARS2 + INVALID_CHARS;
+	}
+
+	unsigned int strLen = (unsigned)strStringRepo.length();
+	unsigned int pwdLen = (unsigned)rand() % RAN_MAX + RAN_MIN;
+	for (unsigned int i = 0; i < pwdLen; i++)
+	{
+		strGenPwd += strStringRepo[rand() % strLen + 1];
+	}
+
+	return strGenPwd;
+}
+
+void TestFlipClass(flipPwdCheck* obj)
+{
+	cout << endl;
+	cout << ASTERISK + "Begin test FLIP class" + ASTERISK << endl;
+
+	unsigned int rIndex;
+	string strFlipped;
+	for (unsigned int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		rIndex = rand() % RAN_MAX + RAN_MIN;
+		cout << "- flip beginning " << rIndex << " characters in password" << endl;
+
+		strFlipped = obj[i].flipChar(rIndex);
+		cout << " Flipped password " << "'" << strFlipped << "'" << endl;
+	}
+
+	cout << ASTERISK + "End test FLIP class" + ASTERISK << endl;
+}
+
+void TestPwdCheckClass(flipPwdCheck* obj)
+{
+	cout << endl;
+	cout << ASTERISK + "Begin test PwdCheck class" + ASTERISK << endl;
+
+	string strAlphaNum;
+	for (unsigned int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		
+		strAlphaNum = GenerateRandomPassword(true);
+		if (obj[i].ValidatePassword(strAlphaNum))
+		{
+			cout << strAlphaNum <<" is a valid password" << endl;
+		}
+		else
+		{
+			cout << strAlphaNum << " is not a valid password" << endl;
+			cout << "reason(s):" << endl;
+			if (obj[i].GetObjectStatus())
+			{
+			  //pwdCheck object is active
+				if ((int)strAlphaNum.length() < obj[i].GetPasswordLength())
+				{
+					cout << "- password length doesn't meet minimum requirement" << endl;
+					cout << "  minimum lenght: " << obj[i].GetPasswordLength() << endl;
+					cout << "  password length: " << strAlphaNum.length() << endl;
+				}
+				else
+				{
+					//password length is valid
+					if (obj[i].GetIsCharForbidden())
+					{
+						cout << "- password contains invalid character(s)" << endl;
+					}
+					
+				}
+			}
+			else
+			{
+				cout << "- pwdCheck object is not active " << endl;
+			}
+			
+		}
+		
+	}
+
+	cout << ASTERISK + "End test PwdCheck class" + ASTERISK << endl;
+}
+
+void InitFlipExcessCObject(flipExcessC* obj)
+{
+	cout << endl;
+	cout << ASTERISK + "Begin Initialize FLIP EXCESSC OBJECTS" + ASTERISK << endl;
+	cout << " - Generated " << DEFAULT_ARR_SIZE << " FlipExcessC Objects" << endl;
+	cout << " - Store " << DEFAULT_ARR_SIZE << " FlipExcessC Objects in a stack array" << endl;
+	string pwd = GenerateRandomPassword(true);
+	int num;
+	bool isActive;
+	cout << " - Generated password " << "'" << pwd << "'" << " to pass to flip constructor" << endl;
+
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << " - Random number " << "'" << num << "'" << " to pass to excessC constructor" << endl;
+		if (i % 2)
+		{
+			isActive = false;
+		}
+		else
+		{
+			isActive = true;
+		}
+		cout << " - Generated random status " << "'" << isActive << "'" << " to pass to excessC constructor" << endl;
+		obj[i] = flipExcessC(num, isActive, pwd);
+		cout << " - " << i + 1 << ")" << " random password length " << num << " to pass into pwdCheck constructor " << endl;
+	}
+	cout << ASTERISK + " End Initialize FLIP EXCESSC OBJECTS" + ASTERISK << endl;
+
+}

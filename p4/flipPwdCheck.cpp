@@ -10,6 +10,7 @@
 
 #include "flipPwdCheck.h"
 
+flipPwdCheck::flipPwdCheck() : pwdCheck(), flip() { }
 flipPwdCheck::flipPwdCheck(unsigned int length, string password) : pwdCheck(length), flip(password) { }
 
 bool flipPwdCheck::flipPwdCheckCharacter(unsigned int uIndex)

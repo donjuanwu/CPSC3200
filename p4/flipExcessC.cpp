@@ -9,7 +9,7 @@
 */
 
 #include "flipExcessC.h"
-
+flipExcessC::flipExcessC() : excessC(), flip() { }
 flipExcessC::flipExcessC(unsigned int len, bool isOn, string password) : excessC(len, isOn), flip(password){ }
 
 bool flipExcessC::flipExcessCCharacter(unsigned int uIndex)

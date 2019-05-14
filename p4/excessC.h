@@ -35,7 +35,9 @@ private:
 	bool IsDollarSign(string str);
 
 public:
-	excessC(unsigned int len = INIT_PASSWORD_LENGTH, bool isOn = false);
+	excessC();
+	excessC(unsigned int len, bool isOn);
+	//excessC(unsigned int len = INIT_PASSWORD_LENGTH, bool isOn = false);
 	bool ValidatePassword(string pwd);
 	bool GetExObjectStatus();
 	bool GetIsInteger();

@@ -20,6 +20,7 @@ using namespace std;
 class flipExcessC: public excessC, public flip
 {
 public:
+	flipExcessC();
 	flipExcessC(unsigned int len, bool isOn, string password);
 	bool flipExcessCCharacter(unsigned int uIndex);
 };
