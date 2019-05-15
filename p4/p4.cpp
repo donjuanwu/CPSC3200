@@ -77,8 +77,9 @@ Notes:
 	 
 */
 
-#include <iostream>
+
 #include <stdlib.h> /*srand, rand*/
+#include <iostream>
 
 #include "pwdCheck.h"
 #include "flip.h"
@@ -96,17 +97,22 @@ string GenerateRandomPassword(bool isValid);
 
 void InitFlipPwdCheckObject(flipPwdCheck* obj);
 void TestFlipClass_With_FlipPwdCheck(flipPwdCheck* obj);
-void TestPwdCheckClass_With_FlipPwdCheck(flipPwdCheck* obj);
+//void TestPwdCheckClass_With_FlipPwdCheck(flipPwdCheck* obj);
 void TestMixedPassword_With_FlipPwdCheck(flipPwdCheck* obj);
+void TestToggle_With_FlipPwdClass(flipPwdCheck* obj);
 
 void InitFlipExcessCObject(flipExcessC* obj);
 void TestExcessClass_With_FlipExcessClass(flipExcessC* obj);
-void TestFlipClass_With_FlipExcessClass(flipExcessC* obj);
+//void TestFlipClass_With_FlipExcessClass(flipExcessC* obj);
 void TestMixedPassword_With_FlipExcessClass(flipExcessC* obj);
+void TestsToggle_With_FlipExcessCClass(flipExcessC* obj);
+
+
 
 void InitFlipCompundCObject(flipCompundC* obj);
 void TestFlipClass_With_FlipCompundCClass(flipCompundC* obj);
-void TestCompundCClass_With_FlipCompundCClass(flipCompundC* obj);
+//void TestCompundCClass_With_FlipCompundCClass(flipCompundC* obj);
+void TestMixedPassword_With_FlipCompundClass(flipCompundC* obj);
 
 
 const int RAN_MIN = 2;
@@ -117,7 +123,7 @@ const int REDUCED_LENGTH = 1;
 const string ASTERISK = "******";
 const string VALID_CHARS1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkl";
 const string VALID_CHARS2 = "mnopqrstuvwxyz0123456789#_<>!+*&@^=.?|$";
-const string INVALID_CHARS = " ~(){}[]"; // ∆ªÿ¯≈Âﬂ∂";
+const string INVALID_CHARS = " ~(){}[]"; 
 const bool ISVALIDPWD = true;
 const int ONECYLE = 2;
 const string NON_ASCII = "∆Êÿ¯≈Âﬂ∂";
@@ -131,20 +137,23 @@ int main()
 
  // flipPwdCheck fPObj[DEFAULT_ARR_SIZE];
 	//InitFlipPwdCheckObject(fPObj);
-	//TestFlipClass_With_FlipPwdCheck(fPObj);
-	//TestPwdCheckClass_With_FlipPwdCheck(fPObj);
+	////TestFlipClass_With_FlipPwdCheck(fPObj);
+	//////TestPwdCheckClass_With_FlipPwdCheck(fPObj);
 	//TestMixedPassword_With_FlipPwdCheck(fPObj);
+	//TestToggle_With_FlipPwdClass(fPObj);
 
 	flipExcessC fEObj[DEFAULT_ARR_SIZE];
 	InitFlipExcessCObject(fEObj);
 	//TestFlipClass_With_FlipExcessClass(fEObj);
 	//TestExcessClass_With_FlipExcessClass(fEObj);
-	TestMixedPassword_With_FlipExcessClass(fEObj);
+	//TestMixedPassword_With_FlipExcessClass(fEObj);
+	TestsToggle_With_FlipExcessCClass(fEObj);
 
 	//flipCompundC fCObj[DEFAULT_ARR_SIZE];
 	//InitFlipCompundCObject(fCObj);
 	//TestFlipClass_With_FlipCompundCClass(fCObj);
-	//TestCompundCClass_With_FlipCompundCClass(fCObj);
+	////TestCompundCClass_With_FlipCompundCClass(fCObj);
+	//TestMixedPassword_With_FlipCompundClass(fCObj);
 	
 
 
@@ -289,51 +298,52 @@ void TestFlipClass_With_FlipPwdCheck(flipPwdCheck* obj)
 	cout << ASTERISK + "End Test Flip Password With FlipPwdCheck Object" + ASTERISK << endl;
 }
 
-void TestPwdCheckClass_With_FlipPwdCheck(flipPwdCheck* obj)
-{
-	cout << endl;
-	cout << ASTERISK + "Begin Validate Password Length With FlipPwdCheck Object" + ASTERISK << endl;
-	cout << " - Passed in password has no forbidden characters" + ASTERISK << endl;
-
-	string strAlphaNum;
-	for (unsigned int i = 0; i < DEFAULT_ARR_SIZE; i++)
-	{
-		
-		strAlphaNum = GenerateRandomPassword(true);
-		if (obj[i].ValidatePassword(strAlphaNum))
-		{
-			cout << i + 1 << ")" << strAlphaNum <<" is a valid password" << endl;
-		}
-		else
-		{
-			cout << i + 1 << ")" << strAlphaNum << " is not a valid password" << endl;
-			cout << "reason(s):" << endl;
-			if (obj[i].GetObjectStatus())
-			{
-			  //pwdCheck object is active
-				if ((int)strAlphaNum.length() < obj[i].GetPasswordLength())
-				{
-					cout << "- password length doesn't meet minimum requirement" << endl;
-					cout << "  minimum lenght: " << obj[i].GetPasswordLength() << endl;
-					cout << "  password length: " << strAlphaNum.length() << endl;
-				}
-			}
-			else
-			{
-				cout << "- pwdCheck object is not active " << endl;
-			}
-			
-		}
-		
-	}
-
-	cout << ASTERISK + "End Validate Password Length With FlipPwdCheck Object" + ASTERISK << endl;
-}
+//void TestPwdCheckClass_With_FlipPwdCheck(flipPwdCheck* obj)
+//{
+//	cout << endl;
+//	cout << ASTERISK + "Begin Validate Password Length With FlipPwdCheck Object" + ASTERISK << endl;
+//	cout << " - Passed in password has no forbidden characters" + ASTERISK << endl;
+//
+//	string strAlphaNum;
+//	for (unsigned int i = 0; i < DEFAULT_ARR_SIZE; i++)
+//	{
+//		
+//		strAlphaNum = GenerateRandomPassword(true);
+//		if (obj[i].ValidatePassword(strAlphaNum))
+//		{
+//			cout << i + 1 << ")" << strAlphaNum <<" is a valid password" << endl;
+//		}
+//		else
+//		{
+//			cout << i + 1 << ")" << strAlphaNum << " is not a valid password" << endl;
+//			cout << "reason(s):" << endl;
+//			if (obj[i].GetObjectStatus())
+//			{
+//			  //pwdCheck object is active
+//				if ((int)strAlphaNum.length() < obj[i].GetPasswordLength())
+//				{
+//					cout << "- password length doesn't meet minimum requirement" << endl;
+//					cout << "  minimum lenght: " << obj[i].GetPasswordLength() << endl;
+//					cout << "  password length: " << strAlphaNum.length() << endl;
+//				}
+//			}
+//			else
+//			{
+//				cout << "- pwdCheck object is not active " << endl;
+//			}
+//			
+//		}
+//		
+//	}
+//
+//	cout << ASTERISK + "End Validate Password Length With FlipPwdCheck Object" + ASTERISK << endl;
+//}
 
 void TestMixedPassword_With_FlipPwdCheck(flipPwdCheck* obj)
 {
 	cout << endl;
 	cout << ASTERISK + "Begin Validate Mixed Password With FlipPwdCheck Object" + ASTERISK << endl;
+	cout << " - validate mixed password in PwdCheck class" << endl;
 	cout << " - Passed in password length is random" + ASTERISK << endl;
 	cout << " - Passed in password may contains forbidden characters" + ASTERISK << endl;
 
@@ -344,11 +354,30 @@ void TestMixedPassword_With_FlipPwdCheck(flipPwdCheck* obj)
 		strAlphaNum = GenerateRandomPassword(false);
 		if (obj[i].ValidatePassword(strAlphaNum))
 		{
-			cout << i + 1 << ")" << strAlphaNum << " is a valid password" << endl;
+
+			if (obj[i].GetObjectStatus())
+			{
+				cout << i + 1 << ") PwdCheck is active" << endl;
+			}
+			else
+			{
+				cout << i + 1 << ") PwdCheck is inactive" << endl;
+			}
+
+			cout << strAlphaNum << " is a valid password" << endl;
 		}
 		else
 		{
-			cout << i + 1 << ")" << strAlphaNum << " is not a valid password" << endl;
+			if (obj[i].GetObjectStatus())
+			{
+				cout << i + 1 << ") PwdCheck is active" << endl;
+			}
+			else
+			{
+				cout << i + 1 << ") PwdCheck is inactive" << endl;
+			}
+
+			cout << strAlphaNum << " is not a valid password" << endl;
 			cout << "reason(s):" << endl;
 			if (obj[i].GetObjectStatus())
 			{
@@ -359,7 +388,7 @@ void TestMixedPassword_With_FlipPwdCheck(flipPwdCheck* obj)
 					cout << "  minimum lenght: " << obj[i].GetPasswordLength() << endl;
 					cout << "  password length: " << strAlphaNum.length() << endl;
 				}
-				else
+				else 
 				{
 					if (obj[i].GetIsCharForbidden())
 					{
@@ -369,7 +398,7 @@ void TestMixedPassword_With_FlipPwdCheck(flipPwdCheck* obj)
 			}
 			else
 			{
-				cout << "- pwdCheck object is not active " << endl;
+				cout << "- pwdCheck object is  inactive " << endl;
 			}
 
 		}
@@ -457,136 +486,98 @@ void TestExcessClass_With_FlipExcessClass(flipExcessC* obj)
 	cout << ASTERISK + "End Validate Password Length With FlipExcess Object" + ASTERISK << endl;
 }
 
-void TestFlipClass_With_FlipExcessClass(flipExcessC* obj)
-{
-	cout << endl;
-	cout << ASTERISK + "Begin Test FLIP Password With FlipExcess Object" + ASTERISK << endl;
-	cout << "Attempt to flip password " << DEFAULT_ARR_SIZE << " times with " << DEFAULT_ARR_SIZE << " different indexes " << endl;
-
-	unsigned int rIndex;
-	string strFlipped;
-	for (unsigned int i = 0; i < DEFAULT_ARR_SIZE; i++)
-	{
-		rIndex = rand() % RAN_MAX + RAN_MIN;
-		cout << i + 1 << ") flip beginning " << rIndex << " characters in password" << endl;
-
-		strFlipped = obj[i].flipChar(rIndex);
-		cout << " Flipped password:" << strFlipped << endl;
-	}
-
-	cout << ASTERISK + "End Test FLIP Password With FlipExcess Object" + ASTERISK << endl;
-}
-
+//void TestFlipClass_With_FlipExcessClass(flipExcessC* obj)
+//{
+//	cout << endl;
+//	cout << ASTERISK + "Begin Test FLIP Password With FlipExcess Object" + ASTERISK << endl;
+//	cout << "Attempt to flip password " << DEFAULT_ARR_SIZE << " times with " << DEFAULT_ARR_SIZE << " different indexes " << endl;
+//
+//	unsigned int rIndex;
+//	string strFlipped;
+//	for (unsigned int i = 0; i < DEFAULT_ARR_SIZE; i++)
+//	{
+//		rIndex = rand() % RAN_MAX + RAN_MIN;
+//		cout << i + 1 << ") flip beginning " << rIndex << " characters in password" << endl;
+//
+//		strFlipped = obj[i].flipChar(rIndex);
+//		cout << " Flipped password:" << strFlipped << endl;
+//	}
+//
+//	cout << ASTERISK + "End Test FLIP Password With FlipExcess Object" + ASTERISK << endl;
+//}
 
 void TestMixedPassword_With_FlipExcessClass(flipExcessC* obj)
 {
 	cout << endl;
 	cout << ASTERISK + "Begin Validate Mixed Password With FlipExcessC Object" + ASTERISK << endl;
-	cout << "- validate mixed password in ExcessC class" << endl;
+	cout << " - validate mixed password in ExcessC class" << endl;
 	cout << " - Passed in password length is random" + ASTERISK << endl;
 	cout << " - Passed in password may contains forbidden characters" + ASTERISK << endl;
-
+	cout << endl;
 	string strAlphaNum;
 	for (unsigned int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 
 		strAlphaNum = GenerateRandomPassword(false);
+		if (obj[i].GetExObjectStatus())
+		{
+			cout << i + 1 << ") ExcessC object is active" << endl;
+		}
+		else
+		{
+			cout << i + 1 << ") ExcessC object is inactive" << endl;
+		}
+
+
 		if (obj[i].ValidatePassword(strAlphaNum))
 		{
-			if (obj[i].GetExObjectStatus())
-			{
-				cout << i + 1 << ") ExcessC object is active" << endl;
-			}
-			else
-			{
-				cout << i + 1 << ") ExcessC object is inactive" << endl;
-			}
-
 			cout << strAlphaNum << " is a valid password" << endl;
 		}
 		else
 		{
-			if (obj[i].GetExObjectStatus())
-			{
-				cout << i + 1 << ") ExcessC object is active" << endl;
-			}
-			else
-			{
-				cout << i + 1 << ") ExcessC object is inactive" << endl;
-			}
 			cout << strAlphaNum << " is not a valid password" << endl;
 			cout << "reason(s):" << endl;
 
 
-			if ((int)strAlphaNum.length() < obj[i].GetPasswordLength())
-			{
-				cout << "- password length doesn't meet minimum requirement" << endl;
-				cout << "  minimum lenght: " << obj[i].GetPasswordLength() << endl;
-				cout << "  password length: " << strAlphaNum.length() << endl;
-			}
-			else
+			if (obj[i].GetExObjectStatus())
 			{
 				if (!obj[i].GetIsInteger())
 				{
 					cout << "- password doesn't contain a digit at the end" << endl;
 				}
+				else if (!obj[i].GetIsMixedCase())
+				{
+					cout << "- password doesn't contain mixed case" << endl;
+				}
 				else
 				{
-					if (!obj[i].GetIsMixedCase())
-					{
-						cout << "- password doesn't contain mixed case" << endl;
-					}
-					else
-					{
-						cout << "- password doesn't contain '$' sign" << endl;
-					}
+					cout << "- password doesn't contain '$' sign" << endl;
 				}
-
-			}
-
-
-
 			
-			//if (obj[i].GetExObjectStatus())
-			//{
-			//	cout << i + 1 << ") ExcessC object is active" << endl;
-			//	cout << strAlphaNum << " is not a valid password" << endl;
-			//	cout << "reason(s):" << endl;
-			//	//ExcessC object is active
-			//	if ((int)strAlphaNum.length() < obj[i].GetPasswordLength())
-			//	{
-			//		cout << "- password length doesn't meet minimum requirement" << endl;
-			//		cout << "  minimum lenght: " << obj[i].GetPasswordLength() << endl;
-			//		cout << "  password length: " << strAlphaNum.length() << endl;
-			//	}
-			//	else
-			//	{
-			//		if (!obj[i].GetIsInteger())
-			//		{
-			//			cout << "- password doesn't contain a digit at the end" << endl;
-			//		}
-			//		else
-			//		{
-			//			if (!obj[i].GetIsMixedCase())
-			//			{
-			//				cout << "- password doesn't contain mixed case" << endl;
-			//			}
-			//			else
-			//			{
-			//				cout << "- password doesn't contain '$' sign" << endl;
-			//			}
-			//		}
-			//		
-			//	}
-			//}
-			//else
-			//{
-			//	cout << i + 1 << ") ExcessC object is inactive" << endl;
-			//	cout << strAlphaNum << " is not a valid password" << endl;
-			//	cout << "reason(s):" << endl;
-			//	cout << "- FlipExcessC object is not active " << endl;
-			//}
+			}
+			else
+			{
+				if (obj[i].GetObjectStatus())
+				{
+					//check pwd length
+					if ((int)strAlphaNum.length() < obj[i].GetPasswordLength())
+					{
+						cout << "- password length doesn't meet minimum requirement" << endl;
+						cout << "  minimum lenght: " << obj[i].GetPasswordLength() << endl;
+						cout << "  password length: " << strAlphaNum.length() << endl;
+					}
+					else if (obj[i].GetIsCharForbidden()) //check is forbidden password
+					{
+						cout << "- password contains forbidden character(s)" << endl;
+					}
 
+				}
+				else
+				{
+					cout << "- PwdCheck object is inactive" << endl;
+				}
+				
+			}
 		}
 
 	}
@@ -638,45 +629,203 @@ void TestFlipClass_With_FlipCompundCClass(flipCompundC* obj)
 
 	cout << ASTERISK + "End Test FLIP Password With FlipCompundC Object" + ASTERISK << endl;
 }
+//
+//void TestCompundCClass_With_FlipCompundCClass(flipCompundC* obj)
+//{
+//	cout << endl;
+//	cout << ASTERISK + "Begin Validate Password With FlipCompundC Object" + ASTERISK << endl;
+//	cout << "- Passed in password has no forbidden characters" << endl;
+//
+//	string strAlphaNum;
+//	for (unsigned int i = 0; i < DEFAULT_ARR_SIZE; i++)
+//	{
+//		strAlphaNum = GenerateRandomPassword(true);
+//		if (obj[i].ValidatePassword(strAlphaNum))
+//		{
+//			cout << i + 1 << ")" << strAlphaNum << " is a valid password" << endl;
+//		}
+//		else
+//		{
+//			cout << i + 1 << ")" << strAlphaNum << " is not a valid password" << endl;
+//			cout << "reason(s):" << endl;
+//			if (obj[i].GetObjectStatus())
+//			{
+//				//CompundC object is active
+//				if ((int)strAlphaNum.length() < obj[i].GetPasswordLength())
+//				{
+//					cout << "- password length doesn't meet minimum requirement" << endl;
+//					cout << "  minimum lenght: " << obj[i].GetPasswordLength() << endl;
+//					cout << "  password length: " << strAlphaNum.length() << endl;
+//				}
+//			
+//			}
+//			else
+//			{
+//				cout << "- CompundC object is not active " << endl;
+//			}
+//
+//		}
+//
+//	}
+//
+//	cout << ASTERISK + "End Validate Password With FlipCompundC Object" + ASTERISK << endl;
+//}
 
-
-void TestCompundCClass_With_FlipCompundCClass(flipCompundC* obj)
+void TestMixedPassword_With_FlipCompundClass(flipCompundC* obj)
 {
 	cout << endl;
-	cout << ASTERISK + "Begin Validate Password With FlipCompundC Object" + ASTERISK << endl;
-	cout << "- Passed in password has no forbidden characters" << endl;
-
+	cout << ASTERISK + "Begin Validate Mixed Password With FlipCompundC Object" + ASTERISK << endl;
+	cout << " - validate mixed password in CompundC class" << endl;
+	cout << " - Passed in password length is random" + ASTERISK << endl;
+	cout << " - Passed in password may contains forbidden characters" + ASTERISK << endl;
+	cout << endl;
 	string strAlphaNum;
 	for (unsigned int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
-		strAlphaNum = GenerateRandomPassword(true);
-		if (obj[i].ValidatePassword(strAlphaNum))
+
+		strAlphaNum = GenerateRandomPassword(false);
+		if (!obj[i].IsObjectLocked())
 		{
-			cout << i + 1 << ")" << strAlphaNum << " is a valid password" << endl;
+			cout << i + 1 << ") CompundC object is not locked" << endl;
+
+			if (obj[i].ValidatePassword(strAlphaNum))
+			{
+				cout << strAlphaNum << " is a valid password" << endl;
+			}
+			else //not valid password
+			{
+				cout << strAlphaNum << " is not a valid password" << endl;
+				cout << "reason(s):" << endl;
+
+				if (!obj[i].GetObjectStatus())
+				{
+					
+					cout << "- PwdCheck object is not active " << endl;
+				}
+				else
+				{
+					//PwdCheck is active
+					if ((int)strAlphaNum.length() < obj[i].GetPasswordLength())
+					{
+						cout << "- password length doesn't meet minimum requirement" << endl;
+						cout << "  minimum lenght: " << obj[i].GetPasswordLength() << endl;
+						cout << "  password length: " << strAlphaNum.length() << endl;
+					}
+					if (obj[i].GetIsCharForbidden())
+					{
+							cout << "- password contains forbidden characters" << endl;
+					}
+					if (!obj[i].IsRepeatedChar(strAlphaNum))
+					{
+						cout << "- password doesn't contain repeated characters" << endl;
+					}
+				}
+			}
+
+
 		}
 		else
 		{
-			cout << i + 1 << ")" << strAlphaNum << " is not a valid password" << endl;
-			cout << "reason(s):" << endl;
-			if (obj[i].GetObjectStatus())
-			{
-				//CompundC object is active
-				if ((int)strAlphaNum.length() < obj[i].GetPasswordLength())
-				{
-					cout << "- password length doesn't meet minimum requirement" << endl;
-					cout << "  minimum lenght: " << obj[i].GetPasswordLength() << endl;
-					cout << "  password length: " << strAlphaNum.length() << endl;
-				}
-			
-			}
-			else
-			{
-				cout << "- CompundC object is not active " << endl;
-			}
-
+			cout << i + 1 << ") CompundC object is locked" << endl;
 		}
+	}
+	cout << ASTERISK + "End Validate Mixed Password With FlipCompundC Object" + ASTERISK << endl;
+}
+
+//////////////////////////////TOGGLE WITH DISTINCT ARRAY OBJECTS///////////////////////////////////////
+void TestToggle_With_FlipPwdClass(flipPwdCheck* obj)
+{
+
+	cout << endl;
+	cout << ASTERISK + "Begin Test Toggle With FlipPwdCheck Objects" + ASTERISK << endl;
+	//cout << " - Passed in password may contains forbidden characters" + ASTERISK << endl;
+	//cout << endl;
+
+	string strPassword; 
+	bool pStatus;
+	int toggledMax;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		toggledMax = obj[i].GetPasswordLength();
+		pStatus = obj[i].GetObjectStatus();
+		cout << i + 1 << ") PwdCheck object at index " << i << " current status = " << (obj[i].GetObjectStatus() ? "active" : "inactive") << endl;
+		cout << " - password length " << toggledMax << endl;
+		while (pStatus == obj[i].GetObjectStatus())
+		{
+			strPassword = GenerateRandomPassword(false);
+			obj[i].ValidatePassword(strPassword);
+			
+		}
+
+		cout << " - pwdCheck object at index " << i << " was toggled" << endl;
+		cout << " - toggled at " << toggledMax << " requests " << endl; 
+		cout << " - updated status = " << (obj[i].GetObjectStatus() ? "active" : "inactive") << endl;
 
 	}
 
-	cout << ASTERISK + "End Validate Password With FlipCompundC Object" + ASTERISK << endl;
+	cout << endl;
+	cout << " Attempted to untoggled the previous PwdCheck objects...." << endl;
+	cout << endl;
+
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		toggledMax = obj[i].GetPasswordLength();
+		pStatus = obj[i].GetObjectStatus();
+		cout << i + 1 << ") PwdCheck object at index " << i << " current status = " << (obj[i].GetObjectStatus() ? "active" : "inactive") << endl;
+		cout << " - password length " << toggledMax << endl;
+		while (pStatus == obj[i].GetObjectStatus())
+		{
+			strPassword = GenerateRandomPassword(false);
+			obj[i].ValidatePassword(strPassword);
+
+		}
+
+		cout << " - pwdCheck object at index " << i << " was toggled" << endl;
+		cout << " - toggled at " << toggledMax << " requests " << endl;
+		cout << " - updated status = " << (obj[i].GetObjectStatus() ? "active" : "inactive") << endl;
+
+	}
+
+
+	cout << ASTERISK + "End Test Toggle With FlipPwdCheck Objects" + ASTERISK << endl;
 }
+
+
+void TestsToggle_With_FlipExcessCClass(flipExcessC* obj)
+{
+	cout << endl;
+	cout << ASTERISK + "Begin Test Toggle With FlipExcessC Objects" + ASTERISK << endl;
+	
+	bool exIsActive;
+	int cToggledLimit;
+	string strPassword;
+
+	for (unsigned int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		exIsActive = obj[i].GetExObjectStatus();
+
+		if (exIsActive)
+		{
+			cout << i + 1 << ") ExcessC object at index " << i << " current status = " << (exIsActive ? "active" : "inactive") << endl;
+			cout << " - by design when ExcessC status = " << (exIsActive ? "active" : "inactive") << endl;
+			cout << " - ExcessC object state can't be toggled " << endl;
+		}
+		else
+		{
+			cout << i + 1 << ") ExcessC object at index " << i << " current status = " << (exIsActive ? "active" : "inactive") << endl;
+			cToggledLimit = obj[i].GetPasswordLength();
+			while (exIsActive == obj[i].GetObjectStatus())
+			{
+				strPassword = GenerateRandomPassword(false);
+				obj[i].ValidatePassword(strPassword);
+			}
+			cout << " - ExcessC object at index " << i << " was toggled" << endl;
+			cout << " - toggled at " << cToggledLimit << " requests " << endl;
+			cout << " - updated status = " << (obj[i].GetObjectStatus() ? "active" : "inactive") << endl;
+		}
+	}
+
+	cout << ASTERISK + "End Test Toggle With FlipExcessC Objects" + ASTERISK << endl;
+}
+
+
