@@ -17,7 +17,7 @@ pwdCheck::pwdCheck()
 	isCharForbidden = 0;
 	strForBidden = " ~(){}[]";
 }
-pwdCheck::pwdCheck(unsigned int length) //: pwdLength(DEFAULT_PWD_LENGTH)
+pwdCheck::pwdCheck(unsigned int length = DEFAULT_PWD_LENGTH) //: pwdLength(DEFAULT_PWD_LENGTH)
 {
 	if (length < DEFAULT_PWD_LENGTH)
 	{

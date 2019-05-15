@@ -34,7 +34,7 @@ bool excessC::ValidatePassword(string pwd)
 {
 	if (exActiveStatus)
 	{
-		return IsPasswordLength(pwd);
+		return IsPasswordValid(pwd);
 	}
 	return pwdCheck::ValidatePassword(pwd);
 }

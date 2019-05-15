@@ -24,7 +24,8 @@ private:
 	const static unsigned int ONECYCLE = 2;
 
 public:
-	compundC(unsigned int len = INIT_PASSWORD_LENGTH, unsigned int toggleNum = INIT_TOGGLE_MAX);
+	compundC();
+	compundC(unsigned int len, unsigned int toggleNum);
 
 	bool ValidatePassword(string strPwd);
 	bool IsObjectLocked();

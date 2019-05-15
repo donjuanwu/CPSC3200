@@ -10,7 +10,7 @@
 
 
 #include "flipCompundC.h"
-
+flipCompundC::flipCompundC() : compundC(), flip() { }
 flipCompundC::flipCompundC(unsigned int len, unsigned int toggleNum, string password) : compundC(len, toggleNum), flip (password){ }
 
 bool flipCompundC::flipCompundCCharacter(unsigned int uIndex)

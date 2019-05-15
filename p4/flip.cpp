@@ -16,7 +16,7 @@ flip::flip()
 { 
 	strPhrase = DEFAULT_PASSWORD;
 }
-flip::flip(string password) 
+flip::flip(string password = DEFAULT_PASSWORD)
 {
 	strPhrase = password;
 }
@@ -24,28 +24,26 @@ flip::flip(string password)
 string flip::flipChar(unsigned int flipIndex)
 {
 	unsigned int strLen = (unsigned int)strPhrase.length();
-
+	string strFlipped;
 	if (flipIndex > strLen)
 	{
 		flipIndex = strLen;
 	}
 
-	char* cArray = new char[strLen];
-
 	for (unsigned int i = 0; i < strLen; i++)
 	{
 		if (flipIndex > 0)
 		{
-			cArray[i] = strPhrase[flipIndex - 1];
+			strFlipped += strPhrase[flipIndex - 1];
 			flipIndex--;
 		}
 		else
 		{
-			cArray[i] = strPhrase[i];
+			strFlipped += strPhrase[i];
 		}
 	}
-	string strFlipped = string(cArray);
-	delete[] cArray;
+
+
 	return strFlipped;
 
 }

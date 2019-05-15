@@ -18,6 +18,7 @@ using namespace std;
 class flipCompundC: public compundC, public flip
 {
 public:
+	flipCompundC();
 	flipCompundC(unsigned int len, unsigned int toggleNum, string password);
 	bool flipCompundCCharacter(unsigned int uIndex);
 };

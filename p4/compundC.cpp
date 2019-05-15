@@ -10,7 +10,14 @@
 
 #include "compundC.h"
 
-compundC::compundC(unsigned int len, unsigned int toggleNum) : pwdCheck(len)
+compundC::compundC() : pwdCheck()
+{
+	countCompCRequest = 0;
+	toggleMax = INIT_TOGGLE_MAX;
+	isCompCLocked = false;
+}
+
+compundC::compundC(unsigned int len, unsigned int toggleNum = INIT_TOGGLE_MAX) : pwdCheck(len)
 {
 	if (toggleMax < INIT_TOGGLE_MAX)
 	{

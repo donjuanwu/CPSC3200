@@ -489,8 +489,6 @@ namespace Project3
          
         }
 
-
-
         //Toggled compundC state until it's LOCKED
         //Toggled pwdCheck and execessC objects
         //PRE : pwdCheck, compundC and excessC are already initialized
