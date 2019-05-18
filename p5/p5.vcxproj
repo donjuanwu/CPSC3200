@@ -35,9 +35,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{fb29c96e-647e-4f67-980b-234852e24e70}</ProjectGuid>
+    <ProjectGuid>{d7b5ba62-d175-49b2-aebf-363a9480c15c}</ProjectGuid>
     <Keyword>Linux</Keyword>
-    <RootNamespace>p4</RootNamespace>
+    <RootNamespace>p5</RootNamespace>
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <ApplicationType>Linux</ApplicationType>
     <ApplicationTypeRevision>1.0</ApplicationTypeRevision>
@@ -75,29 +75,13 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
-    <ClInclude Include="compundC.h" />
-    <ClInclude Include="excessC.h" />
-    <ClInclude Include="flip.h" />
-    <ClInclude Include="flipCompundC.h" />
-    <ClInclude Include="flipExcessC.h" />
-    <ClInclude Include="flipPwdCheck.h" />
-    <ClInclude Include="pwdCheck.h" />
+    <ClInclude Include="factor.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="compundC.cpp" />
-    <ClCompile Include="excessC.cpp" />
-    <ClCompile Include="flip.cpp" />
-    <ClCompile Include="flipCompundC.cpp" />
-    <ClCompile Include="flipExcessC.cpp" />
-    <ClCompile Include="flipPwdCheck.cpp" />
-    <ClCompile Include="p4.cpp" />
-    <ClCompile Include="pwdCheck.cpp" />
+    <ClCompile Include="factor.cpp" />
+    <ClCompile Include="p5.cpp" />
   </ItemGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <AdditionalOptions>-Werror</AdditionalOptions>
-    </ClCompile>
-  </ItemDefinitionGroup>
+  <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>

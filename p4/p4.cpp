@@ -6,81 +6,84 @@
 -- File Version : 1.0
 -- Due Date	    : 5/15/2019
 -- Course Name  : CPSC 3200
-----------------------------------------------------------------------------
-OVERVIEW:
-	 This driver will sequentially perform the following test cases:
-	 1) InitPwdObject(rand)
-			- Create a heterogenous array and initialized pwdCheck, compundC and excessC objects
-			- Return the heterogenous arary back to the calling function
-	 2) TestPasswordLength(arrPwdObj, rand)
-			- Specific test to see if password meet the minimum password length defined during
-				firing each object constructor
-	 3) TestPwdClassWithInValidPassword(arrPwdObj, rand)
-			- Specific test to see if password has invalid characters. These invalid characters
-				were initialized during firing constructor of the pwdCheck
-	 4) TestCheckPassword(arrPwdObj, rand)
-			- General password test to determine if password meet each class specific password conditions
-	 5) TestForbiddenCharsInPwd(arrPwdObj, rand, NON_ASCII)
-			- Update the initialized forbidden characters during firing pwdCheck constructor with new
-				NON ASCII characters
-			- Determine if password contains any of these forbidden characters
-	 6) TestToggleObject(arrPwdObj,rand)
-			- Toggle the state of each initialized object in the heterogenous array.
 
+------------------------------------------------------------------------------------------------
+ATTENTION:
+Base on the project description I interrupted the "You should have arrays of distinct objects"
+as no heterogenous array is needed for this project. I found the requirement to implement heterogenous
+in the project right on the due date (5/15/19). I attempted to implement the heterogenous array 
+but unfortunately I didn't have enought time to complete it.
+
+
+OVERVIEW:
+	 This driver will sequentially perform the following non heterogenous test cases:
+	 1) InitFlipPwdCheckObject(flipPwdCheck* obj);
+      TestFlipClass_With_FlipPwdCheck(flipPwdCheck* obj);
+      TestMixedPassword_With_FlipPwdCheck(flipPwdCheck* obj);
+      TestToggle_With_FlipPwdClass(flipPwdCheck* obj);
+
+	 2) InitFlipExcessCObject(flipExcessC* obj);
+		  TestFlipClass_With_FlipExcessClass(flipExcessC* obj);
+      TestMixedPassword_With_FlipExcessClass(flipExcessC* obj);
+      TestsToggle_With_FlipExcessCClass(flipExcessC* obj);
+
+
+	 3) InitFlipCompundCObject(flipCompundC* obj);
+      TestFlipClass_With_FlipCompundCClass(flipCompundC* obj);
+      TestMixedPassword_With_FlipCompundClass(flipCompundC* obj);
+      TestsToggle_With_FlipCompundClass(flipCompundC* obj);
+
+  An attempt to test the Heterogenous array
+
+	 4)  flip* fObj;
+	     pwdCheck* pObj;
+	     InitializeHeterogenousArray(fObj, pObj)
+	     TestToggle_With_Heterogeneous(fObj, pObj);
 ---------------------------------------------------------------------------------
 Design Decisions and Assumptions:
+
 - All objects initialized with password length greater than 0
-- Password length is randomly generated using RAND_MIN & RAND_MAX values
-- Password is randomly generated from a predefined string using random generator
-- Objects are added to heterogenous array in group of 1/3.
-	First third is reserved for pwdCheck object
-	Second third is reserved for compundC object
-	Third third is reserved for excessC object
-- Down cast was used when need access to compundC and excessC object's public functions
+- All Password length is randomly generated using RAND_MIN & RAND_MAX values
+- All Password is randomly generated from a predefined string using random generator
+- There are 3 derived classes created from a combination of multiple inheritance
+- 1. FlipPwdCheck : Flip + PwdCheck
+- 2. FlipCompundC : Flip + CompundC
+- 3. FlipExcessC  : Flip + ExcessC
+- Each derived class is tested against it parent class
+- An array is created for derived class
+  Each array holds 3 of objects
+- There are 3 non heterogenous test cases
+1. FlipPwdCheck
+2. FlipExcess
+3. FlipCompundc
+- 1 Heterogenous test case
+  (unfortunately, there was enough time to complete the heterogenous test case)
 - Every invalid password validation will be displayed with failed reasons
 - This design applies to compundC
 	Each toggle = K cycle * 2
 	Max validation = password length * K cycle * 2
-- Initialization of excessC object status is inactive.
+- Initialization of excessC object active status is random.
+- Test case with valid password was omitted
+  See 
+	1. void TestPwdCheckClass_With_FlipPwdCheck(flipPwdCheck* obj);
+	2. void TestExcessClass_With_FlipExcessClass(flipExcessC* obj);
+	3. void TestCompundCClass_With_FlipCompundCClass(flipCompundC* obj);
 
-
-DATA MEMBERS DICTIONARY:
- enum ObjectName                       -- Use to display objet name
-				{
-						pwdClass = 0,
-						compundC = 1,
-						excessC = 2
-				};
-				const int RAND_MIN = 2          -- Minimum random value
-				const int RAND_MAX = 20;        -- Maximum random value
-				const int ARR_SIZE = 3;         -- Default array size
-				const int ARR_MULTIPLIER = 3;   -- Multiplier to increase array size
-				const int REDUCED_LENGTH = 1;   -- Decrement value
-				const string ASTERISK = "***************";  -- Prefix and suffix to aling caption
-				const string VALID_CHARS ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkl" +
-						"mnopqrstuvwxyz0123456789#_<>!+*&@^=.?|\\";
-				const string INVALID_CHARS = " ~(){}[]∆ªÿ¯≈Âﬂ∂";   -- Mixed invalid character
-				const int ONECYLE = 2;                             -- indicate one cycle
-				const string NON_ASCII = "∆Êÿ¯≈Âﬂ∂";               -- NON-ASCII characters
-
-
-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------
 Notes:
 -Run make file by doing the followings:
 1. Log into putty
 2. Go to directory where project files are stored -> projects -> p4
 3. Type "make main"
 4. Execute ./main
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 -- WHEN     WHO		WHAT
 	 5/12/19	DD  	Created p4.cpp
 	 
 */
 
-
-#include <stdlib.h> /*srand, rand*/
+#include <stdlib.h> 
 #include <iostream>
-
 #include "pwdCheck.h"
 #include "flip.h"
 #include "flipPwdCheck.h"
@@ -94,7 +97,6 @@ using namespace std;
 void ProgramIntro();
 string GenerateRandomPassword(bool isValid);
 
-
 void InitFlipPwdCheckObject(flipPwdCheck* obj);
 void TestFlipClass_With_FlipPwdCheck(flipPwdCheck* obj);
 //void TestPwdCheckClass_With_FlipPwdCheck(flipPwdCheck* obj);
@@ -102,8 +104,8 @@ void TestMixedPassword_With_FlipPwdCheck(flipPwdCheck* obj);
 void TestToggle_With_FlipPwdClass(flipPwdCheck* obj);
 
 void InitFlipExcessCObject(flipExcessC* obj);
-void TestExcessClass_With_FlipExcessClass(flipExcessC* obj);
-//void TestFlipClass_With_FlipExcessClass(flipExcessC* obj);
+void TestFlipClass_With_FlipExcessClass(flipExcessC* obj);
+//void TestExcessClass_With_FlipExcessClass(flipExcessC* obj);
 void TestMixedPassword_With_FlipExcessClass(flipExcessC* obj);
 void TestsToggle_With_FlipExcessCClass(flipExcessC* obj);
 
@@ -113,106 +115,57 @@ void InitFlipCompundCObject(flipCompundC* obj);
 void TestFlipClass_With_FlipCompundCClass(flipCompundC* obj);
 //void TestCompundCClass_With_FlipCompundCClass(flipCompundC* obj);
 void TestMixedPassword_With_FlipCompundClass(flipCompundC* obj);
+void TestsToggle_With_FlipCompundClass(flipCompundC* obj);
+
+
+void InitializeHeterogenousArray(flip* fObj, pwdCheck* pObj);
+void TestToggle_With_Heterogeneous(flip** fObj, pwdCheck** pObj);
 
 
 const int RAN_MIN = 2;
 const int RAN_MAX = 20;
 const int DEFAULT_ARR_SIZE = 3;
-const int ARR_MULTIPLIER = 3;
-const int REDUCED_LENGTH = 1;
+const int DEFAULT_HETEROGENOUS_SIZE = 4;
+const int HETEROGENOUS_DIVISOR = 4;
 const string ASTERISK = "******";
 const string VALID_CHARS1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkl";
 const string VALID_CHARS2 = "mnopqrstuvwxyz0123456789#_<>!+*&@^=.?|$";
 const string INVALID_CHARS = " ~(){}[]"; 
-const bool ISVALIDPWD = true;
 const int ONECYLE = 2;
-const string NON_ASCII = "∆Êÿ¯≈Âﬂ∂";
 const int DIVISOR = 2;
 
 
 int main()
 {
 	srand(static_cast<unsigned>(time(0)));
-	//ProgramIntro();
+	ProgramIntro();
 
- // flipPwdCheck fPObj[DEFAULT_ARR_SIZE];
-	//InitFlipPwdCheckObject(fPObj);
-	////TestFlipClass_With_FlipPwdCheck(fPObj);
-	//////TestPwdCheckClass_With_FlipPwdCheck(fPObj);
-	//TestMixedPassword_With_FlipPwdCheck(fPObj);
-	//TestToggle_With_FlipPwdClass(fPObj);
+  flipPwdCheck fPObj[DEFAULT_ARR_SIZE];
+	InitFlipPwdCheckObject(fPObj);
+	TestFlipClass_With_FlipPwdCheck(fPObj);
+	////TestPwdCheckClass_With_FlipPwdCheck(fPObj);
+	TestMixedPassword_With_FlipPwdCheck(fPObj);
+	TestToggle_With_FlipPwdClass(fPObj);
 
 	flipExcessC fEObj[DEFAULT_ARR_SIZE];
 	InitFlipExcessCObject(fEObj);
-	//TestFlipClass_With_FlipExcessClass(fEObj);
+	TestFlipClass_With_FlipExcessClass(fEObj);
 	//TestExcessClass_With_FlipExcessClass(fEObj);
-	//TestMixedPassword_With_FlipExcessClass(fEObj);
+	TestMixedPassword_With_FlipExcessClass(fEObj);
 	TestsToggle_With_FlipExcessCClass(fEObj);
 
-	//flipCompundC fCObj[DEFAULT_ARR_SIZE];
-	//InitFlipCompundCObject(fCObj);
-	//TestFlipClass_With_FlipCompundCClass(fCObj);
-	////TestCompundCClass_With_FlipCompundCClass(fCObj);
-	//TestMixedPassword_With_FlipCompundClass(fCObj);
+	flipCompundC fCObj[DEFAULT_ARR_SIZE];
+	InitFlipCompundCObject(fCObj);
+	TestFlipClass_With_FlipCompundCClass(fCObj);
+	//TestCompundCClass_With_FlipCompundCClass(fCObj);
+	TestMixedPassword_With_FlipCompundClass(fCObj);
+	TestsToggle_With_FlipCompundClass(fCObj);
 	
 
-
-
-
-
-	//flipPwdCheck[] obj;
-	//flipPwdCheck ob1(flipIndex, password);
-
-	
-	/////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////SECTION: PWDCHECK, FLIP & FLIPPWDCHECK/////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////
-	/**************************TEST pwdCheck class******************************/
-	/*pwdCheck pwdObject(flipIndex);
-	bool isPwdCheck = pwdObject.ValidatePassword(password);
-	if (isPwdCheck)
-	{
-		cout << "Password is validated with pwdCheck" << endl;
-	}
-	else
-	{
-		cout << "Password is not validated with pwdCheck" << endl;
-	}
-*/
-
-	/**************************TEST flip class*********************************/
-	//flip fObject(password);
-	//string flipped = fObject.flipChar(flipIndex);
-	//cout << "Flipped password: " << flipped << endl;
-
-
-	/****************************TEST flipPwdCheck class***************************/
-	//flipPwdCheck* flipPwdCheckObj = new flipPwdCheck(flipIndex, password);
-	//bool isFlipped = flipPwdCheckObj->flipPwdCheckCharacter(flipIndex);
-
-	//if (isFlipped)
-	//{
-	//	cout << "Password is flipped " << endl;
-	//}
-
-	/////////////////////////////////////////////////////////////////////////////////////
-  /////////////////////////////SECTION: EXCESSC & FLIPEXCESSC/////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////
-  /******************************TEST excessC class*********************************/
-	
-	/*excessC exObject(flipIndex, false);
-
-
-	bool isExCheck = exObject.ValidatePassword(password);
-	if (isExCheck)
-	{
-		cout << "Password is validated with exCessCheck" << endl;
-	}
-	else
-	{
-		cout << "Password is not validated with exCessCheck" << endl;
-	}*/
-
+	/*flip* fObj;
+	pwdCheck* pObj;
+	InitializeHeterogenousArray(fObj, pObj);*/
+	//TestToggle_With_Heterogeneous(fObj, pObj);
 
 	return 0;
 }
@@ -381,7 +334,7 @@ void TestMixedPassword_With_FlipPwdCheck(flipPwdCheck* obj)
 			cout << "reason(s):" << endl;
 			if (obj[i].GetObjectStatus())
 			{
-				//pwdCheck object is active
+				
 				if ((int)strAlphaNum.length() < obj[i].GetPasswordLength())
 				{
 					cout << "- password length doesn't meet minimum requirement" << endl;
@@ -444,67 +397,66 @@ void InitFlipExcessCObject(flipExcessC* obj)
 	cout << ASTERISK + " End Initialize FLIP EXCESSC Objects" + ASTERISK << endl;
 
 }
-
-void TestExcessClass_With_FlipExcessClass(flipExcessC* obj)
-{
-	cout << endl;
-	cout << ASTERISK + "Begin Validate Password Length With FlipExcess Object" + ASTERISK << endl;
-	cout << "- Passed in password has no forbidden characters" << endl;
-	string strAlphaNum;
-	for (unsigned int i = 0; i < DEFAULT_ARR_SIZE; i++)
-	{
-
-		strAlphaNum = GenerateRandomPassword(true);
-		if (obj[i].ValidatePassword(strAlphaNum))
-		{
-			cout << i + 1 <<")" << strAlphaNum << " is a valid password" << endl;
-		}
-		else
-		{
-			cout << i + 1 << ")" << strAlphaNum << " is not a valid password" << endl;
-			cout << "reason(s):" << endl;
-			if (obj[i].GetObjectStatus())
-			{
-				//ExcessC object is active
-				if ((int)strAlphaNum.length() < obj[i].GetPasswordLength())
-				{
-					cout << "- password length doesn't meet minimum requirement" << endl;
-					cout << "  minimum lenght: " << obj[i].GetPasswordLength() << endl;
-					cout << "  password length: " << strAlphaNum.length() << endl;
-				}
-				
-			}
-			else
-			{
-				cout << "- ExcessC object is not active " << endl;
-			}
-
-		}
-
-	}
-
-	cout << ASTERISK + "End Validate Password Length With FlipExcess Object" + ASTERISK << endl;
-}
-
-//void TestFlipClass_With_FlipExcessClass(flipExcessC* obj)
+//
+//void TestExcessClass_With_FlipExcessClass(flipExcessC* obj)
 //{
 //	cout << endl;
-//	cout << ASTERISK + "Begin Test FLIP Password With FlipExcess Object" + ASTERISK << endl;
-//	cout << "Attempt to flip password " << DEFAULT_ARR_SIZE << " times with " << DEFAULT_ARR_SIZE << " different indexes " << endl;
-//
-//	unsigned int rIndex;
-//	string strFlipped;
+//	cout << ASTERISK + "Begin Validate Password Length With FlipExcess Object" + ASTERISK << endl;
+//	cout << "- Passed in password has no forbidden characters" << endl;
+//	string strAlphaNum;
 //	for (unsigned int i = 0; i < DEFAULT_ARR_SIZE; i++)
 //	{
-//		rIndex = rand() % RAN_MAX + RAN_MIN;
-//		cout << i + 1 << ") flip beginning " << rIndex << " characters in password" << endl;
 //
-//		strFlipped = obj[i].flipChar(rIndex);
-//		cout << " Flipped password:" << strFlipped << endl;
+//		strAlphaNum = GenerateRandomPassword(true);
+//		if (obj[i].ValidatePassword(strAlphaNum))
+//		{
+//			cout << i + 1 <<")" << strAlphaNum << " is a valid password" << endl;
+//		}
+//		else
+//		{
+//			cout << i + 1 << ")" << strAlphaNum << " is not a valid password" << endl;
+//			cout << "reason(s):" << endl;
+//			if (obj[i].GetObjectStatus())
+//			{
+//				if ((int)strAlphaNum.length() < obj[i].GetPasswordLength())
+//				{
+//					cout << "- password length doesn't meet minimum requirement" << endl;
+//					cout << "  minimum lenght: " << obj[i].GetPasswordLength() << endl;
+//					cout << "  password length: " << strAlphaNum.length() << endl;
+//				}
+//				
+//			}
+//			else
+//			{
+//				cout << "- ExcessC object is not active " << endl;
+//			}
+//
+//		}
+//
 //	}
 //
-//	cout << ASTERISK + "End Test FLIP Password With FlipExcess Object" + ASTERISK << endl;
+//	cout << ASTERISK + "End Validate Password Length With FlipExcess Object" + ASTERISK << endl;
 //}
+
+void TestFlipClass_With_FlipExcessClass(flipExcessC* obj)
+{
+	cout << endl;
+	cout << ASTERISK + "Begin Test FLIP Password With FlipExcess Object" + ASTERISK << endl;
+	cout << "Attempt to flip password " << DEFAULT_ARR_SIZE << " times with " << DEFAULT_ARR_SIZE << " different indexes " << endl;
+
+	unsigned int rIndex;
+	string strFlipped;
+	for (unsigned int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		rIndex = rand() % RAN_MAX + RAN_MIN;
+		cout << i + 1 << ") flip beginning " << rIndex << " characters in password" << endl;
+
+		strFlipped = obj[i].flipChar(rIndex);
+		cout << " Flipped password:" << strFlipped << endl;
+	}
+
+	cout << ASTERISK + "End Test FLIP Password With FlipExcess Object" + ASTERISK << endl;
+}
 
 void TestMixedPassword_With_FlipExcessClass(flipExcessC* obj)
 {
@@ -559,14 +511,14 @@ void TestMixedPassword_With_FlipExcessClass(flipExcessC* obj)
 			{
 				if (obj[i].GetObjectStatus())
 				{
-					//check pwd length
+			
 					if ((int)strAlphaNum.length() < obj[i].GetPasswordLength())
 					{
 						cout << "- password length doesn't meet minimum requirement" << endl;
 						cout << "  minimum lenght: " << obj[i].GetPasswordLength() << endl;
 						cout << "  password length: " << strAlphaNum.length() << endl;
 					}
-					else if (obj[i].GetIsCharForbidden()) //check is forbidden password
+					else if (obj[i].GetIsCharForbidden()) 
 					{
 						cout << "- password contains forbidden character(s)" << endl;
 					}
@@ -692,7 +644,7 @@ void TestMixedPassword_With_FlipCompundClass(flipCompundC* obj)
 			{
 				cout << strAlphaNum << " is a valid password" << endl;
 			}
-			else //not valid password
+			else 
 			{
 				cout << strAlphaNum << " is not a valid password" << endl;
 				cout << "reason(s):" << endl;
@@ -704,7 +656,6 @@ void TestMixedPassword_With_FlipCompundClass(flipCompundC* obj)
 				}
 				else
 				{
-					//PwdCheck is active
 					if ((int)strAlphaNum.length() < obj[i].GetPasswordLength())
 					{
 						cout << "- password length doesn't meet minimum requirement" << endl;
@@ -738,8 +689,6 @@ void TestToggle_With_FlipPwdClass(flipPwdCheck* obj)
 
 	cout << endl;
 	cout << ASTERISK + "Begin Test Toggle With FlipPwdCheck Objects" + ASTERISK << endl;
-	//cout << " - Passed in password may contains forbidden characters" + ASTERISK << endl;
-	//cout << endl;
 
 	string strPassword; 
 	bool pStatus;
@@ -790,7 +739,6 @@ void TestToggle_With_FlipPwdClass(flipPwdCheck* obj)
 	cout << ASTERISK + "End Test Toggle With FlipPwdCheck Objects" + ASTERISK << endl;
 }
 
-
 void TestsToggle_With_FlipExcessCClass(flipExcessC* obj)
 {
 	cout << endl;
@@ -828,4 +776,126 @@ void TestsToggle_With_FlipExcessCClass(flipExcessC* obj)
 	cout << ASTERISK + "End Test Toggle With FlipExcessC Objects" + ASTERISK << endl;
 }
 
+void TestsToggle_With_FlipCompundClass(flipCompundC* obj)
+{
+	cout << endl;
+	cout << ASTERISK + "Begin Test Toggle With FlipCompundC Objects" + ASTERISK << endl;
+
+bool cIsLocked;
+int cToggle;
+string strPassword;
+
+for (unsigned int i = 0; i < DEFAULT_ARR_SIZE; i++)
+{
+	cIsLocked = obj[i].GetLockedStatus();
+
+	if (cIsLocked)
+	{
+		cout << i + 1 << ") CompundC object at index " << i << " Locked" << endl;
+	}
+	else
+	{
+		cout << i + 1 << ") CompundC object at index " << i << " is not Locked" << endl;
+		cout << " - toggling CompundC object " << endl;
+
+		while (!obj[i].GetLockedStatus())
+		{
+			cToggle++;
+			strPassword = GenerateRandomPassword(false);
+			obj[i].ValidatePassword(strPassword);
+		}
+		cout << " - CompundC object is now LOCKED" << endl;
+		cout << " - CompundC object was toggled " << cToggle << " times" << endl;
+	}
+}
+
+cout << ASTERISK + "End Test Toggle With FlipCompundC Objects" + ASTERISK << endl;
+}
+
+
+//////////////////////////////////HETEROGENOUS ARRAY////////////////////////////////////////////////////
+void InitializeHeterogenousArray(flip* fObj, pwdCheck* pObj)
+{
+	int arr_Size = DEFAULT_ARR_SIZE * DEFAULT_HETEROGENOUS_SIZE;
+	fObj = new flip[arr_Size];
+	pObj = new pwdCheck[arr_Size];
+	string strPassword;
+	unsigned int len;
+	unsigned int toggleNum;
+
+
+	cout << endl;
+	cout << ASTERISK + "Begin Initialize 2 Heterogenous Objects" + ASTERISK << endl;
+	cout << " - Generated " << arr_Size << " Flip Heterogeous Objects" << endl;
+	cout << " - Generated " << arr_Size << " PwdCheck Heterogeous Objects" << endl;
+	cout << " - Stored Flip and PwdCheck Heterogenous Objects in 2 dynamic arrays" << endl;
+	cout << endl;
+	for (int i = 0; i < arr_Size; i++)
+	{
+		strPassword = GenerateRandomPassword(false);
+		len = rand() % RAN_MAX + RAN_MIN;
+
+		if (i < (arr_Size) / HETEROGENOUS_DIVISOR) 
+		{
+			cout << i + 1 << ") Flip object random password " << strPassword << endl;
+			cout << i + 1 << ") PwdCheck object random password length " << len << endl;
+			fObj[i] = flip(strPassword);
+			pObj[i] = pwdCheck(len);
+		}
+		else if (i >= (arr_Size / HETEROGENOUS_DIVISOR) && i < (arr_Size - 2 * (arr_Size / HETEROGENOUS_DIVISOR))) 
+		{
+			cout << i + 1 << ") FlipCompundC object random length: " << len << " toggle limit: " << toggleNum << " and password: " << strPassword << endl;
+			cout << i + 1 << ") FlipCompundC object random length: " << len << " toggle limit: " << toggleNum << " and password: " << strPassword << endl;
+			toggleNum = len * len * ONECYLE;
+			fObj[i] = flipCompundC(len, toggleNum, strPassword);
+			pObj[i] = flipCompundC(len, toggleNum, strPassword);
+		}
+
+		else if (i >= (2 * (arr_Size / HETEROGENOUS_DIVISOR)) && arr_Size - (arr_Size / HETEROGENOUS_DIVISOR)) 
+		{
+			bool isActive = true;
+			if (len % DIVISOR)
+			{
+				isActive = false;
+			}
+			cout << i + 1 << ") FlipExcessC object random length: " << len << " status: " << (isActive ? "active" : "inactive") << " and password: " << strPassword << endl;
+			cout << i + 1 << ") FlipExcessC object random length: " << len << " status: " << (isActive ? "active" : "inactive") << " and password: " << strPassword << endl;
+			fObj[i] = flipExcessC(len, isActive, strPassword);
+			pObj[i] = flipExcessC(len, isActive, strPassword);
+		}
+		else 
+		{
+			cout << i + 1 << ") FlipPwdCheck object random length: " << len << " and password: " << strPassword << endl;
+			cout << i + 1 << ") FlipPwdCheck object random length: " << len << " and password: " << strPassword << endl;
+			fObj[i] = flipPwdCheck(len, strPassword);
+			pObj[i] = flipPwdCheck(len, strPassword);
+		}
+	}
+	cout << ASTERISK + "End Initialize 2 Heterogenous Objects" + ASTERISK << endl;
+}
+
+
+void TestToggle_With_Heterogeneous(flip** fObj, pwdCheck** pObj)
+{
+
+	cout << endl;
+	cout << ASTERISK + "Begin Test Toggle With Heterogenous Objects" + ASTERISK << endl;
+
+	int arr_Size = DEFAULT_ARR_SIZE * HETEROGENOUS_DIVISOR;
+	for (int i = 0; i < arr_Size; i++)
+	{
+		if ((dynamic_cast<flip*> (fObj[i]))) 
+		{
+
+		}
+
+		if ((dynamic_cast<flipCompundC*> (pObj[i])) || (dynamic_cast<flipExcessC*> (pObj[i])) || (dynamic_cast<flipPwdCheck*> (pObj[i])) || (dynamic_cast<flipPwdCheck*> (pObj[i])))
+		{
+			cout << " PwdCheck heterogenous here...." << endl;
+		}
+	}
+
+	cout << ASTERISK + "End Test Toggle With Heterogenous Objects" + ASTERISK << endl;
+	
+}
 
