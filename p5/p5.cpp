@@ -18,9 +18,11 @@ struct Arrays {
 
 void InitArrays(Arrays& obj);
 void TestNumberIsMultiplierFactor(Arrays arr);
-void TestOverloadedInsertionOperator(Arrays arr);
-void TestOverloadedAdditionOperator(Arrays arr);
-void TestOverloadedComparisonOperator(Arrays arr);
+void TestOverloaded_StreamIO_Operators(Arrays arr);
+void TestOverloadedMathematicalOperators(Arrays arr);
+void TestOverloadedRelationalOperators(Arrays arr);
+void TestOverloadedShortcutOperators(Arrays arr);
+void TestOverloadedCompounAssignmentOperators(Arrays arr);
 
 
 
@@ -30,10 +32,12 @@ int main()
 	Arrays p5Arr;
 	InitArrays(p5Arr);
 	//TestNumberIsMultiplierFactor(p5Arr);
-	//TestOverloadedInsertionOperator(p5Arr); 
-	//TestOverloadedAdditionOperator(p5Arr);
-	//TestOverloadedInsertionOperator(p5Arr);
-	TestOverloadedComparisonOperator(p5Arr);
+	TestOverloaded_StreamIO_Operators(p5Arr); 
+	TestOverloadedMathematicalOperators(p5Arr);
+	TestOverloaded_StreamIO_Operators(p5Arr);
+	TestOverloadedRelationalOperators(p5Arr);
+	TestOverloadedShortcutOperators(p5Arr);
+	TestOverloadedCompounAssignmentOperators(p5Arr);
 
 
 	return 0;
@@ -81,10 +85,10 @@ void TestNumberIsMultiplierFactor(Arrays arr)
 	cout << ASTERISK + "End test number is a multiplier of factor value" + ASTERISK << endl;
 }
 
-void TestOverloadedInsertionOperator(Arrays arr)
+void TestOverloaded_StreamIO_Operators(Arrays arr)
 {
 	cout << endl;
-	cout << ASTERISK + "Begin Test Overloaded Insertion Operator " + ASTERISK << endl;
+	cout << ASTERISK + "Begin Test Overloaded Stream I/O Operators " + ASTERISK << endl;
 	cout << " - Print factor objects" << endl;
 
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
@@ -92,29 +96,29 @@ void TestOverloadedInsertionOperator(Arrays arr)
 		cout << " object[" << i << "] div factor = " << arr.arrFactor[i] << endl;
 	}
 
-	cout << ASTERISK + "End Test Overloaded Insertion Operator" + ASTERISK << endl;
+	cout << ASTERISK + "End Test Overloaded Stream I/O Operators" + ASTERISK << endl;
 }
 
-void TestOverloadedAdditionOperator(Arrays arr)
+void TestOverloadedMathematicalOperators(Arrays arr)
 {
 	srand(static_cast<unsigned>(time(0)));
 	int num;
 
 	cout << endl;
-	cout << ASTERISK + "Begin Test Overloaded Addition Operator " + ASTERISK << endl;
+	cout << ASTERISK + "Begin Test Overloaded Mathematical Operators " + ASTERISK << endl;
 
-	cout << "Adding factor objects" << endl;
+	cout << "Adding two factor objects" << endl;
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- object [" << i << "] + object[" << i + 1 << "] = " << arr.arrFactor[i] << " + " << arr.arrFactor[i + 1] << endl;
+			cout << "- object [" << i << "] + object[" << i + 1 << "] --> " << arr.arrFactor[i] << " + " << arr.arrFactor[i + 1] << endl;
 			arr.arrFactor[i] + arr.arrFactor[i + 1];
 			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
 		}
 		else
 		{
-			cout << "- object [" << i << "] + object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] = " << arr.arrFactor[i] << " + " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			cout << "- object [" << i << "] + object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " + " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			arr.arrFactor[i] + arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
 			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
 		}
@@ -125,18 +129,133 @@ void TestOverloadedAdditionOperator(Arrays arr)
 		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 		{
 			num = rand() % RAN_MAX + RAN_MIN;
-			cout << "- object [" << i << "] div factor +  random integer = " << arr.arrFactor[i] << " + " << num << endl;
+			cout << "- object [" << i << "] div factor +  random integer --> " << arr.arrFactor[i] << " + " << num << endl;
 			arr.arrFactor[i] + num;
 			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
 		}
-	cout << ASTERISK + "End Test Overloaded Addition Operator" + ASTERISK << endl;
+
+		cout << endl;
+		cout << "Subtracting two factor objects" << endl;
+		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+		{
+			if (i < DEFAULT_ARR_SIZE - 1)
+			{
+				cout << "- object [" << i << "] - object[" << i + 1 << "] --> " << arr.arrFactor[i] << " - " << arr.arrFactor[i + 1] << endl;
+				arr.arrFactor[i] - arr.arrFactor[i + 1];
+				cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			}
+			else
+			{
+				cout << "- object [" << i << "] - object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " - " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+				arr.arrFactor[i] - arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
+				cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			}
+		}
+
+		cout << endl;
+		cout << "Subtracting an unsigned int from a factor objects" << endl;
+		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+		{
+			num = rand() % RAN_MAX + RAN_MIN;
+			cout << "- object [" << i << "] div factor - random integer --> " << arr.arrFactor[i] << " - " << num << endl;
+			arr.arrFactor[i] - num;
+			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			
+			
+		}
+
+		cout << endl;
+		cout << "Multiply two factor objects" << endl;
+		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+		{
+			if (i < DEFAULT_ARR_SIZE - 1)
+			{
+				cout << "- object [" << i << "] * object[" << i + 1 << "] --> " << arr.arrFactor[i] << " * " << arr.arrFactor[i + 1] << endl;
+				arr.arrFactor[i] * arr.arrFactor[i + 1];
+				cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			}
+			else
+			{
+				cout << "- object [" << i << "] * object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " * " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+				arr.arrFactor[i] * arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
+				cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			}
+		}
+
+		cout << endl;
+		cout << "Multiply a factor object to an unsigned int" << endl;
+		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+		{
+			num = rand() % RAN_MAX + RAN_MIN;
+			cout << "- object [" << i << "] div factor * random integer --> " << arr.arrFactor[i] << " * " << num << endl;
+			arr.arrFactor[i] * num;
+			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+		}
+
+		cout << endl;
+		cout << "Integer division with two factor objects" << endl;
+		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+		{
+			if (i < DEFAULT_ARR_SIZE - 1)
+			{
+				cout << "- object [" << i << "] / object[" << i + 1 << "] --> " << arr.arrFactor[i] << " / " << arr.arrFactor[i + 1] << endl;
+				arr.arrFactor[i] / arr.arrFactor[i + 1];
+				cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			}
+			else
+			{
+				cout << "- object [" << i << "] / object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " / " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+				arr.arrFactor[i] / arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
+				cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			}
+		}
+
+		cout << endl;
+		cout << "Integer division of a factor object by an unsigned int" << endl;
+		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+		{
+			num = rand() % RAN_MAX + RAN_MIN;
+			cout << "- object [" << i << "] div factor / random integer --> " << arr.arrFactor[i] << " / " << num << endl;
+			arr.arrFactor[i] / num;
+			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+		}
+
+		cout << endl;
+		cout << "Integer modulus with two factor objects" << endl;
+		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+		{
+			if (i < DEFAULT_ARR_SIZE - 1)
+			{
+				cout << "- object [" << i << "] % object[" << i + 1 << "] --> " << arr.arrFactor[i] << " % " << arr.arrFactor[i + 1] << endl;
+				arr.arrFactor[i] % arr.arrFactor[i + 1];
+				cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			}
+			else
+			{
+				cout << "- object [" << i << "] % object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " % " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+				arr.arrFactor[i] % arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
+				cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			}
+		}
+
+		cout << endl;
+		cout << "Integer modulus of a factor object by an unsigned int" << endl;
+		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+		{
+			num = rand() % RAN_MAX + RAN_MIN;
+			cout << "- object [" << i << "] div factor % random integer --> " << arr.arrFactor[i] << " % " << num << endl;
+			arr.arrFactor[i] % num;
+			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+		}
+
+	cout << ASTERISK + "End Test Overloaded Mathematical Operators" + ASTERISK << endl;
 }
 
-void TestOverloadedComparisonOperator(Arrays arr)
+void TestOverloadedRelationalOperators(Arrays arr)
 {
 
 	cout << endl;
-	cout << ASTERISK + "Begin Test Overloaded Comparison Operator " + ASTERISK << endl;
+	cout << ASTERISK + "Begin Test Overloaded Relational Operators " + ASTERISK << endl;
 
 	cout << "Determine two factor objects div factor are equals to each other using '==' operator" << endl;
 
@@ -337,5 +456,203 @@ void TestOverloadedComparisonOperator(Arrays arr)
 		}
 	}
 
-	cout << ASTERISK + "End Test Overloaded Comparison Operator " + ASTERISK << endl;
+	cout << ASTERISK + "End Test Overloaded Relational Operators " + ASTERISK << endl;
+}
+
+void TestOverloadedShortcutOperators(Arrays arr)
+{
+	cout << endl;
+	cout << ASTERISK + "Begin Test Overloaded Shortcut Operators " + ASTERISK << endl;
+
+	cout << "Pre increment factor objects using '++object' operator" << endl;
+
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		cout << "- object [" << i << "] current div factor = " << arr.arrFactor[i];
+		cout << ", call ++object[" << i <<"]" << endl;
+		cout << "  in scope returned div factor = " << ++arr.arrFactor[i] << endl;
+	}
+	cout << endl;
+	cout << "Post increment factor objects using 'object++' operator" << endl;
+
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		cout << "- object [" << i << "] current div factor = " << arr.arrFactor[i];
+		cout << ", call object[" << i << "]++" << endl;
+		cout << "  in scope returned div factor = " << arr.arrFactor[i]++ << endl;
+	}
+
+	cout << endl;
+	cout << "Pre decrement factor objects using '--object' operator" << endl;
+
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		cout << "- object [" << i << "] current div factor = " << arr.arrFactor[i];
+		cout << ", call --object[" << i << "]" << endl;
+		cout << "  in scope returned div factor = " << --arr.arrFactor[i] << endl;
+	}
+
+	cout << endl;
+	cout << "Post decrement factor objects using 'object--' operator" << endl;
+
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		cout << "- object [" << i << "] current div factor = " << arr.arrFactor[i];
+		cout << ", call object[" << i << "]--" << endl;
+		cout << "  in scope returned div factor = " << arr.arrFactor[i]-- << endl;
+	}
+
+	cout << ASTERISK + "End Test Overloaded Shortcut Operators " + ASTERISK << endl;
+}
+
+void TestOverloadedCompounAssignmentOperators(Arrays arr)
+{
+	srand(static_cast<unsigned>(time(0)));
+	int num;
+
+	cout << endl;
+	cout << ASTERISK + "Begin Test Overloaded Compound Assignment Operators " + ASTERISK << endl;
+
+	cout << "Add two factor objects using '+=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		if (i < DEFAULT_ARR_SIZE - 1)
+		{
+			cout << "- object [" << i << "] += object[" << i + 1 << "] --> " << arr.arrFactor[i] << " += " << arr.arrFactor[i + 1] << endl;
+			arr.arrFactor[i] += arr.arrFactor[i + 1];
+			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+		}
+		else
+		{
+			cout << "- object [" << i << "] += object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " += " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			arr.arrFactor[i] += arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
+			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+		}
+	}
+
+	cout << endl;
+	cout << "Add a factor object with an unsigned int using '+=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- object [" << i << "] div factor +=  random integer --> " << arr.arrFactor[i] << " += " << num << endl;
+		arr.arrFactor[i] += num;
+		cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+	}
+
+	cout << endl;
+	cout << "Subtract two factor objects using '-=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		if (i < DEFAULT_ARR_SIZE - 1)
+		{
+			cout << "- object [" << i << "] -= object[" << i + 1 << "] --> " << arr.arrFactor[i] << " -= " << arr.arrFactor[i + 1] << endl;
+			arr.arrFactor[i] -= arr.arrFactor[i + 1];
+			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+		}
+		else
+		{
+			cout << "- object [" << i << "] -= object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " -= " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			arr.arrFactor[i] -= arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
+			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+		}
+	}
+
+	cout << endl;
+	cout << "Subtract an unsigned int from a factor object using '-=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- object [" << i << "] div factor -=  random integer --> " << arr.arrFactor[i] << " -= " << num << endl;
+		arr.arrFactor[i] -= num;
+		cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+	}
+
+
+	cout << endl;
+	cout << "Multiply two factor objects using '*=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		if (i < DEFAULT_ARR_SIZE - 1)
+		{
+			cout << "- object [" << i << "] *= object[" << i + 1 << "] --> " << arr.arrFactor[i] << " *= " << arr.arrFactor[i + 1] << endl;
+			arr.arrFactor[i] *= arr.arrFactor[i + 1];
+			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+		}
+		else
+		{
+			cout << "- object [" << i << "] *= object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " *= " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			arr.arrFactor[i] *= arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
+			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+		}
+	}
+
+	cout << endl;
+	cout << "Multiply a factor object with an unsigned int using '*=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- object [" << i << "] div factor *=  random integer --> " << arr.arrFactor[i] << " *= " << num << endl;
+		arr.arrFactor[i] *= num;
+		cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+	}
+
+	cout << endl;
+	cout << "Integer division with two factor objects using '/=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		if (i < DEFAULT_ARR_SIZE - 1)
+		{
+			cout << "- object [" << i << "] /= object[" << i + 1 << "] --> " << arr.arrFactor[i] << " /= " << arr.arrFactor[i + 1] << endl;
+			arr.arrFactor[i] /= arr.arrFactor[i + 1];
+			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+		}
+		else
+		{
+			cout << "- object [" << i << "] /= object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " /= " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			arr.arrFactor[i] /= arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
+			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+		}
+	}
+
+
+	cout << endl;
+	cout << "Integer division of a factor object by an unsigned int using '/=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- object [" << i << "] div factor /=  random integer --> " << arr.arrFactor[i] << " /= " << num << endl;
+		arr.arrFactor[i] /= num;
+		cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+	}
+
+	cout << endl;
+	cout << "Integer modulus with two factor objects using '%=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		if (i < DEFAULT_ARR_SIZE - 1)
+		{
+			cout << "- object [" << i << "] %= object[" << i + 1 << "] --> " << arr.arrFactor[i] << " %= " << arr.arrFactor[i + 1] << endl;
+			arr.arrFactor[i] %= arr.arrFactor[i + 1];
+			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+		}
+		else
+		{
+			cout << "- object [" << i << "] %= object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " %= " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			arr.arrFactor[i] %= arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
+			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+		}
+	}
+
+	cout << endl;
+	cout << "Integer modulus of a factor object by an unsigned int using '%=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- object [" << i << "] div factor %=  random integer --> " << arr.arrFactor[i] << " %= " << num << endl;
+		arr.arrFactor[i] %= num;
+		cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+	}
+
+	cout << ASTERISK + "End Test Overloaded Compound Assignment Operators " + ASTERISK << endl;
 }

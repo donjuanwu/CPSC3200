@@ -17,6 +17,9 @@
 #ifndef FACTOR_H
 #define FACTOR_H
 #include <iostream>
+#include <cmath>
+
+
 using namespace std;
 class factor
 {
@@ -42,11 +45,67 @@ public:
 	void Reset();
 	bool GetFactorStatus();
 
+	//////////////////////Access//////////////////////////
+	//[], ->
+	
+	
+	/////////////////Stream I/O/////////////////////////
 	friend ostream& operator<<(ostream& os, const factor & f); //completed
+
+
+
+	/////////////////Mathematical//////////////////////
 	factor operator+(const factor & rhs); //completed
 	factor operator+(unsigned int x); //completed
 
-	///////////////overloaded operation returning a boolean value////////////////
+	factor operator-(const factor & rhs); //completed
+	factor operator-(unsigned int x); //complete
+
+	factor operator*(const factor & rhs);//complete
+	factor operator*(unsigned int x);//complete
+
+	factor operator/(const factor & rhs);//complete
+	factor operator/(unsigned int x);//complete
+
+	factor operator%(const factor & rhs);//complete
+	factor operator%(unsigned int x);//complete
+
+
+	/////////////////Logical//////////////////////////
+	//&&, ||, !
+
+	//bool operator&&();
+
+//	bool factor::operator&&(bool a, bool a)
+
+
+	/////////////////Compound Assignments//////////////////////
+	//=, +=, *=, -=, /=
+	factor operator+=(const factor & rhs);
+	factor operator+=(unsigned int x);
+
+	factor operator-=(const factor & rhs);
+	factor operator-=(unsigned int x);
+
+	factor operator*=(const factor & rhs);
+	factor operator*=(unsigned int x);
+
+	factor operator/=(const factor & rhs);
+	factor operator/=(unsigned int x);
+
+	factor operator%=(const factor & rhs);
+	factor operator%=(unsigned int x);
+
+	/////////////////Shortcuts/////////////////////////
+	//++, --
+	factor operator++();
+	int operator++(int x);
+
+	factor operator--();
+	int operator--(int x);
+
+
+	///////////////Relational////////////////////////
 	bool operator == (const factor & rhs); //completed
 	bool operator<(const factor & rhs); //completed
 	bool operator>(const factor & rhs); //completed
