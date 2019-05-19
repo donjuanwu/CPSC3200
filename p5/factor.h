@@ -20,17 +20,16 @@
 using namespace std;
 class factor
 {
-	friend ostream & operator << (ostream& os, const factor & f);
-
+	
 
 private:
 	unsigned int divFactor;
 	unsigned int multiplesCount;
-	unsigned int lastNumber;
+	int lastNumber;
 	bool isObjectActive;
 	static const int INITIAL_LAST_NUMBER = -1;
 	static const int INITIAL_MULTIPLESCOUNT = 0;
-	static const int INITIAL_FACTOR_VALUE = 1;
+	static const int INITIAL_FACTOR_VALUE = 2;
 	static const int RETURN_INACTIVE = -1;
 
 
@@ -42,6 +41,19 @@ public:
 	bool Div(unsigned int number);
 	void Reset();
 	bool GetFactorStatus();
+
+	friend ostream& operator<<(ostream& os, const factor & f); //completed
+	factor operator+(const factor & rhs); //completed
+	factor operator+(unsigned int x); //completed
+
+	///////////////overloaded operation returning a boolean value////////////////
+	bool operator == (const factor & rhs); //completed
+	bool operator<(const factor & rhs); //completed
+	bool operator>(const factor & rhs); //completed
+	bool operator!=(const factor & rhs); //completed
+	bool operator<=(const factor & rhs); //completed
+	bool operator>=(const factor & rhs); //completed
+
 };
 
 #endif 

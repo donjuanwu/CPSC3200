@@ -56,8 +56,11 @@ bool factor::Div(unsigned int number)
 				return true;
 			}
 		}
+		else
+		{
+			isObjectActive = false;
+		}
 
-		isObjectActive = false;
 	}
 	return false;
 }
@@ -74,9 +77,34 @@ bool factor::GetFactorStatus()
 	return isObjectActive;
 }
 
-ostream& operator << (ostream& os, const factor & f)
+ostream& operator<<(ostream& os, const factor & f) 
 {
-	os << "Object status: " << f.isObjectActive << "div factor: " << f.Div << endl;
-
-	return os << endl;
+	os << f.divFactor;	
+	return os;
 }
+
+factor factor::operator+(const factor & rhs)
+{
+	divFactor += rhs.divFactor;
+	return *this;
+}
+
+factor factor::operator+(unsigned int x)
+{
+	divFactor += x;
+	return *this;
+}
+
+
+
+///////////////overloaded operation returning a boolean value////////////////
+bool factor::operator == (const factor & rhs) { return (divFactor == rhs.divFactor);} 
+bool factor::operator<(const factor & rhs){ return (divFactor < rhs.divFactor);}
+bool factor::operator>(const factor & rhs){ return (divFactor > rhs.divFactor);}
+bool factor::operator!=(const factor & rhs){return (divFactor != rhs.divFactor);}
+bool factor::operator<=(const factor & rhs) {return (divFactor <= rhs.divFactor);}
+bool factor::operator>=(const factor & rhs){return (divFactor >= rhs.divFactor);}
+
+
+
+
