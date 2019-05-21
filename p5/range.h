@@ -27,23 +27,29 @@ class range
 private:
 	factor factObject1;
 	factor factObject2;
+	unsigned int rFactor1;
+	unsigned int rFactor2;
 	unsigned int pingsCount;
 	unsigned int min_Ping;
 	unsigned int max_Ping;
 	static const int DEFAULT_PING_VALUE = 0;
-	static const int DEFAULT_FACTOR1_VALUE = 2;
-	static const int DEFAULT_FACTOR2_VALUE = 4;
+	static const int DEFAULT_FACTOR_VALUE = 2;
+
 
 	void UpdateMinMaxPingRange(unsigned int number);
 
 
 public:
-	range(unsigned int factor1 = DEFAULT_FACTOR1_VALUE, unsigned int factor2 = DEFAULT_FACTOR2_VALUE);
+	range(unsigned int factor1 = DEFAULT_FACTOR_VALUE, unsigned int factor2 = DEFAULT_FACTOR_VALUE);
 	~range();
 	unsigned int Ping(unsigned int pNumber);
 	unsigned int GetMaxPingNumber();
 	unsigned int GetMinPingNumber();
 	unsigned int GetTotalPingCount();
+	void Replace(unsigned int factor1, unsigned int factor2);
+
+	/////////////////Stream I/O/////////////////////////
+	friend ostream& operator<<(ostream& os, const range & r); //completed
 
 
 };

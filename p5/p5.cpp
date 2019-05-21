@@ -1,4 +1,5 @@
 #include "factor.h"
+#include "range.h"
 #include <iostream>
 #include <stdlib.h>
 
@@ -13,11 +14,12 @@ const int MAX_ARRAYS_IDX = 1;
 
 struct Arrays {
 	factor arrFactor[DEFAULT_ARR_SIZE];
+	range arrRange[DEFAULT_ARR_SIZE];
 
 };
 
 void InitArrays(Arrays& obj);
-//void TestNumberIsMultiplierFactor(Arrays arr);
+void TestNumberIsMultiplierFactor(Arrays arr);
 void TestOverloaded_StreamIO_Operators(Arrays arr);
 void TestOverloadedMathematicalOperators(Arrays arr);
 void TestOverloadedRelationalOperators(Arrays arr);
@@ -32,8 +34,8 @@ int main()
 	Arrays p5Arr;
 	InitArrays(p5Arr);
 	//TestNumberIsMultiplierFactor(p5Arr);
-	TestOverloaded_StreamIO_Operators(p5Arr); 
-	TestOverloadedMathematicalOperators(p5Arr);
+	//TestOverloaded_StreamIO_Operators(p5Arr); 
+	//TestOverloadedMathematicalOperators(p5Arr);
 	//TestOverloaded_StreamIO_Operators(p5Arr);
 	//TestOverloadedRelationalOperators(p5Arr);
 	//TestOverloadedShortcutOperators(p5Arr);
@@ -51,12 +53,21 @@ void InitArrays(Arrays& arr)
 	cout << " - Initialized each factor, range and multiQ object " << DEFAULT_ARR_SIZE << " times" << endl;
 
 	int num;
+	int num2;
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		num = rand() % RAN_MAX + RAN_MIN;
-		arr.arrFactor[i] = num;
-		cout << i + 1 << ") factor object " << i + 1 << " encapsulated factor is " << num << endl;
+		arr.arrFactor[i] = factor(num);
+		cout << i + 1 << ") factor object " << i << " passed in factor { " << num << " }" << endl;
+		
+		num = rand() % RAN_MAX + RAN_MIN;
+		num2 = rand() % RAN_MAX + RAN_MIN;
+		arr.arrRange[i] = range(num, num2);
+		cout << i + 1 << ") range object " << i  << " passed in factors { " << num << ", " << num2 << "}" << endl;
+		cout << "- factor object " << i << " encapsulated value = " << arr.arrFactor[i] << endl;
+		cout << "- range object " << i << " encapsulated values = " << arr.arrRange[i] << endl;
 
+		cout << endl;
 	}
 	cout << ASTERISK + "End initialize P5 arrays" + ASTERISK << endl;
 
@@ -72,15 +83,26 @@ void TestNumberIsMultiplierFactor(Arrays arr)
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		num = rand() % (RAN_MAX * MULTIPLIER) + RAN_MIN;
-		cout << i + 1 << ") Generated random number is " << num << endl;
+		cout << i + 1 << ") Generated number " << num << endl;
 		if (arr.arrFactor[i].Div(num))
 		{
-			cout << " - Number " << num << " is a multiplier of the encapsulated factor" << endl;
+			cout << " - Passed in number " << num << " is a multiplier of factor" << endl;
 		}
 		else
 		{
-			cout << " - Number " << num << " is NOT a multiplier of the encapsulated factor" << endl;
+			cout << " - Number " << num << " is NOT a multiplier of factor" << endl;
 		}
+
+		if (arr.arrRange[i].Ping(num))
+		{
+			cout << " - Passed in number " << num << " is a multiplier of range " << endl;
+		}
+		else
+		{
+			cout << " - Number " << num << " is NOT a multiplier of range" << endl;
+		}
+
+
 	}
 	cout << ASTERISK + "End test number is a multiplier of factor value" + ASTERISK << endl;
 }

@@ -21,13 +21,16 @@ Range Feedback: Range Class Design - 4
 
 #include "range.h"
 
-range::range(unsigned int factor1, unsigned int factor2)
+range::range(unsigned int factor1, unsigned int factor2) //: factObject1(factor1), factObject2(factor2)
 {
-	if (factor1 <= 1) factor1 = DEFAULT_FACTOR1_VALUE;
-	if (factor2 <= 3) factor2 = DEFAULT_FACTOR2_VALUE;
+	if (factor1 <= 1) factor1 = DEFAULT_FACTOR_VALUE;
+	if (factor2 <= 1) factor2 = DEFAULT_FACTOR_VALUE;
 
-	factObject1 = factor1;
-	factObject2 = factor2;
+	rFactor1 = factor1;
+	rFactor2 = factor2;
+
+	factObject1 = factor(rFactor1);
+	factObject2 = factor(rFactor2);
 	min_Ping = DEFAULT_PING_VALUE;
 	max_Ping = DEFAULT_PING_VALUE;
 	pingsCount = DEFAULT_PING_VALUE;
@@ -43,7 +46,7 @@ unsigned int range::Ping(unsigned int pNumber)
 	bool isMultiple2 = factObject2.Div(pNumber);
 	factObject1.Reset();
 	factObject2.Reset();
-	if ((isMultiple1) && (isMultiple1))
+	if ((isMultiple1) && (isMultiple2))
 	{
 		pingsCount++;
 		UpdateMinMaxPingRange(pNumber);
@@ -69,3 +72,20 @@ unsigned int range::GetMaxPingNumber() {return max_Ping;}
 unsigned int range::GetMinPingNumber() {return min_Ping;}
 
 unsigned int range::GetTotalPingCount() { return pingsCount; }
+
+void range::Replace(unsigned int rFactor1, unsigned int rFactor2)
+{
+	factObject1 = factor(rFactor1);
+	factObject2 = factor(rFactor2);
+	min_Ping = DEFAULT_PING_VALUE;
+	max_Ping = DEFAULT_PING_VALUE;
+	pingsCount = DEFAULT_PING_VALUE;
+}
+
+/////////////////Stream I/O/////////////////////////
+ostream& operator<<(ostream& os, const range & r)
+{
+	//os << r.rFactor1 << ", " << r.rFactor2;
+	os << r.factObject1 << ", " << r.factObject2;
+	return os;
+}
