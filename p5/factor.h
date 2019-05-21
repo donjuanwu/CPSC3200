@@ -10,6 +10,7 @@
 -- WHEN     WHO		WHAT
 	 5/17/19  DD    Ported factor.cs to factor.h
 									Updated factor.h from feedback (See Factor Feeback in factor.cpp file)
+   5/20/19  DD   Completed with most overloaded operators
 */
 
 
@@ -23,7 +24,6 @@
 using namespace std;
 class factor
 {
-	
 
 private:
 	unsigned int divFactor;
@@ -51,24 +51,29 @@ public:
 	
 	/////////////////Stream I/O/////////////////////////
 	friend ostream& operator<<(ostream& os, const factor & f); //completed
-
-
+	
 
 	/////////////////Mathematical//////////////////////
 	factor operator+(const factor & rhs); //completed
 	factor operator+(unsigned int x); //completed
+	friend factor operator+(unsigned int x, const factor & rhs);
+
 
 	factor operator-(const factor & rhs); //completed
 	factor operator-(unsigned int x); //complete
+	friend factor operator-(unsigned int x, const factor & rhs);
 
 	factor operator*(const factor & rhs);//complete
 	factor operator*(unsigned int x);//complete
+	friend factor operator*(unsigned int x, const factor & rhs);
 
 	factor operator/(const factor & rhs);//complete
 	factor operator/(unsigned int x);//complete
+	friend factor operator/(unsigned int x, const factor & rhs);
 
 	factor operator%(const factor & rhs);//complete
 	factor operator%(unsigned int x);//complete
+	friend factor operator%(unsigned int x, const factor & rhs);
 
 
 	/////////////////Logical//////////////////////////
@@ -81,28 +86,28 @@ public:
 
 	/////////////////Compound Assignments//////////////////////
 	//=, +=, *=, -=, /=
-	factor operator+=(const factor & rhs);
-	factor operator+=(unsigned int x);
+  void operator+=(const factor & rhs);
+	void operator+=(unsigned int x);
 
-	factor operator-=(const factor & rhs);
-	factor operator-=(unsigned int x);
+	void operator-=(const factor & rhs);
+	void operator-=(unsigned int x);
 
-	factor operator*=(const factor & rhs);
-	factor operator*=(unsigned int x);
+	void operator*=(const factor & rhs);
+	void operator*=(unsigned int x);
 
-	factor operator/=(const factor & rhs);
-	factor operator/=(unsigned int x);
+	void operator/=(const factor & rhs);
+	void operator/=(unsigned int x);
 
-	factor operator%=(const factor & rhs);
-	factor operator%=(unsigned int x);
+	void operator%=(const factor & rhs);
+	void operator%=(unsigned int x);
 
 	/////////////////Shortcuts/////////////////////////
 	//++, --
 	factor operator++();
-	int operator++(int x);
+	factor operator++(int x);
 
 	factor operator--();
-	int operator--(int x);
+	factor operator--(int x);
 
 
 	///////////////Relational////////////////////////

@@ -76,10 +76,12 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClInclude Include="factor.h" />
+    <ClInclude Include="range.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="factor.cpp" />
     <ClCompile Include="p5.cpp" />
+    <ClCompile Include="range.cpp" />
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

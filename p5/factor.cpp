@@ -88,106 +88,130 @@ ostream& operator<<(ostream& os, const factor & f)
 ///////////////MATHEMATICAL////////////////////
 factor factor::operator+(const factor & rhs)
 {
-	divFactor += rhs.divFactor;
-	return *this;
+	factor local(rhs.divFactor);
+	local.divFactor += divFactor;
+	return local;
 }
+
 
 factor factor::operator+(unsigned int x)
 {
-	divFactor += x;
-	return *this;
+	factor local(x);
+	local.divFactor += divFactor;
+	return local;
+
 }
+
+factor operator+(unsigned int x, const factor & rhs)
+{
+	factor local(x);
+	local.divFactor += rhs.divFactor;
+	return local;
+}
+
 
 factor factor::operator-(const factor & rhs)
 {
-	int temp = divFactor - rhs.divFactor;
-	int div = abs(temp);
-	if (div == 0)
-	{
-		div += 2;
+	factor local(divFactor);
+	if (local.divFactor <= rhs.divFactor + 1) {
+		local.divFactor = 2;
 	}
-	
-	if (div == 1)
-	{
-		div += 1;
-	
+	else {
+		local.divFactor -= rhs.divFactor;
 	}
-	divFactor = div;
-	return *this;
+	return local;
 
 }
 
 
 factor factor::operator-(unsigned int x)
 {
-	int temp;
-	if (x > divFactor) temp = x - divFactor;
-	else temp = divFactor - x;
+	factor local(divFactor);
+	if (local.divFactor <= x + 1) { local.divFactor = 2;}
+	else {local.divFactor -= x;}
 
-	if (temp == 0) temp += 2;
-	if (temp == 1) temp += 1;
+	return local;
+}
 
-	divFactor = temp;
-	return *this;
+factor operator-(unsigned int x, const factor & rhs)
+{
+	factor local(x);
+	if (local.divFactor <= rhs.divFactor + 1) { local.divFactor = 2; }
+	else { local.divFactor -= rhs.divFactor; }
+
+	return local;
 }
 
 
 factor factor::operator*(const factor & rhs)
 {
-	divFactor *= rhs.divFactor;
-	return *this;
+	factor local(rhs.divFactor);
+	local.divFactor *= divFactor;
+	return local;
 }
 
 factor factor::operator*(unsigned int x)
 {
-	if (x <= 0) x += 1;
+	factor local(x);
+	local.divFactor *= divFactor;
+	if (local.divFactor <= 1) local.divFactor = 2;
+	return local;
+}
 
-	divFactor *= x;
-	return *this;
+factor operator*(unsigned int x, const factor & rhs)
+{
+	factor local(x);
+	local.divFactor *= rhs.divFactor;
+	return local;
 }
 
 factor factor::operator/(const factor & rhs)
 {
-	int remainder = divFactor / rhs.divFactor;
-	if ( remainder == 1) remainder += 1;
-	if (remainder == 0) remainder += 2;
-
-	divFactor = remainder;
-	return *this;
+	factor local(divFactor);
+	local.divFactor /= rhs.divFactor;
+	if (local.divFactor <= 1) local.divFactor = 2;
+	return local;
 
 }
 
-
 factor factor::operator/(unsigned int x)
 {
-	if (x <= 0) x += 1;
+	factor local(divFactor);
+	local.divFactor /= x;
+	if (local.divFactor <= 1) local.divFactor = 2;
+	return local;
+}
 
-	int remainder = divFactor / x;
-	if (remainder == 1) remainder += 1;
-	if (remainder == 0) remainder += 2;
-
-	divFactor = remainder;
-	return *this;
-
+factor operator/(unsigned int x, const factor & rhs)
+{
+	factor local(x);
+	local.divFactor /= rhs.divFactor;
+	if (local.divFactor <= 1) local.divFactor = 2;
+	return local;
 }
 
 factor factor::operator%(const factor & rhs)
 {
-	int quotient = divFactor % rhs.divFactor;
-	if (quotient == 0) quotient += 2;
-	if (quotient == 1) quotient += 1;
-	divFactor = quotient;
-	return *this;
+	factor local(divFactor);
+	local.divFactor %= rhs.divFactor;
+	if (local.divFactor <= 1) local.divFactor = 2;
+	return local;
 }
 
 factor factor::operator%(unsigned int x)
 {
-	if (x <= 0) x += 1;
-	int quotient = divFactor % x;
-	if (quotient == 0) quotient += 2;
-	if (quotient == 1) quotient += 1;
-	divFactor = quotient;
-	return *this;
+	factor local(divFactor);
+	local.divFactor %= x;
+	if (local.divFactor <= 1) local.divFactor = 2;
+	return local;
+}
+
+factor operator%(unsigned int x, const factor & rhs)
+{
+	factor local(x);
+	local.divFactor %= rhs.divFactor;
+	if (local.divFactor <= 1) local.divFactor = 2;
+	return local;
 }
 
 /////////////////////////SHORTCUT OPERATORS/////////////////
@@ -197,32 +221,26 @@ factor factor::operator++()
 	return *this;
 }
 
-int factor::operator++(int x)
+factor factor::operator++(int x)
 {
-	int local = divFactor;
-	divFactor += 1;
+	factor local = *this;
+	divFactor++;
 	return local;
 }
 
 factor factor::operator--()
 {
-	int temp = divFactor - 1;
-	if (temp <= 1) temp = 2;
-	divFactor = temp;
-
+	if (divFactor > 2) divFactor--;
 	return *this;
+
+
+	
 }
 
-int factor::operator--(int x)
+factor factor::operator--(int x)
 {
-	int local = divFactor - 1;
-	if (local <= 1) local = 2;
-	else
-	{
-		local = divFactor;
-		divFactor -= 1;
-	}
-	
+	factor local = *this;
+	if (divFactor > 2) divFactor--;
 	return local;
 }
 
@@ -237,91 +255,68 @@ int factor::operator--(int x)
 
 /////////////////COMPOUND ASSIGNMENT OPERATORS//////////////////////
 	//=, +=, *=, -=, /=
-factor factor::operator+=(const factor & rhs)
+void factor::operator+=(const factor & rhs)
 {
-	divFactor = divFactor + rhs.divFactor;
-	return *this;
+	divFactor += rhs.divFactor;
+
 }
 
-factor factor::operator+=(unsigned int x)
+void factor::operator+=(unsigned int x)
 {
-	divFactor = divFactor + x;
-	return *this;
+	divFactor += x;
+
 }
 
-factor factor::operator-=(const factor & rhs)
+void factor::operator-=(const factor & rhs)
 {
-	int temp = divFactor - rhs.divFactor;
-	int local = abs(temp);
-	if (local <= 1) local = 2;
-	divFactor = local;
-
-	return *this;
-}
-
-factor factor::operator-=(unsigned int x)
-{
+	if (divFactor <= rhs.divFactor + 1) divFactor = 2;
+	else divFactor -= rhs.divFactor;
 	
-	int temp = divFactor - x;
-	int local = abs(temp);
-	if (local <= 1) local = 2;
-	divFactor = local;
 
-	return *this;
 }
 
-factor factor::operator*=(const factor & rhs)
+void factor::operator-=(unsigned int x)
 {
-	divFactor = divFactor * rhs.divFactor;
-	return *this;
-}
-
-factor factor::operator*=(unsigned int x)
-{
-	divFactor = divFactor * x;
-	return *this;
-}
-
-factor factor::operator/=(const factor & rhs)
-{
-	int remainder = divFactor / rhs.divFactor;
-	if (remainder == 1) remainder += 1;
-	if (remainder == 0) remainder += 2;
-
-	divFactor = remainder;
-	return *this;
-}
-
-factor factor::operator/=(unsigned int x)
-{
-	if (x <= 0) x = 1;
-	int remainder = divFactor / x;
-	if (remainder == 1) remainder += 1;
-	if (remainder == 0) remainder += 2;
-
-	divFactor = remainder;
-	return *this;
-}
-
-factor factor::operator%=(const factor & rhs)
-{
+	if (divFactor <= x + 1) divFactor = 2;
+	else divFactor -= x;
 	
-	int quotient = divFactor % rhs.divFactor;
-	if (quotient == 0) quotient += 2;
-	if (quotient == 1) quotient += 1;
-	divFactor = quotient;
-	return *this;
 }
 
-factor factor::operator%=(unsigned int x)
+void factor::operator*=(const factor & rhs)
 {
+	divFactor *= rhs.divFactor;
+	
+}
 
-	if (x <= 0) x += 1;
-	int quotient = divFactor % x;
-	if (quotient == 0) quotient += 2;
-	if (quotient == 1) quotient += 1;
-	divFactor = quotient;
-	return *this;
+void factor::operator*=(unsigned int x)
+{
+	divFactor *= x;
+	if (divFactor <= 1) divFactor = 2;
+	
+}
+
+void factor::operator/=(const factor & rhs)
+{
+	divFactor /= rhs.divFactor;
+	if (divFactor <= 1) divFactor = 2;
+}
+
+void factor::operator/=(unsigned int x)
+{
+	divFactor /= x;
+	if (divFactor <= 1) divFactor = 2;
+}
+
+void factor::operator%=(const factor & rhs)
+{
+	divFactor %= rhs.divFactor;
+	if (divFactor <= 1) divFactor = 2;
+}
+
+void factor::operator%=(unsigned int x)
+{
+	divFactor %= x;
+	if (divFactor <= 1) divFactor = 2;
 }
 
 

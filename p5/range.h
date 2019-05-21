@@ -1,0 +1,54 @@
+/*
+-- Developer    : Don Dang
+-- Project      : Project 5
+-- Instructor   : Dr. Dingle
+-- File Name    : range.h
+-- File Version : 1.1
+-- Due Date	    : 5/24/2019
+-- Course Name  : CPSC 3200
+----------------------------------------------------------------------------------
+-- WHEN     WHO		WHAT
+	 5/20/19  DD    Ported range.cs to range.h
+								  Updated range.h from feedback (See range Feeback in range.cpp file)
+*/
+
+
+#ifndef RANGE_H
+#define RANGE_H
+#include <iostream>
+#include <stdlib.h>
+#include "factor.h"
+
+using namespace std;
+
+class range
+{
+
+private:
+	factor factObject1;
+	factor factObject2;
+	unsigned int pingsCount;
+	unsigned int min_Ping;
+	unsigned int max_Ping;
+	static const int DEFAULT_PING_VALUE = 0;
+	static const int DEFAULT_FACTOR1_VALUE = 2;
+	static const int DEFAULT_FACTOR2_VALUE = 4;
+
+	void UpdateMinMaxPingRange(unsigned int number);
+
+
+public:
+	range(unsigned int factor1 = DEFAULT_FACTOR1_VALUE, unsigned int factor2 = DEFAULT_FACTOR2_VALUE);
+	~range();
+	unsigned int Ping(unsigned int pNumber);
+	unsigned int GetMaxPingNumber();
+	unsigned int GetMinPingNumber();
+	unsigned int GetTotalPingCount();
+
+
+};
+
+
+#endif
+
+

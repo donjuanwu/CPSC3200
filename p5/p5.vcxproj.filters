@@ -12,6 +12,7 @@
     <ClInclude Include="factor.h">
       <Filter>headers</Filter>
     </ClInclude>
+    <ClInclude Include="range.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="factor.cpp">
@@ -20,5 +21,6 @@
     <ClCompile Include="p5.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="range.cpp" />
   </ItemGroup>
 </Project>
