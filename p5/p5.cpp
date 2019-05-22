@@ -19,7 +19,7 @@ struct Arrays {
 };
 
 void InitArrays(Arrays& obj);
-void TestNumberIsMultiplierFactor(Arrays arr);
+void TestNumberIsMultiplierFactor(Arrays& arr);
 void TestOverloaded_StreamIO_Operators(Arrays arr);
 void TestOverloadedMathematicalOperators(Arrays arr);
 void TestOverloadedRelationalOperators(Arrays arr);
@@ -33,11 +33,11 @@ int main()
 	cout << "Welcome to p5" << endl;
 	Arrays p5Arr;
 	InitArrays(p5Arr);
-	//TestNumberIsMultiplierFactor(p5Arr);
+	TestNumberIsMultiplierFactor(p5Arr);
 	//TestOverloaded_StreamIO_Operators(p5Arr); 
 	//TestOverloadedMathematicalOperators(p5Arr);
 	//TestOverloaded_StreamIO_Operators(p5Arr);
-	//TestOverloadedRelationalOperators(p5Arr);
+	TestOverloadedRelationalOperators(p5Arr);
 	//TestOverloadedShortcutOperators(p5Arr);
 	//TestOverloadedCompounAssignmentOperators(p5Arr);
 
@@ -58,14 +58,16 @@ void InitArrays(Arrays& arr)
 	{
 		num = rand() % RAN_MAX + RAN_MIN;
 		arr.arrFactor[i] = factor(num);
-		cout << i + 1 << ") factor object " << i << " passed in factor { " << num << " }" << endl;
+		cout << i + 1 << ") factor object " << i << " initialized value { " << num << " }" << endl;
+		
 		
 		num = rand() % RAN_MAX + RAN_MIN;
 		num2 = rand() % RAN_MAX + RAN_MIN;
+
 		arr.arrRange[i] = range(num, num2);
-		cout << i + 1 << ") range object " << i  << " passed in factors { " << num << ", " << num2 << "}" << endl;
-		cout << "- factor object " << i << " encapsulated value = " << arr.arrFactor[i] << endl;
-		cout << "- range object " << i << " encapsulated values = " << arr.arrRange[i] << endl;
+		cout << i + 1 << ") range object " << i  << " initialized values { " << num << ", " << num2 << "}" << endl;
+		cout << "- display factor object " << i << " encapsulated value = " << arr.arrFactor[i] << endl;
+		cout << "- display range object " << i << " encapsulated values = " << arr.arrRange[i] << endl;
 
 		cout << endl;
 	}
@@ -73,7 +75,7 @@ void InitArrays(Arrays& arr)
 
 }
 
-void TestNumberIsMultiplierFactor(Arrays arr)
+void TestNumberIsMultiplierFactor(Arrays& arr)
 {
 	cout << endl;
 	cout << ASTERISK + "Begin test number is a multiplier of encapsulated factor" + ASTERISK << endl;
@@ -82,24 +84,24 @@ void TestNumberIsMultiplierFactor(Arrays arr)
 
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
-		num = rand() % (RAN_MAX * MULTIPLIER) + RAN_MIN;
-		cout << i + 1 << ") Generated number " << num << endl;
+		num = rand() % (RAN_MAX * RAN_MAX * MULTIPLIER) + RAN_MIN;
+		cout << i + 1 << ") Passed in number " << num << endl;
 		if (arr.arrFactor[i].Div(num))
 		{
-			cout << " - Passed in number " << num << " is a multiplier of factor" << endl;
+			cout << " - " << num << " is a multiplier of factor {" << arr.arrFactor[i] << "}" << endl;
 		}
 		else
 		{
-			cout << " - Number " << num << " is NOT a multiplier of factor" << endl;
+			cout << " - " << num << " is NOT a multiplier of factor {" << arr.arrFactor[i] << "}" << endl;
 		}
 
 		if (arr.arrRange[i].Ping(num))
 		{
-			cout << " - Passed in number " << num << " is a multiplier of range " << endl;
+			cout << " - " << num << " is a multiplier of range {" << arr.arrRange[i] << "}" << endl;
 		}
 		else
 		{
-			cout << " - Number " << num << " is NOT a multiplier of range" << endl;
+			cout << " - " << num << " is NOT a multiplier of range {" << arr.arrRange[i] << "}" << endl;
 		}
 
 
@@ -111,11 +113,14 @@ void TestOverloaded_StreamIO_Operators(Arrays arr)
 {
 	cout << endl;
 	cout << ASTERISK + "Begin Test Overloaded Stream I/O Operators " + ASTERISK << endl;
-	cout << " - Print factor objects" << endl;
+	cout << " - Print encapsulated values" << endl;
 
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
-		cout << " object[" << i << "] div factor = " << arr.arrFactor[i] << endl;
+		cout << i + 1 << ") factor object[" << i << "] encapsulated factor = " << arr.arrFactor[i] << endl;
+		cout << i + 1 << ") range object[" << i << "] encapsulated factors = " << arr.arrRange[i] << endl;
+
+		cout << endl;
 	}
 
 	cout << ASTERISK + "End Test Overloaded Stream I/O Operators" + ASTERISK << endl;
@@ -137,16 +142,16 @@ void TestOverloadedMathematicalOperators(Arrays arr)
 		{
 			cout << "- object [" << i << "] + object[" << i + 1 << "] --> " << arr.arrFactor[i] << " + " << arr.arrFactor[i + 1] << endl;
 			fTest = arr.arrFactor[i] + arr.arrFactor[i + 1];
-			cout << "  in scope object [" << i << "] updated div factor = " << fTest << endl;
+			cout << "  in scope new object factor = " << fTest << endl;
 		}
 		else
 		{
 			cout << "- object [" << i << "] + object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " + " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			fTest = arr.arrFactor[i] + arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
-			cout << "  in scope object [" << i << "] updated div factor = " << fTest << endl;
+			cout << "  in scope new object factor = " << fTest << endl;
 		}
 	}
-		 
+
 		cout << endl;
 		cout << "Adding a factor object to a random unsigned integer" << endl;
 		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
@@ -362,35 +367,174 @@ void TestOverloadedRelationalOperators(Arrays arr)
 			}
 		}
 	}
+
 	cout << endl;
-	cout << "Determine one object div factor is less than another div factor using '<' operator" << endl;
+	cout << "Determine two range objects MAX PING values equal each other using '==' operator" << endl;
+
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- object [" << i << "] div factor = " << arr.arrFactor[i] << endl;
-			cout << "- object [" << i + 1 << "] div factor = " << arr.arrFactor[i + 1] << endl;
-			if (arr.arrFactor[i] < arr.arrFactor[i + 1])
+			cout << "- range [" << i << "] max ping =  " << arr.arrRange[i].GetMaxPingNumber() << endl;
+			cout << "- range [" << i + 1 << "] max ping = " << arr.arrRange[i + 1].GetMaxPingNumber() << endl;
+			if (arr.arrRange[i] == arr.arrRange[i + 1])
 			{
-				cout << " object [" << i << "] div factor is less than object [" << i + 1 << "] div factor" << endl;
+				cout << " range objects have same max ping value" << endl;
 			}
 			else
 			{
-				cout << " object [" << i << "] div factor is NOT less than object [" << i + 1 << "] div factor" << endl;
+				cout << " range objects dont have same max ping value" << endl;
+			}
+		}
+		else
+		{
+			cout << "- range [" << i << "] max ping = " << arr.arrRange[i].GetMaxPingNumber() << endl;
+			cout << "- range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] max ping = " << arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE].GetMaxPingNumber() << endl;
+			if (arr.arrRange[i] == arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
+			{
+				cout << " range objects have same max ping value" << endl;
+			}
+			else
+			{
+				cout << " range objects dont have same max ping value" << endl;
+			}
+		}
+	}
+
+
+	cout << endl;
+	cout << "Determine one range MAX PING is less than another using '<' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		if (i < DEFAULT_ARR_SIZE - 1)
+		{
+			cout << "- range [" << i << "] max ping = " << arr.arrRange[i].GetMaxPingNumber() << endl;
+			cout << "- range [" << i + 1 << "] max ping = " << arr.arrRange[i + 1].GetMaxPingNumber() << endl;
+			if (arr.arrRange[i] < arr.arrRange[i + 1])
+			{
+				cout << " range [" << i << "] max ping is less than range [" << i + 1 << "]" << endl;
+			}
+			else
+			{
+				cout << " range [" << i << "] max ping is NOT less than range [" << i + 1 << "]" << endl;
+			}
+
+		}
+		else
+		{
+			cout << "- range [" << i << "] max ping = " << arr.arrRange[i].GetMaxPingNumber() << endl;
+			cout << "- range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] max ping = " << arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE].GetMaxPingNumber() << endl;
+			if (arr.arrRange[i] < arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
+			{
+				cout << " range [" << i << "] div value is less than range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
+			}
+			else
+			{
+				cout << " range [" << i << "] max ping is NOT less than range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
+			}
+
+		}
+	}
+
+	cout << endl;
+	cout << "Determine one range MAX PING is greater than another using '>' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		if (i < DEFAULT_ARR_SIZE - 1)
+		{
+			cout << "- range [" << i << "] max ping = " << arr.arrRange[i].GetMaxPingNumber() << endl;
+			cout << "- range [" << i + 1 << "] max ping = " << arr.arrRange[i + 1].GetMaxPingNumber() << endl;
+			if (arr.arrRange[i] > arr.arrRange[i + 1])
+			{
+				cout << " range [" << i << "] max ping is greater than range [" << i + 1 << "]" << endl;
+			}
+			else
+			{
+				cout << " range [" << i << "] max ping is NOT greater than range [" << i + 1 << "]" << endl;
+			}
+
+		}
+		else
+		{
+			cout << "- range [" << i << "] max ping = " << arr.arrRange[i].GetMaxPingNumber() << endl;
+			cout << "- range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] max ping = " << arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE].GetMaxPingNumber() << endl;
+			if (arr.arrRange[i] > arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
+			{
+				cout << " range [" << i << "] max ping is greater than range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
+			}
+			else
+			{
+				cout << " range [" << i << "] max ping is NOT greater than range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
+			}
+
+		}
+	}
+
+	cout << endl;
+	cout << "Determine two range objects MAX PING are not equal using '!=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		if (i < DEFAULT_ARR_SIZE - 1)
+		{
+			cout << "- range [" << i << "] max ping = " << arr.arrRange[i].GetMaxPingNumber() << endl;
+			cout << "- range [" << i + 1 << "] max ping = " << arr.arrRange[i + 1].GetMaxPingNumber() << endl;
+			if (arr.arrRange[i] != arr.arrRange[i + 1])
+			{
+				cout << " range [" << i << "] max ping is NOT equals to range [" << i + 1 << "]" << endl;
+			}
+			else
+			{
+				cout << " range [" << i << "] max ping is equals range [" << i + 1 << "]" << endl;
+			}
+
+		}
+		else
+		{
+			cout << "- range [" << i << "] max ping = " << arr.arrRange[i].GetMaxPingNumber() << endl;
+			cout << "- range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] max ping = " << arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE].GetMaxPingNumber() << endl;
+			if (arr.arrRange[i] != arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
+			{
+				cout << " range [" << i << "] max ping is NOT equals to range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
+			}
+			else
+			{
+				cout << " range [" << i << "] max ping is equals to range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
+			}
+
+		}
+	}
+
+
+
+	cout << endl;
+	cout << "Determine one div factor is less than another div factor using '<' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		if (i < DEFAULT_ARR_SIZE - 1)
+		{
+			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << i + 1 << "] div value = " << arr.arrFactor[i + 1] << endl;
+			if (arr.arrFactor[i] < arr.arrFactor[i + 1])
+			{
+				cout << " factor [" << i << "] div value is less than factor [" << i + 1 << "] div value" << endl;
+			}
+			else
+			{
+				cout << " factor [" << i << "] div value is NOT less than factor [" << i + 1 << "] div value" << endl;
 			}
 		
 		}
 		else
 		{
-			cout << "- object [" << i << "] div factor = " << arr.arrFactor[i] << endl;
-			cout << "- object [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div factor = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			if (arr.arrFactor[i] < arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
 			{
-				cout << " object [" << i << "] div factor is less than object [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div factor" << endl;
+				cout << " factor [" << i << "] div value is less than factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
 			}
 			else
 			{
-				cout << " object [" << i << "] div factor is NOT less than object [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div factor" << endl;
+				cout << " factor [" << i << "] div value is NOT less than factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
 			}
 		
 		}
@@ -402,29 +546,29 @@ void TestOverloadedRelationalOperators(Arrays arr)
 	{
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- object [" << i << "] div factor = " << arr.arrFactor[i] << endl;
-			cout << "- object [" << i + 1 << "] div factor = " << arr.arrFactor[i + 1] << endl;
+			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << i + 1 << "] div value = " << arr.arrFactor[i + 1] << endl;
 			if (arr.arrFactor[i] > arr.arrFactor[i + 1])
 			{
-				cout << " object [" << i << "] div factor is greater than object [" << i + 1 << "] div factor" << endl;
+				cout << " factor [" << i << "] div factor is greater than factor [" << i + 1 << "] div value" << endl;
 			}
 			else
 			{
-				cout << " object [" << i << "] div factor is NOT greater than object [" << i + 1 << "] div factor" << endl;
+				cout << " factor [" << i << "] div value is NOT greater than factor [" << i + 1 << "] div value" << endl;
 			}
 
 		}
 		else
 		{
-			cout << "- object [" << i << "] div factor = " << arr.arrFactor[i] << endl;
-			cout << "- object [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div factor = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			if (arr.arrFactor[i] > arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
 			{
-				cout << " object [" << i << "] div factor is greater than object [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div factor" << endl;
+				cout << " factor [" << i << "] div value is greater than factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
 			}
 			else
 			{
-				cout << " object [" << i << "] div factor is NOT greater than object [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div factor" << endl;
+				cout << " factor [" << i << "] div value is NOT greater than factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
 			}
 
 		}
@@ -436,29 +580,29 @@ void TestOverloadedRelationalOperators(Arrays arr)
 	{
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- object [" << i << "] div factor = " << arr.arrFactor[i] << endl;
-			cout << "- object [" << i + 1 << "] div factor = " << arr.arrFactor[i + 1] << endl;
+			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << i + 1 << "] div value = " << arr.arrFactor[i + 1] << endl;
 			if (arr.arrFactor[i] != arr.arrFactor[i + 1])
 			{
-				cout << " object [" << i << "] div factor is NOT equals to object [" << i + 1 << "] div factor" << endl;
+				cout << " factor [" << i << "] div factor is NOT equals to factor [" << i + 1 << "] div value" << endl;
 			}
 			else
 			{
-				cout << " object [" << i << "] div factor is equals object [" << i + 1 << "] div factor" << endl;
+				cout << " factor [" << i << "] div factor is equals factor [" << i + 1 << "] div value" << endl;
 			}
 
 		}
 		else
 		{
-			cout << "- object [" << i << "] div factor = " << arr.arrFactor[i] << endl;
-			cout << "- object [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div factor = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			if (arr.arrFactor[i] != arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
 			{
-				cout << " object [" << i << "] div factor is NOT equals to object [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div factor" << endl;
+				cout << " factor [" << i << "] div value is NOT equals to factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
 			}
 			else
 			{
-				cout << " object [" << i << "] div factor is equals to object [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div factor" << endl;
+				cout << " factor [" << i << "] div value is equals to factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
 			}
 
 		}
@@ -470,29 +614,29 @@ void TestOverloadedRelationalOperators(Arrays arr)
 	{
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- object [" << i << "] div factor = " << arr.arrFactor[i] << endl;
-			cout << "- object [" << i + 1 << "] div factor = " << arr.arrFactor[i + 1] << endl;
+			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << i + 1 << "] div value = " << arr.arrFactor[i + 1] << endl;
 			if (arr.arrFactor[i] <= arr.arrFactor[i + 1])
 			{
-				cout << " object [" << i << "] div factor is less than or equals to object [" << i + 1 << "] div factor" << endl;
+				cout << " factor [" << i << "] div value is less than or equals to factor [" << i + 1 << "] div value" << endl;
 			}
 			else
 			{
-				cout << " object [" << i << "] div factor is NOT less than or equals to object [" << i + 1 << "] div factor" << endl;
+				cout << " factor [" << i << "] div value is NOT less than or equals to factor [" << i + 1 << "] div value" << endl;
 			}
 
 		}
 		else
 		{
-			cout << "- object [" << i << "] div factor = " << arr.arrFactor[i] << endl;
-			cout << "- object [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div factor = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			if (arr.arrFactor[i] <= arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
 			{
-				cout << " object [" << i << "] div factor is less than or equals to object [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div factor" << endl;
+				cout << " factor [" << i << "] div value is less than or equals to factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
 			}
 			else
 			{
-				cout << " object [" << i << "] div factor is NOT less than or equals to object [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div factor" << endl;
+				cout << " factor [" << i << "] div value is NOT less than or equals to factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
 			}
 		}
 	}
@@ -503,29 +647,29 @@ void TestOverloadedRelationalOperators(Arrays arr)
 	{
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- object [" << i << "] div factor = " << arr.arrFactor[i] << endl;
-			cout << "- object [" << i + 1 << "] div factor = " << arr.arrFactor[i + 1] << endl;
+			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << i + 1 << "] div value = " << arr.arrFactor[i + 1] << endl;
 			if (arr.arrFactor[i] >= arr.arrFactor[i + 1])
 			{
-				cout << " object [" << i << "] div factor is greater than or equals to object [" << i + 1 << "] div factor" << endl;
+				cout << " factor [" << i << "] div value is greater than or equals to factor [" << i + 1 << "] div value" << endl;
 			}
 			else
 			{
-				cout << " object [" << i << "] div factor is NOT greater than or equals to object [" << i + 1 << "] div factor" << endl;
+				cout << " factor [" << i << "] div value is NOT greater than or equals to factor [" << i + 1 << "] div value" << endl;
 			}
 
 		}
 		else
 		{
-			cout << "- object [" << i << "] div factor = " << arr.arrFactor[i] << endl;
-			cout << "- object [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div factor = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			if (arr.arrFactor[i] >= arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
 			{
-				cout << " object [" << i << "] div factor is greater than or equals to object [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div factor" << endl;
+				cout << " factor [" << i << "] div value is greater than or equals to factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
 			}
 			else
 			{
-				cout << " object [" << i << "] div factor is NOT greater than or equals to object [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div factor" << endl;
+				cout << " factor [" << i << "] div value is NOT greater than or equals to factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
 			}
 		}
 	}
@@ -542,7 +686,7 @@ void TestOverloadedShortcutOperators(Arrays arr)
 
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
-		cout << "- object [" << i << "] current div factor = " << arr.arrFactor[i];
+		cout << "- factor [" << i << "] current div value = " << arr.arrFactor[i];
 		cout << ", call ++object[" << i <<"]" << endl;
 		cout << "  in scope returned div factor = " << ++arr.arrFactor[i] << endl;
 	}
@@ -551,7 +695,7 @@ void TestOverloadedShortcutOperators(Arrays arr)
 
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
-		cout << "- object [" << i << "] current div factor = " << arr.arrFactor[i];
+		cout << "- factor [" << i << "] current div value = " << arr.arrFactor[i];
 		cout << ", call object[" << i << "]++" << endl;
 		cout << "  in scope returned div factor = " << arr.arrFactor[i]++ << endl;
 	}
@@ -561,7 +705,7 @@ void TestOverloadedShortcutOperators(Arrays arr)
 
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
-		cout << "- object [" << i << "] current div factor = " << arr.arrFactor[i];
+		cout << "- factor [" << i << "] current div value = " << arr.arrFactor[i];
 		cout << ", call --object[" << i << "]" << endl;
 		cout << "  in scope returned div factor = " << --arr.arrFactor[i] << endl;
 	}
@@ -571,9 +715,9 @@ void TestOverloadedShortcutOperators(Arrays arr)
 
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
-		cout << "- object [" << i << "] current div factor = " << arr.arrFactor[i];
+		cout << "- factor [" << i << "] current div value = " << arr.arrFactor[i];
 		cout << ", call object[" << i << "]--" << endl;
-		cout << "  in scope returned div factor = " << arr.arrFactor[i]-- << endl;
+		cout << "  in scope returned div value = " << arr.arrFactor[i]-- << endl;
 	}
 
 	cout << ASTERISK + "End Test Overloaded Shortcut Operators " + ASTERISK << endl;
@@ -592,15 +736,15 @@ void TestOverloadedCompounAssignmentOperators(Arrays arr)
 	{
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- object [" << i << "] += object[" << i + 1 << "] --> " << arr.arrFactor[i] << " += " << arr.arrFactor[i + 1] << endl;
+			cout << "- factor [" << i << "] += object[" << i + 1 << "] --> " << arr.arrFactor[i] << " += " << arr.arrFactor[i + 1] << endl;
 			arr.arrFactor[i] += arr.arrFactor[i + 1];
-			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
 		}
 		else
 		{
-			cout << "- object [" << i << "] += object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " += " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			cout << "- factor [" << i << "] += factor[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " += " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			arr.arrFactor[i] += arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
-			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
 		}
 	}
 
@@ -609,9 +753,9 @@ void TestOverloadedCompounAssignmentOperators(Arrays arr)
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		num = rand() % RAN_MAX + RAN_MIN;
-		cout << "- object [" << i << "] div factor +=  random integer --> " << arr.arrFactor[i] << " += " << num << endl;
+		cout << "- factor [" << i << "] div value +=  random integer --> " << arr.arrFactor[i] << " += " << num << endl;
 		arr.arrFactor[i] += num;
-		cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+		cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
 	}
 
 	cout << endl;
@@ -620,15 +764,15 @@ void TestOverloadedCompounAssignmentOperators(Arrays arr)
 	{
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- object [" << i << "] -= object[" << i + 1 << "] --> " << arr.arrFactor[i] << " -= " << arr.arrFactor[i + 1] << endl;
+			cout << "- factor [" << i << "] -= factor[" << i + 1 << "] --> " << arr.arrFactor[i] << " -= " << arr.arrFactor[i + 1] << endl;
 			arr.arrFactor[i] -= arr.arrFactor[i + 1];
-			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
 		}
 		else
 		{
-			cout << "- object [" << i << "] -= object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " -= " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			cout << "- factor [" << i << "] -= factor[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " -= " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			arr.arrFactor[i] -= arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
-			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
 		}
 	}
 
@@ -637,9 +781,9 @@ void TestOverloadedCompounAssignmentOperators(Arrays arr)
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		num = rand() % RAN_MAX + RAN_MIN;
-		cout << "- object [" << i << "] div factor -=  random integer --> " << arr.arrFactor[i] << " -= " << num << endl;
+		cout << "- factor [" << i << "] div value -=  random integer --> " << arr.arrFactor[i] << " -= " << num << endl;
 		arr.arrFactor[i] -= num;
-		cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+		cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
 	}
 
 
@@ -649,15 +793,15 @@ void TestOverloadedCompounAssignmentOperators(Arrays arr)
 	{
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- object [" << i << "] *= object[" << i + 1 << "] --> " << arr.arrFactor[i] << " *= " << arr.arrFactor[i + 1] << endl;
+			cout << "- factor [" << i << "] *= factor[" << i + 1 << "] --> " << arr.arrFactor[i] << " *= " << arr.arrFactor[i + 1] << endl;
 			arr.arrFactor[i] *= arr.arrFactor[i + 1];
-			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
 		}
 		else
 		{
-			cout << "- object [" << i << "] *= object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " *= " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			cout << "- factor [" << i << "] *= factor[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " *= " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			arr.arrFactor[i] *= arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
-			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
 		}
 	}
 
@@ -666,9 +810,9 @@ void TestOverloadedCompounAssignmentOperators(Arrays arr)
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		num = rand() % RAN_MAX + RAN_MIN;
-		cout << "- object [" << i << "] div factor *=  random integer --> " << arr.arrFactor[i] << " *= " << num << endl;
+		cout << "- factor [" << i << "] div value *=  random integer --> " << arr.arrFactor[i] << " *= " << num << endl;
 		arr.arrFactor[i] *= num;
-		cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+		cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
 	}
 
 	cout << endl;
@@ -677,15 +821,15 @@ void TestOverloadedCompounAssignmentOperators(Arrays arr)
 	{
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- object [" << i << "] /= object[" << i + 1 << "] --> " << arr.arrFactor[i] << " /= " << arr.arrFactor[i + 1] << endl;
+			cout << "- factor [" << i << "] /= factor[" << i + 1 << "] --> " << arr.arrFactor[i] << " /= " << arr.arrFactor[i + 1] << endl;
 			arr.arrFactor[i] /= arr.arrFactor[i + 1];
-			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
 		}
 		else
 		{
-			cout << "- object [" << i << "] /= object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " /= " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			cout << "- factor [" << i << "] /= factor[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " /= " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			arr.arrFactor[i] /= arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
-			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			cout << "  in scope object [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
 		}
 	}
 
@@ -695,9 +839,9 @@ void TestOverloadedCompounAssignmentOperators(Arrays arr)
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		num = rand() % RAN_MAX + RAN_MIN;
-		cout << "- object [" << i << "] div factor /=  random integer --> " << arr.arrFactor[i] << " /= " << num << endl;
+		cout << "- factor [" << i << "] div value /=  random integer --> " << arr.arrFactor[i] << " /= " << num << endl;
 		arr.arrFactor[i] /= num;
-		cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+		cout << "  in scope object [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
 	}
 
 	cout << endl;
@@ -706,15 +850,15 @@ void TestOverloadedCompounAssignmentOperators(Arrays arr)
 	{
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- object [" << i << "] %= object[" << i + 1 << "] --> " << arr.arrFactor[i] << " %= " << arr.arrFactor[i + 1] << endl;
+			cout << "- factor [" << i << "] %= factor[" << i + 1 << "] --> " << arr.arrFactor[i] << " %= " << arr.arrFactor[i + 1] << endl;
 			arr.arrFactor[i] %= arr.arrFactor[i + 1];
-			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			cout << "  in scope object [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
 		}
 		else
 		{
-			cout << "- object [" << i << "] %= object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " %= " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			cout << "- factor [" << i << "] %= object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " %= " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			arr.arrFactor[i] %= arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
-			cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+			cout << "  in scope object [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
 		}
 	}
 
@@ -723,9 +867,9 @@ void TestOverloadedCompounAssignmentOperators(Arrays arr)
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		num = rand() % RAN_MAX + RAN_MIN;
-		cout << "- object [" << i << "] div factor %=  random integer --> " << arr.arrFactor[i] << " %= " << num << endl;
+		cout << "- factor [" << i << "] div value %=  random integer --> " << arr.arrFactor[i] << " %= " << num << endl;
 		arr.arrFactor[i] %= num;
-		cout << "  in scope object [" << i << "] updated div factor = " << arr.arrFactor[i] << endl;
+		cout << "  in scope object [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
 	}
 
 	cout << ASTERISK + "End Test Overloaded Compound Assignment Operators " + ASTERISK << endl;

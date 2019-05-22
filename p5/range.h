@@ -27,8 +27,6 @@ class range
 private:
 	factor factObject1;
 	factor factObject2;
-	unsigned int rFactor1;
-	unsigned int rFactor2;
 	unsigned int pingsCount;
 	unsigned int min_Ping;
 	unsigned int max_Ping;
@@ -36,7 +34,7 @@ private:
 	static const int DEFAULT_FACTOR_VALUE = 2;
 
 
-	void UpdateMinMaxPingRange(unsigned int number);
+	void UpdateMinMaxPingValue(unsigned int number);
 
 
 public:
@@ -51,6 +49,40 @@ public:
 	/////////////////Stream I/O/////////////////////////
 	friend ostream& operator<<(ostream& os, const range & r); //completed
 
+
+
+
+
+	/////////////////Mathematical//////////////////////
+	//range operator+(const factor & rhs); //completed
+	//factor operator+(unsigned int x); //completed
+	//friend factor operator+(unsigned int x, const factor & rhs);
+
+
+	//factor operator-(const factor & rhs); //completed
+	//factor operator-(unsigned int x); //complete
+	//friend factor operator-(unsigned int x, const factor & rhs);
+
+	//factor operator*(const factor & rhs);//complete
+	//factor operator*(unsigned int x);//complete
+	//friend factor operator*(unsigned int x, const factor & rhs);
+
+	//factor operator/(const factor & rhs);//complete
+	//factor operator/(unsigned int x);//complete
+	//friend factor operator/(unsigned int x, const factor & rhs);
+
+	//factor operator%(const factor & rhs);//complete
+	//factor operator%(unsigned int x);//complete
+	//friend factor operator%(unsigned int x, const factor & rhs);
+
+	///////////////////RELATION OPERATOR////////////////////////////
+	bool operator == (const range & rhs);
+	bool operator<(const range & rhs); 
+	bool operator>(const range & rhs);
+	bool operator!=(const range & rhs);
+	bool operator<=(const range & rhs);
+
+	/*bool factor::operator>=(const factor & rhs) { return (divFactor >= rhs.divFactor); }*/
 
 };
 

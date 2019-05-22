@@ -26,11 +26,8 @@ range::range(unsigned int factor1, unsigned int factor2) //: factObject1(factor1
 	if (factor1 <= 1) factor1 = DEFAULT_FACTOR_VALUE;
 	if (factor2 <= 1) factor2 = DEFAULT_FACTOR_VALUE;
 
-	rFactor1 = factor1;
-	rFactor2 = factor2;
-
-	factObject1 = factor(rFactor1);
-	factObject2 = factor(rFactor2);
+	factObject1 = factor(factor1);
+	factObject2 = factor(factor2);
 	min_Ping = DEFAULT_PING_VALUE;
 	max_Ping = DEFAULT_PING_VALUE;
 	pingsCount = DEFAULT_PING_VALUE;
@@ -44,18 +41,18 @@ unsigned int range::Ping(unsigned int pNumber)
 {
 	bool isMultiple1 = factObject1.Div(pNumber);
 	bool isMultiple2 = factObject2.Div(pNumber);
-	factObject1.Reset();
-	factObject2.Reset();
+	//factObject1.Reset();
+	//factObject2.Reset();
 	if ((isMultiple1) && (isMultiple2))
 	{
 		pingsCount++;
-		UpdateMinMaxPingRange(pNumber);
+		UpdateMinMaxPingValue(pNumber);
 	}
 
 	return pingsCount;
 }
 
-void range::UpdateMinMaxPingRange(unsigned int number)
+void range::UpdateMinMaxPingValue(unsigned int number)
 {
 		if (number >= max_Ping)
 		{
@@ -63,7 +60,10 @@ void range::UpdateMinMaxPingRange(unsigned int number)
 		}
 		else
 		{
-			min_Ping = number;
+			if (number <= min_Ping)
+			{
+				min_Ping = number;
+			}
 		}
 }
 
@@ -85,7 +85,31 @@ void range::Replace(unsigned int rFactor1, unsigned int rFactor2)
 /////////////////Stream I/O/////////////////////////
 ostream& operator<<(ostream& os, const range & r)
 {
-	//os << r.rFactor1 << ", " << r.rFactor2;
 	os << r.factObject1 << ", " << r.factObject2;
 	return os;
 }
+
+
+///////////////////RELATION OPERATORs////////////////////////////
+
+bool range::operator== (const range & rhs)
+{
+	return (this->max_Ping == rhs.max_Ping);
+}
+
+bool range::operator<(const range & rhs) 
+{ return (this->max_Ping < rhs.max_Ping); }
+
+bool range::operator>(const range & rhs) { return (this->max_Ping > rhs.max_Ping); }
+
+bool range::operator!=(const range & rhs)
+{
+	return (this->max_Ping != rhs.max_Ping);
+}
+
+bool range::operator<=(const range & rhs)
+{
+	return (this->max_Ping <= rhs.max_Ping);
+}
+
+

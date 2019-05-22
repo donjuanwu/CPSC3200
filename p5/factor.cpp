@@ -49,7 +49,7 @@ bool factor::Div(unsigned int number)
 	if (isObjectActive)
 	{
 
-		if (number != lastNumber) 
+		if ((int)number != lastNumber) 
 		{
 			lastNumber = number;
 			if (number % divFactor == 0)
