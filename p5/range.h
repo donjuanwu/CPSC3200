@@ -16,7 +16,6 @@
 #ifndef RANGE_H
 #define RANGE_H
 #include <iostream>
-#include <stdlib.h>
 #include "factor.h"
 
 using namespace std;
@@ -51,20 +50,18 @@ public:
 
 
 
-
-
 	/////////////////Mathematical//////////////////////
-	//range operator+(const factor & rhs); //completed
-	//factor operator+(unsigned int x); //completed
-	//friend factor operator+(unsigned int x, const factor & rhs);
+	range operator+(const range& rhs); //completed
+	range operator+(unsigned int x); //completed
+	friend range operator+(unsigned int x, const range & rhs); //completed
 
 
-	//factor operator-(const factor & rhs); //completed
-	//factor operator-(unsigned int x); //complete
-	//friend factor operator-(unsigned int x, const factor & rhs);
+	range operator-(const range & rhs); //complete
+	range operator-(unsigned int x); 
+	friend range operator-(unsigned int x, const range & rhs); //complete
 
-	//factor operator*(const factor & rhs);//complete
-	//factor operator*(unsigned int x);//complete
+	range operator*(const range & rhs);//complete
+	range operator*(unsigned int x);
 	//friend factor operator*(unsigned int x, const factor & rhs);
 
 	//factor operator/(const factor & rhs);//complete
@@ -81,8 +78,7 @@ public:
 	bool operator>(const range & rhs);
 	bool operator!=(const range & rhs);
 	bool operator<=(const range & rhs);
-
-	/*bool factor::operator>=(const factor & rhs) { return (divFactor >= rhs.divFactor); }*/
+	bool operator>=(const range & rhs); 
 
 };
 

@@ -53,18 +53,36 @@ public:
 	friend ostream& operator<<(ostream& os, const factor & f); //completed
 	
 
-	/////////////////Mathematical//////////////////////
-	factor operator+(const factor & rhs); //completed
-	factor operator+(unsigned int x); //completed
-	friend factor operator+(unsigned int x, const factor & rhs);
+	////////////////////////////MATHEMATICAL/////////////////////////////////
+	//factor operator+(const factor & rhs); //completed
+	//factor operator+(unsigned int x); //completed
+	//friend factor operator+(unsigned int x, const factor & rhs);
 
+	//	factor operator-(const factor & rhs); //completed
+	// factor operator-(unsigned int x); //complete
+	// friend factor operator-(unsigned int x, const factor & rhs);
 
-	factor operator-(const factor & rhs); //completed
-	factor operator-(unsigned int x); //complete
-	friend factor operator-(unsigned int x, const factor & rhs);
+	//factor operator*(const factor & rhs);//complete
+	//factor operator*(unsigned int x);//complete
 
-	factor operator*(const factor & rhs);//complete
-	factor operator*(unsigned int x);//complete
+	/************************MODIFIED MATHEMATICAL**************************/
+	int operator+(const factor & rhs); //completed
+	int operator+(unsigned int x); //completed
+	friend int operator+(unsigned int x, const factor & rhs); //completed
+
+	int operator-(const factor & rhs); //completed
+	int operator-(unsigned int x); //complete
+	friend int operator-(unsigned int x, const factor & rhs); //complete
+
+	int operator*(const factor & rhs); //complete
+
+	/*************************************************************************/
+	
+
+	
+
+	
+	int operator*(unsigned int x);
 	friend factor operator*(unsigned int x, const factor & rhs);
 
 	factor operator/(const factor & rhs);//complete

@@ -86,76 +86,132 @@ ostream& operator<<(ostream& os, const factor & f)
 
 
 ///////////////MATHEMATICAL////////////////////
-factor factor::operator+(const factor & rhs)
+//factor factor::operator+(const factor & rhs)
+//{
+//	factor local(rhs.divFactor);
+//	local.divFactor += divFactor;
+//	return local;
+//}
+
+//factor factor::operator+(unsigned int x)
+//{
+//	factor local(x);
+//	local.divFactor += divFactor;
+//	return local;
+//
+//}
+
+//factor operator+(unsigned int x, const factor & rhs)
+//{
+//	factor local(x);
+//	local.divFactor += rhs.divFactor;
+//	return local;
+//}
+
+
+//factor factor::operator-(const factor & rhs)
+//{
+//	factor local(divFactor);
+//	if (local.divFactor <= rhs.divFactor + 1) {
+//		local.divFactor = 2;
+//	}
+//	else {
+//		local.divFactor -= rhs.divFactor;
+//	}
+//	return local;
+//
+//}
+
+//factor factor::operator-(unsigned int x)
+//{
+//	factor local(divFactor);
+//	if (local.divFactor <= x + 1) { local.divFactor = 2; }
+//	else { local.divFactor -= x; }
+//
+//	return local;
+//}
+
+//factor factor::operator*(const factor & rhs)
+//{
+//	factor local(rhs.divFactor);
+//	local.divFactor *= divFactor;
+//	return local;
+//}
+
+//factor factor::operator*(unsigned int x)
+//{
+//	factor local(x);
+//	local.divFactor *= divFactor;
+//	if (local.divFactor <= 1) local.divFactor = 2;
+//	return local;
+//}
+
+////////////////////////////////MODIFIED MATH//////////////////////////////////
+int factor::operator+(const factor & rhs)
 {
 	factor local(rhs.divFactor);
 	local.divFactor += divFactor;
-	return local;
+	return local.divFactor;
 }
 
 
-factor factor::operator+(unsigned int x)
+int factor::operator+(unsigned int x)
 {
 	factor local(x);
 	local.divFactor += divFactor;
-	return local;
-
+	return local.divFactor;
 }
 
-factor operator+(unsigned int x, const factor & rhs)
+int operator+(unsigned int x, const factor & rhs)
 {
 	factor local(x);
 	local.divFactor += rhs.divFactor;
-	return local;
+	return local.divFactor;
 }
 
 
-factor factor::operator-(const factor & rhs)
+int factor::operator-(const factor & rhs)
 {
 	factor local(divFactor);
-	if (local.divFactor <= rhs.divFactor + 1) {
-		local.divFactor = 2;
-	}
-	else {
-		local.divFactor -= rhs.divFactor;
-	}
-	return local;
-
+	if (local.divFactor <= rhs.divFactor + 1) { local.divFactor = 2;}
+	else { local.divFactor -= rhs.divFactor;}
+	return local.divFactor;
 }
 
 
-factor factor::operator-(unsigned int x)
+int factor::operator-(unsigned int x)
 {
 	factor local(divFactor);
 	if (local.divFactor <= x + 1) { local.divFactor = 2;}
 	else {local.divFactor -= x;}
-
-	return local;
+	return local.divFactor;
 }
 
-factor operator-(unsigned int x, const factor & rhs)
+int operator-(unsigned int x, const factor & rhs)
 {
 	factor local(x);
 	if (local.divFactor <= rhs.divFactor + 1) { local.divFactor = 2; }
 	else { local.divFactor -= rhs.divFactor; }
-
-	return local;
+	return local.divFactor;
 }
 
 
-factor factor::operator*(const factor & rhs)
+int factor::operator*(const factor & rhs)
 {
 	factor local(rhs.divFactor);
 	local.divFactor *= divFactor;
-	return local;
+	return local.divFactor;
 }
 
-factor factor::operator*(unsigned int x)
+int factor::operator*(unsigned int x)
 {
-	factor local(x);
-	local.divFactor *= divFactor;
+
+	factor local(divFactor);
+	local.divFactor *= x;
+	//factor local(x);
+	//local.divFactor *= divFactor;
 	if (local.divFactor <= 1) local.divFactor = 2;
-	return local;
+	return local.divFactor;
 }
 
 factor operator*(unsigned int x, const factor & rhs)

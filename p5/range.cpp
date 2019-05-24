@@ -85,31 +85,90 @@ void range::Replace(unsigned int rFactor1, unsigned int rFactor2)
 /////////////////Stream I/O/////////////////////////
 ostream& operator<<(ostream& os, const range & r)
 {
-	os << r.factObject1 << ", " << r.factObject2;
+	os << r.factObject1 << "," << r.factObject2;
 	return os;
 }
 
 
-///////////////////RELATION OPERATORs////////////////////////////
+/////////////////////////////////RELATION OPERATORS/////////////////////////////////////
 
 bool range::operator== (const range & rhs)
 {
-	return (this->max_Ping == rhs.max_Ping);
+	return factObject1 == rhs.factObject1 && factObject2 == rhs.factObject2;
+	
 }
 
 bool range::operator<(const range & rhs) 
-{ return (this->max_Ping < rhs.max_Ping); }
+{ return (factObject1 < rhs.factObject1 && factObject2 < rhs.factObject2); }
 
-bool range::operator>(const range & rhs) { return (this->max_Ping > rhs.max_Ping); }
+bool range::operator>(const range & rhs) 
+{ return (factObject1 > rhs.factObject1 && factObject2 > rhs.factObject2); }
+
+
 
 bool range::operator!=(const range & rhs)
 {
-	return (this->max_Ping != rhs.max_Ping);
+	return (factObject1 != rhs.factObject1 && factObject2 != rhs.factObject2);
 }
 
 bool range::operator<=(const range & rhs)
 {
-	return (this->max_Ping <= rhs.max_Ping);
+	return (factObject1 <= rhs.factObject1 && factObject2 <= rhs.factObject2);
 }
 
+bool range::operator>=(const range & rhs)
+{
+	return (factObject1 >= rhs.factObject1 && factObject2 >= rhs.factObject2);
+}
+
+/////////////////////////////////RELATION OPERATOR/////////////////////////////////////
+
+///////////////////////////////MATHEMATICAL OPERATORS//////////////////////////////////
+range range::operator+(const range& rhs)
+{
+	range local(factObject1.operator+(rhs.factObject1), factObject2.operator+(rhs.factObject2));
+	return local;
+}
+
+range range::operator+(unsigned int x)
+{
+	range local(factObject1.operator+(x), factObject2.operator+(x));
+	return local;
+}
+
+range operator+(unsigned int x, const range & rhs)
+{
+	range local(x + rhs.factObject1, x + rhs.factObject2);
+	return local;
+}
+
+range range::operator-(const range & rhs)
+{
+	range local(factObject1.operator-(rhs.factObject1), factObject2.operator-(rhs.factObject2));
+	return local;
+}
+
+range range::operator-(unsigned int x)
+{
+	range local(factObject1.operator-(x), factObject2.operator-(x));
+	return local;
+}
+
+range operator-(unsigned int x, const range & rhs)
+{
+	range local(x - rhs.factObject1, x - rhs.factObject2);
+	return local;
+}
+
+range range::operator*(const range & rhs)
+{
+	range local(factObject1.operator*(rhs.factObject1), factObject2.operator*(rhs.factObject2));
+	return local;
+}
+
+range range::operator*(unsigned int x)
+{
+	range local(factObject1 * x, factObject2 * x);
+	return local;
+}
 
