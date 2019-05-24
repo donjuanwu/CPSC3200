@@ -35,10 +35,10 @@ int main()
 	InitArrays(p5Arr);
 	TestNumberIsMultiplierFactor(p5Arr);
 	TestOverloaded_StreamIO_Operators(p5Arr); 
-	TestOverloadedMathematicalOperators(p5Arr);
+	//TestOverloadedMathematicalOperators(p5Arr);
 	//TestOverloaded_StreamIO_Operators(p5Arr);
 	//TestOverloadedRelationalOperators(p5Arr);
-	//TestOverloadedShortcutOperators(p5Arr);
+	TestOverloadedShortcutOperators(p5Arr);
 	//TestOverloadedCompounAssignmentOperators(p5Arr);
 
 
@@ -307,34 +307,34 @@ void TestOverloadedMathematicalOperators(Arrays arr)
 			if (i < DEFAULT_ARR_SIZE - 1)
 			{
 				cout << "- object [" << i << "] * object[" << i + 1 << "] --> " << arr.arrFactor[i] << " * " << arr.arrFactor[i + 1] << endl;
-				local = arr.arrFactor[i] * arr.arrFactor[i + 1];
-				cout << "  in scope object div factor = " << local << endl;
+				fTest = arr.arrFactor[i] * arr.arrFactor[i + 1];
+				cout << "  in scope object div factor = " << fTest << endl;
 			}
 			else
 			{
 				cout << "- object [" << i << "] * object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " * " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
-				local = arr.arrFactor[i] * arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
-				cout << "  in scope object div factor = " << local << endl;
+				fTest = arr.arrFactor[i] * arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
+				cout << "  in scope object div factor = " << fTest << endl;
 			}
 		}
 
-		cout << endl;
-		cout << "Multiply two range objects" << endl;
-		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
-		{
-			if (i < DEFAULT_ARR_SIZE - 1)
-			{
-				cout << "- object [" << i << "] * object[" << i + 1 << "] --> [" << arr.arrRange[i] << "] * [" << arr.arrRange[i + 1] << "]" << endl;
-				rObject = arr.arrRange[i] * arr.arrRange[i + 1];
-				cout << "  in scope object div factors = " << "[" << rObject << "]" << endl;
-			}
-			else
-			{
-				cout << "- object [" << i << "] * object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> [" << arr.arrRange[i] << "] * [" << arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] <<"]" << endl;
-				rObject = arr.arrRange[i] * arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
-				cout << "  in scope object div factors = " << "[" << rObject << "]" << endl;
-			}
-		}
+		//cout << endl;
+		//cout << "Multiply two range objects" << endl;
+		//for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+		//{
+		//	if (i < DEFAULT_ARR_SIZE - 1)
+		//	{
+		//		cout << "- object [" << i << "] * object[" << i + 1 << "] --> [" << arr.arrRange[i] << "] * [" << arr.arrRange[i + 1] << "]" << endl;
+		//		rObject = arr.arrRange[i] * arr.arrRange[i + 1];
+		//		cout << "  in scope object div factors = " << "[" << rObject << "]" << endl;
+		//	}
+		//	else
+		//	{
+		//		cout << "- object [" << i << "] * object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> [" << arr.arrRange[i] << "] * [" << arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] <<"]" << endl;
+		//		rObject = arr.arrRange[i] * arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
+		//		cout << "  in scope object div factors = " << "[" << rObject << "]" << endl;
+		//	}
+		//}
 
 
 
@@ -344,22 +344,22 @@ void TestOverloadedMathematicalOperators(Arrays arr)
 		{
 			num = rand() % RAN_MAX + RAN_MIN;
 			cout << "- object [" << i << "] div factor * random integer --> " << arr.arrFactor[i] << " * " << num << endl;
-			local =	arr.arrFactor[i] * num;
-			cout << "  in scope object div factor = " << local << endl;
+			fTest =	arr.arrFactor[i] * num;
+			cout << "  in scope object div factor = " << fTest << endl;
 		}
 
 
-		cout << endl;
-		cout << "Multiply a range object to an unsigned int" << endl;
-		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
-		{
-			num = rand() % RAN_MAX + RAN_MIN;
-			cout << "random number " << num << endl;
-			cout << "range factors " << arr.arrRange[i] << endl;
-			cout << "- object [" << i << "] div factors * random integer --> [" << arr.arrRange[i] << "] * " << num << endl;
-			rObject = arr.arrRange[i] * num;
-			cout << "  in scope object div factors = " << "[" << rObject << "]" << endl;
-		}
+		//cout << endl;
+		//cout << "Multiply a range object to an unsigned int" << endl;
+		//for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+		//{
+		//	num = rand() % RAN_MAX + RAN_MIN;
+		//	cout << "random number " << num << endl;
+		//	cout << "range factors " << arr.arrRange[i] << endl;
+		//	cout << "- object [" << i << "] div factors * random integer --> [" << arr.arrRange[i] << "] * " << num << endl;
+		//	rObject = arr.arrRange[i] * num;
+		//	cout << "  in scope object div factors = " << "[" << rObject << "]" << endl;
+		//}
 
 
 		cout << endl;
@@ -870,13 +870,24 @@ void TestOverloadedShortcutOperators(Arrays arr)
 	cout << ASTERISK + "Begin Test Overloaded Shortcut Operators " + ASTERISK << endl;
 
 	cout << "Pre increment factor objects using '++object' operator" << endl;
-
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		cout << "- factor [" << i << "] current div value = " << arr.arrFactor[i];
 		cout << ", call ++object[" << i <<"]" << endl;
 		cout << "  in scope returned div factor = " << ++arr.arrFactor[i] << endl;
 	}
+
+	cout << endl;
+	cout << "Pre increment range objects using '++object' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		cout << "- range [" << i << "] current div factors = [" << arr.arrRange[i] <<"]";
+		cout << ", call ++object[" << i << "]" << endl;
+		cout << "  in scope div factors = [" << ++arr.arrRange[i] <<"]" << endl;
+	}
+
+
+
 	cout << endl;
 	cout << "Post increment factor objects using 'object++' operator" << endl;
 
@@ -886,6 +897,12 @@ void TestOverloadedShortcutOperators(Arrays arr)
 		cout << ", call object[" << i << "]++" << endl;
 		cout << "  in scope returned div factor = " << arr.arrFactor[i]++ << endl;
 	}
+
+
+
+
+
+
 
 	cout << endl;
 	cout << "Pre decrement factor objects using '--object' operator" << endl;

@@ -160,15 +160,16 @@ range operator-(unsigned int x, const range & rhs)
 	return local;
 }
 
-range range::operator*(const range & rhs)
-{
-	range local(factObject1.operator*(rhs.factObject1), factObject2.operator*(rhs.factObject2));
-	return local;
-}
+//range range::operator*(const range & rhs)
+//{
+//	range local(factObject1.operator*(rhs.factObject1), factObject2.operator*(rhs.factObject2));
+//	return local;
+//}
 
-range range::operator*(unsigned int x)
+////////////////////////////////SHORTCUT OPERATORS////////////////////////////////////////////
+range range::operator++()
 {
-	range local(factObject1 * x, factObject2 * x);
+	range local(++factObject1, ++factObject2);
 	return local;
 }
 

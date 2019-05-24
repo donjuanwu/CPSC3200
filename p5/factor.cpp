@@ -138,13 +138,7 @@ ostream& operator<<(ostream& os, const factor & f)
 //	return local;
 //}
 
-//factor factor::operator*(unsigned int x)
-//{
-//	factor local(x);
-//	local.divFactor *= divFactor;
-//	if (local.divFactor <= 1) local.divFactor = 2;
-//	return local;
-//}
+
 
 ////////////////////////////////MODIFIED MATH//////////////////////////////////
 int factor::operator+(const factor & rhs)
@@ -196,22 +190,23 @@ int operator-(unsigned int x, const factor & rhs)
 }
 
 
-int factor::operator*(const factor & rhs)
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+factor factor::operator*(const factor & rhs)
 {
 	factor local(rhs.divFactor);
 	local.divFactor *= divFactor;
-	return local.divFactor;
+	return local;
 }
 
-int factor::operator*(unsigned int x)
+factor factor::operator*(unsigned int x)
 {
-
-	factor local(divFactor);
-	local.divFactor *= x;
-	//factor local(x);
-	//local.divFactor *= divFactor;
+	factor local(x);
+	local.divFactor *= divFactor;
 	if (local.divFactor <= 1) local.divFactor = 2;
-	return local.divFactor;
+	return local;
 }
 
 factor operator*(unsigned int x, const factor & rhs)
@@ -271,11 +266,11 @@ factor operator%(unsigned int x, const factor & rhs)
 }
 
 /////////////////////////SHORTCUT OPERATORS/////////////////
-factor factor::operator++()
-{
-	divFactor += 1;
-	return *this;
-}
+//factor factor::operator++()
+//{
+//	divFactor += 1;
+//	return *this;
+//}
 
 factor factor::operator++(int x)
 {
@@ -299,6 +294,24 @@ factor factor::operator--(int x)
 	if (divFactor > 2) divFactor--;
 	return local;
 }
+
+
+/////////////////////////MODIFIED SHORTCUT OPERATORS///////////////////////////
+int factor::operator++()
+{
+	divFactor += 1;
+	return divFactor;
+}
+
+
+
+
+
+
+
+
+
+
 
 /////////////////LOGICAL OPERATORS//////////////////////////
 //bool factor::operator&&()

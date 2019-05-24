@@ -62,8 +62,8 @@ public:
 	// factor operator-(unsigned int x); //complete
 	// friend factor operator-(unsigned int x, const factor & rhs);
 
-	//factor operator*(const factor & rhs);//complete
-	//factor operator*(unsigned int x);//complete
+	
+
 
 	/************************MODIFIED MATHEMATICAL**************************/
 	int operator+(const factor & rhs); //completed
@@ -74,15 +74,9 @@ public:
 	int operator-(unsigned int x); //complete
 	friend int operator-(unsigned int x, const factor & rhs); //complete
 
-	int operator*(const factor & rhs); //complete
-
 	/*************************************************************************/
-	
-
-	
-
-	
-	int operator*(unsigned int x);
+	factor operator*(const factor & rhs);//complete
+	factor operator*(unsigned int x);
 	friend factor operator*(unsigned int x, const factor & rhs);
 
 	factor operator/(const factor & rhs);//complete
@@ -94,14 +88,7 @@ public:
 	friend factor operator%(unsigned int x, const factor & rhs);
 
 
-	/////////////////Logical//////////////////////////
-	//&&, ||, !
-
-	//bool operator&&();
-
-//	bool factor::operator&&(bool a, bool a)
-
-
+	
 	/////////////////Compound Assignments//////////////////////
 	//=, +=, *=, -=, /=
   void operator+=(const factor & rhs);
@@ -121,12 +108,19 @@ public:
 
 	/////////////////Shortcuts/////////////////////////
 	//++, --
-	factor operator++();
+	//factor operator++();
 	factor operator++(int x);
 
 	factor operator--();
 	factor operator--(int x);
 
+/**************************Modified Shortcuts*****************************/
+ int operator++();
+
+
+
+
+/**************************************************************************/
 
 	///////////////Relational////////////////////////
 	bool operator == (const factor & rhs); //completed

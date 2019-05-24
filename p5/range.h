@@ -60,8 +60,8 @@ public:
 	range operator-(unsigned int x); 
 	friend range operator-(unsigned int x, const range & rhs); //complete
 
-	range operator*(const range & rhs);//complete
-	range operator*(unsigned int x);
+	//range operator*(const range & rhs);//complete
+	//range operator*(unsigned int x);
 	//friend factor operator*(unsigned int x, const factor & rhs);
 
 	//factor operator/(const factor & rhs);//complete
@@ -79,6 +79,16 @@ public:
 	bool operator!=(const range & rhs);
 	bool operator<=(const range & rhs);
 	bool operator>=(const range & rhs); 
+
+
+	////////////////////SHORTCUT OPERATORS///////////////////////////
+	//++, --
+	range operator++();
+	//factor operator++(int x);
+
+	//factor operator--();
+	//factor operator--(int x);
+
 
 };
 
