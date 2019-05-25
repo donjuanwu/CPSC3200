@@ -9,86 +9,108 @@
 
 ----------------------------------------------------------------------------
 OVERVIEW: 
-   The factor object encapsulates its private data members 
-   A postive integer value passed into the Div() is check to
-   see if it's a multiple of the divFactor value.
-   If it's then increment the multipleCount
+ The factor class encapsulates its private data members 
+ A postive integer value (greater than 0) passed into the Div() is check to
+  see if it's a multiple of the divFactor value.
+ If it's then increment the multipleCount
+ A return of -1 indicate the factor object is inactive.
 
+Design Decisions and Assumptions:
+ Constructor initialized all private data memebers to initial values
+ Constructor needs to be initialized with a factor value.
+ Factor value can not be equals to 0
+ If no factor value get passed when firing constructor an INITIAL_DEFAULT_VALUE will be
+  assigned to the factor value
+ If passed-in factor value equals 0 then it will get assigned to an INITIAL_DEFAULT_VALUE.
+ Number passed to Div() must be positive integer value (greater than 0)
+ Set factor object to inactive if prev passed-in number equals current 
+  passed-in number
+ A return of Return_InActive  (value -1 ) to indicate factor object is inactive. 
+ Reset() can be called regardless of Factor object status state
 ------------------------------------------------------------------------------
 INTERFACE INVARIANTS:
-   Constructor expected a factor value of positive integer value
-   Constructor will initial all private data member to defaul values
-   GetDivCount() return a count of successful number that is multiple
-    of divFactor. 
-   Div() 
-     should only be called when the factor object is active
-     return -1 to indicate factor object is inactive
-     factor object status is set to inactive when previous passed in number
-       equals current passed in number
+ GetDivCount() (return a count of successful number that is multiple of divFactor)
+ Can be called regardless of factor object state
+ Return
+  0   = no number that is multiple of divFactor
+  > 0 = quantity of number that is multiple of divFactor
+  -1  = Factor object is inactive
+  
+ Div() (increment multipleCount when passed in number is multiple of divFactor)
+  Should only be called when the factor object is active
+  Return multiple count
+   -1 = Factor object is inactive
+   
+ Reset()
+ Can be called regardless of factor object state
+  Reset all private data members EXCEPT divFactor to initial value
 
-     return 0 if passed in number is not a multiple of the divFactor
-     return > 0 could mean the passed in number is a multiple of the divFactor
-   Reset()
-     reset multiplesCount, lastNumber, and factor object status to default value
-     divFactor doesn't need to get reset as calling the factor constructor
-     will reset it. 
 ---------------------------------------------------------------------------------
 IMPLEMENTATION INVARIANTS:
-   Div()
-     Set factor object to inactive if prev passed in number equals current 
-      passed in number
-     Assign current passed in number to lastNumber
-     Check current passed in number is divisible by factor value
-     If yes, increment multiplescount by 1
-     Return multiplescount
-   Reset()
-     Reset factor object to initial values
+ Only has Parameterized Constructor
+ Div()
+  Factor object must be active for mutliplecount to be incremented
+  Set factor object to inactive if prev passed-in number equals current 
+   passed-in number. 
+   Return -1
+  Assign current passed-in number to prev passed-in number 
+  Check current passed-in number is divisible by divFactor
+   If yes, increment multiplescount by 1
+   Return multiplescount
+ Reset()
+  Reset all private data members EXCEPT divFactor to initial values
+  DivFactor will be changed when calling Parameterized Constructor
+
+ GetDivCount()
+  Return current multiple count
+  Multiplecount is incremented by Div()
 ----------------------------------------------------------------------------------     
 CLASS INVARIANTS:
-   See below PRE & POST conditions 
+ Set factor object to inactive if prev passed-in number equals current 
+  passed-in number
 ----------------------------------------------------------------------------------
 -- WHEN		WHO		WHAT
--- 4/15/19  DD      set DivCount() to return a RETURN_INACTIVE when 
+-- 4/15/19  DD      Set DivCount() to return a RETURN_INACTIVE when 
                       previous passed in number equals current passed in number
+-- 4/16/19  DD      Remove test to determine if passed in factor value is greater
+                      than 0 in Constructor. Passed in factor value should be positive integer.
 */
 
 using System;
 namespace Project2
 {
-
     class factor
     {
         private uint divFactor;
         private int multiplesCount;
         private int lastNumber;
         private bool isObjActive;
-        private const int INITIAL_FACTOR = 1;
         private const int INITIAL_LAST_NUMBER = -1;
         private const int INITIAL_MULTIPLESCOUNT = 0;
+        private const int INITIAL_FACTOR_VALUE = 1;
         private const int RETURN_INACTIVE = -1;
-
-
-        public factor(uint initialFactor)
+        
+        public factor(uint initFactor = INITIAL_FACTOR_VALUE)
         {
-            divFactor = initialFactor;
+            if (initFactor == 0)
+            {
+                divFactor = INITIAL_FACTOR_VALUE;
+            }
+            divFactor = initFactor;
             multiplesCount = INITIAL_MULTIPLESCOUNT;
             isObjActive = true;
             lastNumber = INITIAL_LAST_NUMBER;
         }
-
-        //PRE : Factor object must be active
+        //PRE : N/A
         //POST: N/A
         public int GetDivCount()
         {
             return multiplesCount;
         }
 
-        //PRE : Factor object should be active
-        //      Passed in number should be positive integer value
-        //POST: Factor object will be set to inactive if two consecutive 
-        //      passed in number is the same
-        //      Multiplecount will increment by one if passed in number is
-        //      a multiple of the divFactor
+        //PRE : Factor object must be active
+        //      Passed in number should be positive integer
+        //POST: Factor object status may changed
         public int Div(uint number)
         {
             if (isObjActive)
@@ -106,11 +128,8 @@ namespace Project2
             }
             return multiplesCount;
         }
-
         //PRE : N/A
         //POST: Factor object is active
-        //      MultipleCount is reset to initial value
-        //      LastNumber is reset to initial value
         public void Reset()
         {
             multiplesCount = INITIAL_MULTIPLESCOUNT;
