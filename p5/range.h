@@ -51,7 +51,6 @@ public:
 
 
 	/////////////////Mathematical//////////////////////
-	//friend range operator+(const range& lhs, const range& rhs); //completed
 	range operator+(unsigned int x); //completed
 	friend range operator+(unsigned int x, const range & rhs); //completed
 	
@@ -64,13 +63,6 @@ public:
 	//range operator*(unsigned int x);
 	//friend factor operator*(unsigned int x, const factor & rhs);
 
-	//factor operator/(const factor & rhs);//complete
-	//factor operator/(unsigned int x);//complete
-	//friend factor operator/(unsigned int x, const factor & rhs);
-
-	//factor operator%(const factor & rhs);//complete
-	//factor operator%(unsigned int x);//complete
-	//friend factor operator%(unsigned int x, const factor & rhs);
 
 	///////////////////RELATION OPERATOR////////////////////////////
 	bool operator == (const range & rhs);

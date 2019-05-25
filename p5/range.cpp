@@ -124,13 +124,6 @@ bool range::operator>=(const range & rhs)
 /////////////////////////////////RELATION OPERATOR/////////////////////////////////////
 
 ///////////////////////////////MATHEMATICAL OPERATORS//////////////////////////////////
-//range operator+(const range& lhs, const range& rhs)
-//{
-//	//range local(factObject1.operator+(rhs.factObject1), factObject2.operator+(rhs.factObject2));
-//
-//	range local(lhs.factObject1 + rhs.factObject1, lhs.factObject2 + rhs.factObject2);
-//	return local;
-//}
 
 range range::operator+(unsigned int x)
 {
@@ -144,13 +137,10 @@ range range::operator+(unsigned int x)
 
 range operator+(unsigned int x, const range & rhs)
 {
-
 	range local(rhs);
 	local.factObject1 += x;
 	local.factObject2 += x;
-
 	return local;
-
 }
 
 

@@ -60,20 +60,6 @@ public:
 	factor operator-(unsigned int x); //complete
 	friend factor operator-(unsigned int x, const factor & rhs);
 
-	//friend class range; 
-	
-
-
-	/************************MODIFIED MATHEMATICAL**************************/
-	//int operator+(const factor & rhs); //completed
-	//int operator+(unsigned int x); //completed
-	//friend int operator+(unsigned int x, const factor & rhs); //completed
-
-	//int operator-(const factor & rhs); //completed
-	//int operator-(unsigned int x); //complete
-	//friend int operator-(unsigned int x, const factor & rhs); //complete
-
-	/*************************************************************************/
 	factor operator*(const factor & rhs);//complete
 	factor operator*(unsigned int x);
 	friend factor operator*(unsigned int x, const factor & rhs);
