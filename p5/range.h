@@ -51,13 +51,13 @@ public:
 
 
 	/////////////////Mathematical//////////////////////
-	range operator+(const range& rhs); //completed
+	//friend range operator+(const range& lhs, const range& rhs); //completed
 	range operator+(unsigned int x); //completed
 	friend range operator+(unsigned int x, const range & rhs); //completed
-
+	
 
 	range operator-(const range & rhs); //complete
-	range operator-(unsigned int x); 
+	range operator-(unsigned int x); //complete
 	friend range operator-(unsigned int x, const range & rhs); //complete
 
 	//range operator*(const range & rhs);//complete
@@ -84,10 +84,10 @@ public:
 	////////////////////SHORTCUT OPERATORS///////////////////////////
 	//++, --
 	range operator++();
-	//factor operator++(int x);
+	range operator++(int x);
 
-	//factor operator--();
-	//factor operator--(int x);
+	range operator--();
+	range operator--(int x);
 
 
 };

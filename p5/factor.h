@@ -21,6 +21,7 @@
 #include <cmath>
 
 
+
 using namespace std;
 class factor
 {
@@ -45,34 +46,32 @@ public:
 	void Reset();
 	bool GetFactorStatus();
 
-	//////////////////////Access//////////////////////////
-	//[], ->
-	
 	
 	/////////////////Stream I/O/////////////////////////
 	friend ostream& operator<<(ostream& os, const factor & f); //completed
 	
 
 	////////////////////////////MATHEMATICAL/////////////////////////////////
-	//factor operator+(const factor & rhs); //completed
-	//factor operator+(unsigned int x); //completed
-	//friend factor operator+(unsigned int x, const factor & rhs);
+	factor operator+(const factor & rhs); //completed
+	factor operator+(unsigned int x); //completed
+	friend factor operator+(unsigned int x, const factor & rhs);
 
-	//	factor operator-(const factor & rhs); //completed
-	// factor operator-(unsigned int x); //complete
-	// friend factor operator-(unsigned int x, const factor & rhs);
+	factor operator-(const factor & rhs); //completed
+	factor operator-(unsigned int x); //complete
+	friend factor operator-(unsigned int x, const factor & rhs);
 
+	//friend class range; 
 	
 
 
 	/************************MODIFIED MATHEMATICAL**************************/
-	int operator+(const factor & rhs); //completed
-	int operator+(unsigned int x); //completed
-	friend int operator+(unsigned int x, const factor & rhs); //completed
+	//int operator+(const factor & rhs); //completed
+	//int operator+(unsigned int x); //completed
+	//friend int operator+(unsigned int x, const factor & rhs); //completed
 
-	int operator-(const factor & rhs); //completed
-	int operator-(unsigned int x); //complete
-	friend int operator-(unsigned int x, const factor & rhs); //complete
+	//int operator-(const factor & rhs); //completed
+	//int operator-(unsigned int x); //complete
+	//friend int operator-(unsigned int x, const factor & rhs); //complete
 
 	/*************************************************************************/
 	factor operator*(const factor & rhs);//complete
@@ -89,7 +88,7 @@ public:
 
 
 	
-	/////////////////Compound Assignments//////////////////////
+	//////////////////////////////Compound Assignments///////////////////////////////
 	//=, +=, *=, -=, /=
   void operator+=(const factor & rhs);
 	void operator+=(unsigned int x);
@@ -106,19 +105,19 @@ public:
 	void operator%=(const factor & rhs);
 	void operator%=(unsigned int x);
 
-	/////////////////Shortcuts/////////////////////////
+	///////////////////////////////Shortcuts////////////////////////////////////////
 	//++, --
 	//factor operator++();
-	factor operator++(int x);
+	//factor operator++(int x);
 
-	factor operator--();
-	factor operator--(int x);
+	//factor operator--();
+	//factor operator--(int x);
 
 /**************************Modified Shortcuts*****************************/
  int operator++();
-
-
-
+ int operator++(int x);
+ int operator--();
+ int operator--(int x);
 
 /**************************************************************************/
 

@@ -124,47 +124,66 @@ bool range::operator>=(const range & rhs)
 /////////////////////////////////RELATION OPERATOR/////////////////////////////////////
 
 ///////////////////////////////MATHEMATICAL OPERATORS//////////////////////////////////
-range range::operator+(const range& rhs)
-{
-	range local(factObject1.operator+(rhs.factObject1), factObject2.operator+(rhs.factObject2));
-	return local;
-}
+//range operator+(const range& lhs, const range& rhs)
+//{
+//	//range local(factObject1.operator+(rhs.factObject1), factObject2.operator+(rhs.factObject2));
+//
+//	range local(lhs.factObject1 + rhs.factObject1, lhs.factObject2 + rhs.factObject2);
+//	return local;
+//}
 
 range range::operator+(unsigned int x)
 {
-	range local(factObject1.operator+(x), factObject2.operator+(x));
-	return local;
+	range local(*this);
+	local.factObject1 += x;
+	local.factObject2 += x;
+	
+	return *this;
+	
 }
 
 range operator+(unsigned int x, const range & rhs)
 {
-	range local(x + rhs.factObject1, x + rhs.factObject2);
+
+	range local(rhs);
+	local.factObject1 += x;
+	local.factObject2 += x;
+
 	return local;
+
 }
+
+
+
 
 range range::operator-(const range & rhs)
 {
-	range local(factObject1.operator-(rhs.factObject1), factObject2.operator-(rhs.factObject2));
+	range local(*this);
+	local.factObject1 - rhs.factObject1;
+	local.factObject2 - rhs.factObject2;
 	return local;
+
+
 }
 
 range range::operator-(unsigned int x)
 {
-	range local(factObject1.operator-(x), factObject2.operator-(x));
+
+	range local(*this);
+	local.factObject1 -= x;
+	local.factObject2 -= x;
+
 	return local;
 }
 
 range operator-(unsigned int x, const range & rhs)
 {
-	range local(x - rhs.factObject1, x - rhs.factObject2);
+	range local(rhs);
+	local.factObject1 -= x;
+	local.factObject2 -= x;
+
 	return local;
 }
-
-//range range::operator*(const range & rhs)
-//{
-//	range local(factObject1.operator*(rhs.factObject1), factObject2.operator*(rhs.factObject2));
-//	return local;
-//}
 
 ////////////////////////////////SHORTCUT OPERATORS////////////////////////////////////////////
 range range::operator++()
@@ -173,3 +192,20 @@ range range::operator++()
 	return local;
 }
 
+range range::operator++(int x)
+{
+	range local(factObject1++, factObject2++);
+	return local;
+}
+
+range range::operator--()
+{
+	range local(--factObject1, --factObject2);
+	return local;
+}
+
+range range::operator--(int x)
+{
+	range local(factObject1--, factObject2--);
+	return local;
+}
