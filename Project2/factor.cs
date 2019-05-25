@@ -3,80 +3,59 @@
 -- Project      : Project 2
 -- Instructor   : Dr. Dingle
 -- File Name    : factor.cs
--- File Version : 1.0
+-- File Version : 1.1
 -- Due Date	    : 4/17/2019
 -- Course Name  : CPSC 3200
--- Data Members : 
---                Private
---                 int divFactor;      - passed in divisible factor
---                 int multiplesCount; - keep track of multiple count
---                 int lastNumber;     - use to compare current number
---                 bool isObjActive;   - keep track of object status
---                 const int INITIAL_FACTOR = 1;
---                 const int INITIAL_LAST_NUMBER = -1;
---                 const int INITIAL_MULTIPLESCOUNT = 0;
---                Public: 
---                  N/A
--- Methods      :  
---                Helper Utilities
---                  N/A
---                Private
---                  N/A
---                Public
---                  factor(int initialFactor)
---                  Div(int number)
---                  Reset()
---                  Accessors
---                    GetDivCount() 
---                  Mutators
---                    N/A
---                
--- Class Design :
---                 No Default Constructor, a factor value must be 
---                   provided
---                 Parameterized Constructor, factor value less 
---                   than 1 will be initialized to 1
---                 Constructor will initialized all private members
---                 Incoming number must be positive integer,
---                  number > 0
---                Div() 
---                  increment multiplescount variable by 1 ONLY when 
---                    object status is 'true' and the current incoming 
---                    number doesnt equals the lastNumber
---                  set isObjStatus to 'false', when lastNumber equals
---                    incoming number
---                  assign number to lastNumber
---                  return multiplescount
---                 Reset()
---                   reset all private members:
---                     isObjective, lastNumber and multiplesCount to initial value
---                 GetDivCount()
---                   return multiplescount
---
--- Notes        : 
---                 This class will be used again in P2	
---                   All initial and default values will be 
---                   defined as constant
---                 All comments followed 80 characters line rule
---				
---				
-----------------------------------------------------------------
+
+----------------------------------------------------------------------------
+OVERVIEW: 
+   The factor object encapsulates its private data members 
+   A postive integer value passed into the Div() is check to
+   see if it's a multiple of the divFactor value.
+   If it's then increment the multipleCount
+
+------------------------------------------------------------------------------
+INTERFACE INVARIANTS:
+   Constructor expected a factor value of positive integer value
+   Constructor will initial all private data member to defaul values
+   GetDivCount() return a count of successful number that is multiple
+    of divFactor. 
+   Div() 
+     should only be called when the factor object is active
+     return -1 to indicate factor object is inactive
+     factor object status is set to inactive when previous passed in number
+       equals current passed in number
+
+     return 0 if passed in number is not a multiple of the divFactor
+     return > 0 could mean the passed in number is a multiple of the divFactor
+   Reset()
+     reset multiplesCount, lastNumber, and factor object status to default value
+     divFactor doesn't need to get reset as calling the factor constructor
+     will reset it. 
+---------------------------------------------------------------------------------
+IMPLEMENTATION INVARIANTS:
+   Div()
+     Set factor object to inactive if prev passed in number equals current 
+      passed in number
+     Assign current passed in number to lastNumber
+     Check current passed in number is divisible by factor value
+     If yes, increment multiplescount by 1
+     Return multiplescount
+   Reset()
+     Reset factor object to initial values
+----------------------------------------------------------------------------------     
+CLASS INVARIANTS:
+   See below PRE & POST conditions 
+----------------------------------------------------------------------------------
 -- WHEN		WHO		WHAT
--- 4/3/19	DD  	Design and model factor.cs
--- 4/4/19   DD      Created factor.cs         
--- 4/7/19   DD      Removed Default Constructor()
---                  Removed helper utility, IsDuplicate()
---                  Updated private member & passed in variables 
---                    name to be self documenting
---                  Added documentation comments for factor.cs
--- 4/8/19   DD      Removed GetObjectStatus()
+-- 4/15/19  DD      set DivCount() to return a RETURN_INACTIVE when 
+                      previous passed in number equals current passed in number
 */
-
-
 
 using System;
 namespace Project2
 {
+
     class factor
     {
         private uint divFactor;
@@ -87,25 +66,29 @@ namespace Project2
         private const int INITIAL_LAST_NUMBER = -1;
         private const int INITIAL_MULTIPLESCOUNT = 0;
         private const int RETURN_INACTIVE = -1;
-        
+
 
         public factor(uint initialFactor)
         {
-            if (initialFactor == 0)
-            {
-               divFactor = INITIAL_FACTOR;
-            }
             divFactor = initialFactor;
             multiplesCount = INITIAL_MULTIPLESCOUNT;
             isObjActive = true;
             lastNumber = INITIAL_LAST_NUMBER;
         }
 
+        //PRE : Factor object must be active
+        //POST: N/A
         public int GetDivCount()
         {
             return multiplesCount;
         }
 
+        //PRE : Factor object should be active
+        //      Passed in number should be positive integer value
+        //POST: Factor object will be set to inactive if two consecutive 
+        //      passed in number is the same
+        //      Multiplecount will increment by one if passed in number is
+        //      a multiple of the divFactor
         public int Div(uint number)
         {
             if (isObjActive)
@@ -113,8 +96,6 @@ namespace Project2
                 if (lastNumber == number)
                 {
                     isObjActive = false;
-                    //4/11/19 
-                    //duplicate return -1
                     return RETURN_INACTIVE;
                 }
                 lastNumber = (int)number;
@@ -126,6 +107,10 @@ namespace Project2
             return multiplesCount;
         }
 
+        //PRE : N/A
+        //POST: Factor object is active
+        //      MultipleCount is reset to initial value
+        //      LastNumber is reset to initial value
         public void Reset()
         {
             multiplesCount = INITIAL_MULTIPLESCOUNT;
