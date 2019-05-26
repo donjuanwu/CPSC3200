@@ -96,8 +96,8 @@ factor factor::operator+(const factor & rhs)
 
 factor factor::operator+(unsigned int x)
 {
-	factor local(x);
-	local.divFactor += divFactor;
+	factor local(*this);
+	local.divFactor += x;
 	return local;
 
 }
@@ -203,10 +203,6 @@ factor factor::operator*(const factor & rhs)
 
 
 
-
-///////////////////////////////////////////////////////////////////////////////////////
-
-
 factor factor::operator*(unsigned int x)
 {
 	factor local(x);
@@ -222,54 +218,54 @@ factor operator*(unsigned int x, const factor & rhs)
 	return local;
 }
 
-factor factor::operator/(const factor & rhs)
-{
-	factor local(divFactor);
-	local.divFactor /= rhs.divFactor;
-	if (local.divFactor <= 1) local.divFactor = 2;
-	return local;
+//factor factor::operator/(const factor & rhs)
+//{
+//	factor local(divFactor);
+//	local.divFactor /= rhs.divFactor;
+//	if (local.divFactor <= 1) local.divFactor = 2;
+//	return local;
+//
+//}
+//
+//factor factor::operator/(unsigned int x)
+//{
+//	factor local(divFactor);
+//	local.divFactor /= x;
+//	if (local.divFactor <= 1) local.divFactor = 2;
+//	return local;
+//}
 
-}
+//factor operator/(unsigned int x, const factor & rhs)
+//{
+//	factor local(x);
+//	local.divFactor /= rhs.divFactor;
+//	if (local.divFactor <= 1) local.divFactor = 2;
+//	return local;
+//}
 
-factor factor::operator/(unsigned int x)
-{
-	factor local(divFactor);
-	local.divFactor /= x;
-	if (local.divFactor <= 1) local.divFactor = 2;
-	return local;
-}
-
-factor operator/(unsigned int x, const factor & rhs)
-{
-	factor local(x);
-	local.divFactor /= rhs.divFactor;
-	if (local.divFactor <= 1) local.divFactor = 2;
-	return local;
-}
-
-factor factor::operator%(const factor & rhs)
-{
-	factor local(divFactor);
-	local.divFactor %= rhs.divFactor;
-	if (local.divFactor <= 1) local.divFactor = 2;
-	return local;
-}
-
-factor factor::operator%(unsigned int x)
-{
-	factor local(divFactor);
-	local.divFactor %= x;
-	if (local.divFactor <= 1) local.divFactor = 2;
-	return local;
-}
-
-factor operator%(unsigned int x, const factor & rhs)
-{
-	factor local(x);
-	local.divFactor %= rhs.divFactor;
-	if (local.divFactor <= 1) local.divFactor = 2;
-	return local;
-}
+//factor factor::operator%(const factor & rhs)
+//{
+//	factor local(divFactor);
+//	local.divFactor %= rhs.divFactor;
+//	if (local.divFactor <= 1) local.divFactor = 2;
+//	return local;
+//}
+//
+//factor factor::operator%(unsigned int x)
+//{
+//	factor local(divFactor);
+//	local.divFactor %= x;
+//	if (local.divFactor <= 1) local.divFactor = 2;
+//	return local;
+//}
+//
+//factor operator%(unsigned int x, const factor & rhs)
+//{
+//	factor local(x);
+//	local.divFactor %= rhs.divFactor;
+//	if (local.divFactor <= 1) local.divFactor = 2;
+//	return local;
+//}
 
 /////////////////////////SHORTCUT OPERATORS/////////////////
 //factor factor::operator++()
@@ -401,9 +397,25 @@ void factor::operator%=(unsigned int x)
 
 ///////////////RELATIONAL OPERATORS////////////////////////
 bool factor::operator == (const factor & rhs) { return (divFactor == rhs.divFactor);} 
+bool factor::operator== (unsigned int x){ return (divFactor == x);}
+bool operator== (unsigned int x, const factor& rhs) { return (x == rhs.divFactor);}
+
 bool factor::operator<(const factor & rhs){ return (divFactor < rhs.divFactor);}
+bool factor::operator<(unsigned int x) { return (divFactor < x); }
+bool operator<(unsigned int x, const factor& rhs) { return (x < rhs.divFactor); }
+
+
+
 bool factor::operator>(const factor & rhs){ return (divFactor > rhs.divFactor);}
+bool factor::operator> (unsigned int x) { return (divFactor > x); }
+bool operator>(unsigned int x, const factor& rhs) { return (x > rhs.divFactor); }
+
 bool factor::operator!=(const factor & rhs){return (divFactor != rhs.divFactor);}
+bool factor::operator!=(unsigned int x) {return (divFactor != x);}
+bool operator!=(unsigned int x, const factor& rhs) { return (x != rhs.divFactor); }
+
+
+
 bool factor::operator<=(const factor & rhs) {return (divFactor <= rhs.divFactor);}
 bool factor::operator>=(const factor & rhs){return (divFactor >= rhs.divFactor);}
 

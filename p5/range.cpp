@@ -131,8 +131,7 @@ range range::operator+(unsigned int x)
 	local.factObject1 += x;
 	local.factObject2 += x;
 	
-	return *this;
-	
+	return local;
 }
 
 range operator+(unsigned int x, const range & rhs)
@@ -142,8 +141,6 @@ range operator+(unsigned int x, const range & rhs)
 	local.factObject2 += x;
 	return local;
 }
-
-
 
 
 range range::operator-(const range & rhs)

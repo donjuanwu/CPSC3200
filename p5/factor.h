@@ -64,13 +64,13 @@ public:
 	factor operator*(unsigned int x);
 	friend factor operator*(unsigned int x, const factor & rhs);
 
-	factor operator/(const factor & rhs);//complete
-	factor operator/(unsigned int x);//complete
-	friend factor operator/(unsigned int x, const factor & rhs);
+	//factor operator/(const factor & rhs);//complete
+	//factor operator/(unsigned int x);//complete
+	//friend factor operator/(unsigned int x, const factor & rhs);
 
-	factor operator%(const factor & rhs);//complete
-	factor operator%(unsigned int x);//complete
-	friend factor operator%(unsigned int x, const factor & rhs);
+	//factor operator%(const factor & rhs);//complete
+	//factor operator%(unsigned int x);//complete
+	//friend factor operator%(unsigned int x, const factor & rhs);
 
 
 	
@@ -107,12 +107,28 @@ public:
 
 /**************************************************************************/
 
-	///////////////Relational////////////////////////
-	bool operator == (const factor & rhs); //completed
+	//////////////////////////RELATIONAL/////////////////////////////////////
+	bool operator== (const factor & rhs); //completed
+	bool operator== (unsigned int x); //completed
+	friend bool operator== (unsigned int x, const factor& rhs);
+
 	bool operator<(const factor & rhs); //completed
+	bool operator<(unsigned int x); 
+	friend bool operator<(unsigned int x, const factor& rhs);
+
 	bool operator>(const factor & rhs); //completed
+	bool operator> (unsigned int x);
+	friend bool operator>(unsigned int x, const factor& rhs);
+	
 	bool operator!=(const factor & rhs); //completed
+	bool operator!=(unsigned int x);
+	friend bool operator!=(unsigned int x, const factor& rhs);
+
+
 	bool operator<=(const factor & rhs); //completed
+
+
+
 	bool operator>=(const factor & rhs); //completed
 
 };
