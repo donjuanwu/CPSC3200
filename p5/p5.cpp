@@ -1,7 +1,7 @@
 #include "factor.h"
 #include "range.h"
 #include <iostream>
-//#include <stdlib.h>
+#include <cstdlib>
 
 using namespace std;
 const int RAN_MIN = 1;
@@ -48,6 +48,7 @@ int main()
 void InitArrays(Arrays& arr)
 {
 	srand(static_cast<unsigned>(time(0)));
+
 	cout << endl;
 	cout << ASTERISK + "Begin initialize P5 arrays" + ASTERISK << endl;
 	cout << " - Initialized each factor, range and multiQ object " << DEFAULT_ARR_SIZE << " times" << endl;
@@ -77,7 +78,7 @@ void InitArrays(Arrays& arr)
 void TestNumberIsMultiplierFactor(Arrays& arr)
 {
 	cout << endl;
-	cout << ASTERISK + "Begin test number is a multiplier of encapsulated factor" + ASTERISK << endl;
+	cout << ASTERISK + "Begin test number is a multiplier of encapsulated value" + ASTERISK << endl;
 	cout << " - Passed in " << DEFAULT_ARR_SIZE << " random numbers " << endl;
 	int num;
 
@@ -105,7 +106,7 @@ void TestNumberIsMultiplierFactor(Arrays& arr)
 
 
 	}
-	cout << ASTERISK + "End test number is a multiplier of factor value" + ASTERISK << endl;
+	cout << ASTERISK + "test number is a multiplier of encapsulated value" + ASTERISK << endl;
 }
 
 void TestOverloaded_StreamIO_Operators(Arrays arr)
@@ -116,8 +117,8 @@ void TestOverloaded_StreamIO_Operators(Arrays arr)
 
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
-		cout << i + 1 << ") factor object[" << i << "] encapsulated factor = " << arr.arrFactor[i] << endl;
-		cout << i + 1 << ") range object[" << i << "] encapsulated factors = [" << arr.arrRange[i] <<"]" << endl;
+		cout << i + 1 << ") factor object[" << i << "] encapsulated value = " << arr.arrFactor[i] << endl;
+		cout << i + 1 << ") range object[" << i << "] encapsulated values = [" << arr.arrRange[i] <<"]" << endl;
 
 		cout << endl;
 	}
@@ -142,26 +143,25 @@ void TestOverloadedMathematicalOperators(Arrays arr)
 		{
 			cout << "- object [" << i << "] + object[" << i + 1 << "] --> " << arr.arrFactor[i] << " + " << arr.arrFactor[i + 1] << endl;
 			fObject = arr.arrFactor[i] + arr.arrFactor[i + 1];
-			cout << "  in scope object div factor = " << fObject << endl;
+			cout << "  in scope encapsulated value = " << fObject << endl;
 		}
 		else
 		{
 			cout << "- object [" << i << "] + object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " + " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			
 			fObject = arr.arrFactor[i] + arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
-			cout << "  in scope object div factor = " << fObject << endl;
+			cout << "  in scope encapsulated value = " << fObject << endl;
 		}
 	}
-
 
 		cout << endl;
 		cout << "Adding a factor object to a random unsigned integer" << endl;
 		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 		{
 			num = rand() % RAN_MAX + RAN_MIN;
-			cout << "- object [" << i << "] div factor +  random integer --> " << arr.arrFactor[i] << " + " << num << endl;
+			cout << "- object [" << i << "] encapsulated value +  random integer --> " << arr.arrFactor[i] << " + " << num << endl;
 			fObject = arr.arrFactor[i] + num;
-			cout << "  in scope object div factor = " << fObject << endl;
+			cout << "  in scope encapsulated value = " << fObject << endl;
 		}
 
 		cout << endl;
@@ -169,32 +169,32 @@ void TestOverloadedMathematicalOperators(Arrays arr)
 		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 		{
 			num = rand() % RAN_MAX + RAN_MIN;
-			cout << "- object [" << i << "] div factors +  random integer --> " << "[" << arr.arrRange[i] << "]" << " + " << num << endl;
+			cout << "- object [" << i << "] encapsulated values +  random integer --> " << "[" << arr.arrRange[i] << "]" << " + " << num << endl;
 			rObject = arr.arrRange[i] + num;
-			cout << "  in scope object div factors = " << "[" << rObject << "]" << endl;
+			cout << "  in scope encapsulated values = " << "[" << rObject << "]" << endl;
 		}
 
 
-		cout << endl;
+		/*cout << endl;
 		cout << "Adding a random unsigned integer to a factor object" << endl;
 		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 		{
 			num = rand() % RAN_MAX + RAN_MIN;
-			cout << "- random integer + " << "object [" << i << "] div factor --> " << num << " + " << arr.arrFactor[i] << endl;
+			cout << "- random integer + " << "object [" << i << "] encapsulated value --> " << num << " + " << arr.arrFactor[i] << endl;
 			fObject = num + arr.arrFactor[i];
-			cout << "  in scope object div factor = " << fObject << endl;
-		}
+			cout << "  in scope encapsulated value = " << fObject << endl;
+		}*/
 
 
-		cout << endl;
+		/*cout << endl;
 		cout << "Adding a random unsigned integer to a range object" << endl;
 		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 		{
 			num = rand() % RAN_MAX + RAN_MIN;
-			cout << "- random integer + " << "object [" << i << "] div factors --> " << num << " + [" << arr.arrRange[i] <<"]" << endl;
+			cout << "- random integer + " << "object [" << i << "] encapsulated values --> " << num << " + [" << arr.arrRange[i] <<"]" << endl;
 			rObject = num + arr.arrRange[i];
-			cout << "  in scope object div factors = " << "[" << rObject << "]" << endl;
-		}
+			cout << "  in scope encapsulated values = " << "[" << rObject << "]" << endl;
+		}*/
 
 		cout << endl;
 		cout << "Subtracting two factor objects" << endl;
@@ -204,31 +204,13 @@ void TestOverloadedMathematicalOperators(Arrays arr)
 			{
 				cout << "- object [" << i << "] - object[" << i + 1 << "] --> " << arr.arrFactor[i] << " - " << arr.arrFactor[i + 1] << endl;
 				fObject = arr.arrFactor[i] - arr.arrFactor[i + 1];
-				cout << "  in scope object div factor = " << fObject << endl;
+				cout << "  in scope encapsulated value = " << fObject << endl;
 			}
 			else
 			{
 				cout << "- object [" << i << "] - object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " - " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 				fObject =	arr.arrFactor[i] - arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
-				cout << "  in scope object div factor = " << fObject << endl;
-			}
-		}
-
-		cout << endl;
-		cout << "Subtracting two range objects" << endl;
-		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
-		{
-			if (i < DEFAULT_ARR_SIZE - 1)
-			{
-				cout << "- object [" << i << "] - object[" << i + 1 << "] --> " << arr.arrRange[i] << " - " << arr.arrRange[i + 1] << endl;
-				rObject = arr.arrRange[i] - arr.arrRange[i + 1];
-				cout << "  in scope object div factors = " << "[" << rObject << "]" << endl;
-			}
-			else
-			{
-				cout << "- object [" << i << "] - object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrRange[i] << " - " << arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
-				rObject = arr.arrRange[i] - arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
-				cout << "  in scope object div factors = " << "[" << rObject << "]" << endl;
+				cout << "  in scope encapsulated value = " << fObject << endl;
 			}
 		}
 
@@ -237,9 +219,9 @@ void TestOverloadedMathematicalOperators(Arrays arr)
 		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 		{
 			num = rand() % RAN_MAX + RAN_MIN;
-			cout << "- object [" << i << "] div factor - random integer --> " << arr.arrFactor[i] << " - " << num << endl;
+			cout << "- object [" << i << "] encapsulated value - random integer --> " << arr.arrFactor[i] << " - " << num << endl;
 			fObject = arr.arrFactor[i] - num;
-			cout << "  in scope object div factor = " << fObject << endl;
+			cout << "  in scope encapsulated value = " << fObject << endl;
 		
 		}
 
@@ -248,31 +230,31 @@ void TestOverloadedMathematicalOperators(Arrays arr)
 		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 		{
 			num = rand() % RAN_MAX + RAN_MIN;
-			cout << "- object [" << i << "] div factors - random integer --> [" << arr.arrRange[i] << "] - " << num << endl;
+			cout << "- object [" << i << "] encapsulated values - random integer --> [" << arr.arrRange[i] << "] - " << num << endl;
 			rObject = arr.arrRange[i] - num;
-			cout << "  in scope object div factors = " << "[" << rObject << "]" << endl;
+			cout << "  in scope encapsulated values = " << "[" << rObject << "]" << endl;
 		}
 
 
-		cout << endl;
+		/*cout << endl;
 		cout << "Subtract a factor object from an unsigned int" << endl;
 		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 		{
 			num = rand() % RAN_MAX + RAN_MIN;
-			cout << "- random integer - " << "object [" << i << "] div factor --> " << num << " - " << arr.arrFactor[i] << endl;
+			cout << "- random integer - " << "object [" << i << "] encapsulated value --> " << num << " - " << arr.arrFactor[i] << endl;
 			fObject = num - arr.arrFactor[i];
-			cout << "  in scope object div factor = " << fObject << endl;
-		}
+			cout << "  in scope encapsulated value = " << fObject << endl;
+		}*/
 
-		cout << endl;
-		cout << "Subtract a range object from an unsigned int" << endl;
-		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
-		{
-			num = rand() % RAN_MAX + RAN_MIN;
-			cout << "- random integer - " << "object [" << i << "] div factors --> " << num << " - [" << arr.arrRange[i] <<"]" << endl;
-			rObject = num - arr.arrRange[i];
-			cout << "  in scope object div factors = " << "[" << rObject << "]" << endl;
-		}
+		//cout << endl;
+		//cout << "Subtract a range object from an unsigned int" << endl;
+		//for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+		//{
+		//	num = rand() % RAN_MAX + RAN_MIN;
+		//	cout << "- random integer - " << "object [" << i << "] encapsulated values --> " << num << " - [" << arr.arrRange[i] <<"]" << endl;
+		//	rObject = num - arr.arrRange[i];
+		//	cout << "  in scope encapsulated values = " << "[" << rObject << "]" << endl;
+		//}
 
 
 		cout << endl;
@@ -283,13 +265,13 @@ void TestOverloadedMathematicalOperators(Arrays arr)
 			{
 				cout << "- object [" << i << "] * object[" << i + 1 << "] --> " << arr.arrFactor[i] << " * " << arr.arrFactor[i + 1] << endl;
 				fObject = arr.arrFactor[i] * arr.arrFactor[i + 1];
-				cout << "  in scope object div factor = " << fObject << endl;
+				cout << "  in scope encapsulated value = " << fObject << endl;
 			}
 			else
 			{
 				cout << "- object [" << i << "] * object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " * " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 				fObject = arr.arrFactor[i] * arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
-				cout << "  in scope object div factor = " << fObject << endl;
+				cout << "  in scope encapsulated value = " << fObject << endl;
 			}
 		}
 
@@ -298,20 +280,20 @@ void TestOverloadedMathematicalOperators(Arrays arr)
 		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 		{
 			num = rand() % RAN_MAX + RAN_MIN;
-			cout << "- object [" << i << "] div factor * random integer --> " << arr.arrFactor[i] << " * " << num << endl;
+			cout << "- object [" << i << "] encapsulated value * random integer --> " << arr.arrFactor[i] << " * " << num << endl;
 			fObject =	arr.arrFactor[i] * num;
-			cout << "  in scope object div factor = " << fObject << endl;
+			cout << "  in scope encapsulated value = " << fObject << endl;
 		}
 
-		cout << endl;
+		/*cout << endl;
 		cout << "Multiply an unsigned int to a factor object" << endl;
 		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 		{
 			num = rand() % RAN_MAX + RAN_MIN;
-			cout << "- random integer * " << "object [" << i << "] div factor --> " << num << " * " << arr.arrFactor[i] << endl;
+			cout << "- random integer * " << "object [" << i << "] encapsulated value --> " << num << " * " << arr.arrFactor[i] << endl;
 			fObject = num * arr.arrFactor[i];
-			cout << "  in scope returned object div factor = " << fObject << endl;
-		}
+			cout << "  in scope encapsulated value = " << fObject << endl;
+		}*/
 
 	cout << ASTERISK + "End Test Overloaded Mathematical Operators" + ASTERISK << endl;
 }
@@ -329,62 +311,29 @@ void TestOverloadedRelationalOperators(Arrays arr)
 		
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- object [" << i << "] div factor = " << arr.arrFactor[i] << endl;
-			cout << "- object [" << i + 1 << "] div factor = " << arr.arrFactor[i + 1] << endl;
+			cout << "- object [" << i << "] encapsulated value = " << arr.arrFactor[i] << endl;
+			cout << "- object [" << i + 1 << "] encapsulated value = " << arr.arrFactor[i + 1] << endl;
 			if (arr.arrFactor[i] == arr.arrFactor[i + 1])
 			{
-				cout << " object div factor are the same" << endl;
+				cout << " object encapsulated values are the same" << endl;
 			}
 			else
 			{
-				cout << " object div factor are not the same" << endl;
+				cout << " object encapsulated values are NOT the same" << endl;
 			}
 		}
 		else
 		{
-			cout << "- object [" << i << "] div factor = " << arr.arrFactor[i] << endl;
-			cout << "- object [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div factor = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			cout << "- object [" << i << "] encapsulated value = " << arr.arrFactor[i] << endl;
+			cout << "- object [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] encapsulated value = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			if (arr.arrFactor[i] == arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
 			{
-				cout << " object div factor are the same" << endl;
+				cout << " object encapsulated values are the same" << endl;
 			}
 			else
 			{
-				cout << " object div factor are not the same" << endl;
+				cout << " object encapsulated values are NOT the same" << endl;
 			}
-		}
-	}
-
-	
-	cout << endl;
-	cout << "Determine a factor object equals an unsigned int using '==' operator" << endl;
-	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
-	{
-		num = rand() % RAN_MAX + RAN_MIN;
-		cout << "- object [" << i << "] div factor == random integer --> " << arr.arrFactor[i] << " == " << num << endl;
-		if (arr.arrFactor[i] == num )
-		{
-			cout << " div factor equals number" << endl;
-		}
-		else
-		{
-			cout << " div factor not equal to number" << endl;
-		}
-	}
-
-	cout << endl;
-	cout << "Determine an unsigned int equals a factor object using '==' operator" << endl;
-	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
-	{
-		num = rand() % RAN_MAX + RAN_MIN;
-		cout << "- random integer == " << " object [" << i << "] div factor --> " << num <<" == " << arr.arrFactor[i] << endl;
-		if (num == arr.arrFactor[i])
-		{
-			cout << " div factor equals number" << endl;
-		}
-		else
-		{
-			cout << " div factor not equal to number" << endl;
 		}
 	}
 
@@ -395,29 +344,95 @@ void TestOverloadedRelationalOperators(Arrays arr)
 	{
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- range [" << i << "] factor values =  " << arr.arrRange[i] << endl;
-			cout << "- range [" << i + 1 << "] factor values = " << arr.arrRange[i + 1] << endl;
+			cout << "- range [" << i << "] encapsulated values =  [" << arr.arrRange[i] << "]" << endl;
+			cout << "- range [" << i + 1 << "] encapsulated values = [" << arr.arrRange[i + 1] << "]" << endl;
 			if (arr.arrRange[i] == arr.arrRange[i + 1])
 			{
-				cout << " range objects have same factor values" << endl;
+				cout << " objects have same encapsulated values" << endl;
 			}
 			else
 			{
-				cout << " range objects dont have same factor values" << endl;
+				cout << " objects DON'T have same encapsulated values" << endl;
 			}
 		}
 		else
 		{
-			cout << "- range [" << i << "] factor values = " << arr.arrRange[i] << endl;
-			cout << "- range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] factor values = " << arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			cout << "- range [" << i << "] encapsulated values = " << arr.arrRange[i] << endl;
+			cout << "- range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] encapsulated values = " << arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			if (arr.arrRange[i] == arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
 			{
-				cout << " range objects have same factor values" << endl;
+				cout << " objects have same encapsulated values" << endl;
 			}
 			else
 			{
-				cout << " range objects dont have same factor values" << endl;
+				cout << " objects DON'T have same encapsulated values" << endl;
 			}
+		}
+	}
+
+
+	cout << endl;
+	cout << "Determine a factor object equals an unsigned int using '==' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- object [" << i << "] encapsulated value == random integer --> " << arr.arrFactor[i] << " == " << num << endl;
+		if (arr.arrFactor[i] == num )
+		{
+			cout << " object encapsulated value equals number" << endl;
+		}
+		else
+		{
+			cout << " object encapsulated value doesn't equal number" << endl;
+		}
+	}
+
+	cout << endl;
+	cout << "Determine a range object equals an unsigned int using '==' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- object [" << i << "] encapsulated values == random integer --> [" << arr.arrRange[i] << "] == " << num << endl;
+		if (arr.arrRange[i] == num)
+		{
+			cout << " object encapsulated values equal number" << endl;
+		}
+		else
+		{
+			cout << " object encapsulated values don't equal number" << endl;
+		}
+	}
+
+
+	cout << endl;
+	cout << "Determine an unsigned int equals a factor object using '==' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- random integer == " << " object [" << i << "] encapsulated value --> " << num <<" == " << arr.arrFactor[i] << endl;
+		if (num == arr.arrFactor[i])
+		{
+			cout << " object encapsulated value equals number" << endl;
+		}
+		else
+		{
+			cout << " object encapsulated value doesn't equal number" << endl;
+		}
+	}
+
+	cout << endl;
+	cout << "Determine an unsigned int equals a range object using '==' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- random integer == " << " object [" << i << "] encapsulated value --> " << num << " == [" << arr.arrRange[i] << "]" << endl;
+		if (num == arr.arrRange[i])
+		{
+			cout << " number doesn't equal to encapsulated values" << endl;
+		}
+		else
+		{
+			cout << " number equals to encapsulated values" << endl;
 		}
 	}
 
@@ -428,47 +443,99 @@ void TestOverloadedRelationalOperators(Arrays arr)
 	{
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
-			cout << "- factor [" << i + 1 << "] div value = " << arr.arrFactor[i + 1] << endl;
+			cout << "- factor [" << i << "] encapsulated value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << i + 1 << "] encapsulated value = " << arr.arrFactor[i + 1] << endl;
 			if (arr.arrFactor[i] < arr.arrFactor[i + 1])
 			{
-				cout << " factor [" << i << "] div value is less than factor [" << i + 1 << "] div value" << endl;
+				cout << " factor [" << i << "] encapsulated value is less than factor [" << i + 1 << "]" << endl;
 			}
 			else
 			{
-				cout << " factor [" << i << "] div value is NOT less than factor [" << i + 1 << "] div value" << endl;
+				cout << " factor [" << i << "] encapsulated value is NOT less than factor [" << i + 1 << "]" << endl;
 			}
 
 		}
 		else
 		{
-			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
-			cout << "- factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			cout << "- factor [" << i << "] encapsulated value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] encapsulated value = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			if (arr.arrFactor[i] < arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
 			{
-				cout << " factor [" << i << "] div value is less than factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
+				cout << " factor [" << i << "] encapsulated value is less than factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
 			}
 			else
 			{
-				cout << " factor [" << i << "] div value is NOT less than factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
+				cout << " factor [" << i << "] encapsulated value is NOT less than factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
 			}
 
 		}
 	}
 
 	cout << endl;
+	cout << "Determine one range object is less than another range object using '<' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		if (i < DEFAULT_ARR_SIZE - 1)
+		{
+			cout << "- range [" << i << "] encapsulated values = [" << arr.arrRange[i] <<"]" << endl;
+			cout << "- range [" << i + 1 << "] encapsulated values = [" << arr.arrRange[i + 1] <<"]" << endl;
+			if (arr.arrRange[i] < arr.arrRange[i + 1])
+			{
+				cout << " range [" << i << "] encapsulated values are less than range [" << i + 1 << "]" << endl;
+			}
+			else
+			{
+				cout << " range [" << i << "] encapsulated values are NOT less than range [" << i + 1 << "]" << endl;
+			}
+
+		}
+		else
+		{
+			cout << "- range [" << i << "] factor values = " << arr.arrRange[i] << endl;
+			cout << "- range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] encapsulated values = " << arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			if (arr.arrRange[i] < arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
+			{
+				cout << " range [" << i << "] encapsulated values are less than range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
+			}
+			else
+			{
+				cout << " range [" << i << "] encapsulated values are NOT less than range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
+			}
+
+		}
+	}
+
+
+	cout << endl;
 	cout << "Determine a factor object is less than an unsigned int using '<' operator" << endl;
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		num = rand() % RAN_MAX + RAN_MIN;
-		cout << "- object [" << i << "] div factor < random integer --> " << arr.arrFactor[i] << " < " << num << endl;
+		cout << "- object [" << i << "] encapsulated value < random integer --> " << arr.arrFactor[i] << " < " << num << endl;
 		if (arr.arrFactor[i] < num)
 		{
-			cout << " encapsulated value is less than" << endl;
+			cout << " encapsulated value is less than number" << endl;
 		}
 		else
 		{
-			cout << " encapsulated value is NOT less than" << endl;
+			cout << " encapsulated value is NOT less than number" << endl;
+		}
+	}
+
+
+	cout << endl;
+	cout << "Determine a range object is less than an unsigned int using '<' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- object [" << i << "] encapsulated value < random integer --> [" << arr.arrRange[i] << "] < " << num << endl;
+		if (arr.arrRange[i] < num)
+		{
+			cout << " encapsulated values are less than number" << endl;
+		}
+		else
+		{
+			cout << " encapsulated values are NOT less than number" << endl;
 		}
 	}
 
@@ -477,51 +544,33 @@ void TestOverloadedRelationalOperators(Arrays arr)
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		num = rand() % RAN_MAX + RAN_MIN;
-		cout << "- random integer < object [" << i << "] div factor--> " << num << " < " << arr.arrFactor[i] << endl;
+		cout << "- random integer < object [" << i << "] encapsulated value--> " << num << " < " << arr.arrFactor[i] << endl;
 		if (num < arr.arrFactor[i])
 		{
-			cout << " number is less than" << endl;
+			cout << " number is less than encapsulated value" << endl;
 		}
 		else
 		{
-			cout << "number is NOT less than " << endl;
+			cout << "number is NOT less than encapsulated value" << endl;
 		}
 	}
-
 
 	cout << endl;
-	cout << "Determine one range object is less than another range object using '<' operator" << endl;
+	cout << "Determine an unsigned int is less than a range object using '<' operator" << endl;
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
-		if (i < DEFAULT_ARR_SIZE - 1)
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- random integer < object [" << i << "] encapsulated values --> " << num << " < [" << arr.arrRange[i] <<"]" << endl;
+		if (num < arr.arrRange[i])
 		{
-			cout << "- range [" << i << "] factor values = " << arr.arrRange[i] << endl;
-			cout << "- range [" << i + 1 << "] factor values = " << arr.arrRange[i + 1] << endl;
-			if (arr.arrRange[i] < arr.arrRange[i + 1])
-			{
-				cout << " range [" << i << "] both values are less than range [" << i + 1 << "]" << endl;
-			}
-			else
-			{
-				cout << " range [" << i << "] both values are NOT less than range [" << i + 1 << "]" << endl;
-			}
-
+			cout << " number is less than encapsulated values" << endl;
 		}
 		else
 		{
-			cout << "- range [" << i << "] factor values = " << arr.arrRange[i] << endl;
-			cout << "- range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] factor values = " << arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
-			if (arr.arrRange[i] < arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
-			{
-				cout << " range [" << i << "] both values are less than range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
-			}
-			else
-			{
-				cout << " range [" << i << "] both values are NOT less than range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
-			}
-
+			cout << "number is NOT less than encapsulated values" << endl;
 		}
 	}
+	
 
 
 	cout << endl;
@@ -530,29 +579,63 @@ void TestOverloadedRelationalOperators(Arrays arr)
 	{
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
-			cout << "- factor [" << i + 1 << "] div value = " << arr.arrFactor[i + 1] << endl;
+			cout << "- factor [" << i << "] encapsulated value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << i + 1 << "] encapsulated value = " << arr.arrFactor[i + 1] << endl;
 			if (arr.arrFactor[i] > arr.arrFactor[i + 1])
 			{
-				cout << " factor [" << i << "] div factor is greater than factor [" << i + 1 << "] div value" << endl;
+				cout << " factor [" << i << "] encapsulated value is greater than factor [" << i + 1 << "]" << endl;
 			}
 			else
 			{
-				cout << " factor [" << i << "] div value is NOT greater than factor [" << i + 1 << "] div value" << endl;
+				cout << " factor [" << i << "] encapsulated value is NOT greater than factor [" << i + 1 << "]" << endl;
 			}
 
 		}
 		else
 		{
-			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
-			cout << "- factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			cout << "- factor [" << i << "] encapsulated value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] encapsulated value = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			if (arr.arrFactor[i] > arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
 			{
-				cout << " factor [" << i << "] div value is greater than factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
+				cout << " factor [" << i << "] encapsulated value is greater than factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
 			}
 			else
 			{
-				cout << " factor [" << i << "] div value is NOT greater than factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
+				cout << " factor [" << i << "] encapsulated value is NOT greater than factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
+			}
+
+		}
+	}
+
+	cout << endl;
+	cout << "Determine one range object is greater than another range object using '>' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		if (i < DEFAULT_ARR_SIZE - 1)
+		{
+			cout << "- range [" << i << "] encapsulated values = [" << arr.arrRange[i] <<"]" << endl;
+			cout << "- range [" << i + 1 << "] encapsulated values = [" << arr.arrRange[i + 1] <<"]" << endl;
+			if (arr.arrRange[i] > arr.arrRange[i + 1])
+			{
+				cout << " range [" << i << "] encapsulated values are greater than range [" << i + 1 << "]" << endl;
+			}
+			else
+			{
+				cout << " range [" << i << "] encapsulated values are NOT greater than range [" << i + 1 << "]" << endl;
+			}
+
+		}
+		else
+		{
+			cout << "- range [" << i << "] encapsulated values = [" << arr.arrRange[i] <<"]" << endl;
+			cout << "- range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] encapsulated values = [" << arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] <<"]" << endl;
+			if (arr.arrRange[i] > arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
+			{
+				cout << " range [" << i << "] encapsulated values are greater than range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
+			}
+			else
+			{
+				cout << " range [" << i << "] encapsulated values are NOT greater than range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
 			}
 
 		}
@@ -563,14 +646,30 @@ void TestOverloadedRelationalOperators(Arrays arr)
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		num = rand() % RAN_MAX + RAN_MIN;
-		cout << "- object [" << i << "] div factor > random integer --> " << arr.arrFactor[i] << " > " << num << endl;
+		cout << "- object [" << i << "] encapsulated value > random integer --> " << arr.arrFactor[i] << " > " << num << endl;
 		if (arr.arrFactor[i] > num)
 		{
-			cout << " encapsulated value is greater than" << endl;
+			cout << " encapsulated value is greater than number" << endl;
 		}
 		else
 		{
-			cout << " encapsulated value is NOT greater than" << endl;
+			cout << " encapsulated value is NOT greater than number" << endl;
+		}
+	}
+
+	cout << endl;
+	cout << "Determine a range object is greater than an unsigned int using '>' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- object [" << i << "] encapsulated value > random integer --> [" << arr.arrRange[i] << "] > " << num << endl;
+		if (arr.arrRange[i] > num)
+		{
+			cout << " encapsulated values are greater than number" << endl;
+		}
+		else
+		{
+			cout << " encapsulated values are NOT greater than number" << endl;
 		}
 	}
 
@@ -579,51 +678,33 @@ void TestOverloadedRelationalOperators(Arrays arr)
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		num = rand() % RAN_MAX + RAN_MIN;
-		cout << "- random integer < object [" << i << "] div factor--> " << num << " > " << arr.arrFactor[i] << endl;
+		cout << "- random integer < object [" << i << "] encapsulated value--> " << num << " > " << arr.arrFactor[i] << endl;
 		if (num > arr.arrFactor[i])
 		{
-			cout << " number is greater than" << endl;
+			cout << " number is greater than encapsulated value" << endl;
 		}
 		else
 		{
-			cout << "number is NOT greater than " << endl;
+			cout << "number is NOT greater than encapsulated value" << endl;
 		}
 	}
-
 
 	cout << endl;
-	cout << "Determine one range object is greater than another range object using '>' operator" << endl;
+	cout << "Determine an unsigned int is greater than a range object using '>' operator" << endl;
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
-		if (i < DEFAULT_ARR_SIZE - 1)
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- random integer < object [" << i << "] encapsulated values--> " << num << " > [" << arr.arrRange[i] <<"]" << endl;
+		if (num > arr.arrRange[i])
 		{
-			cout << "- range [" << i << "] factor values = " << arr.arrRange[i] << endl;
-			cout << "- range [" << i + 1 << "] factor values = " << arr.arrRange[i + 1] << endl;
-			if (arr.arrRange[i] > arr.arrRange[i + 1])
-			{
-				cout << " range [" << i << "] both values are greater than range [" << i + 1 << "]" << endl;
-			}
-			else
-			{
-				cout << " range [" << i << "] both values are NOT greater than range [" << i + 1 << "]" << endl;
-			}
-
+			cout << " number is greater than encapsulated values" << endl;
 		}
 		else
 		{
-			cout << "- range [" << i << "] factor values = " << arr.arrRange[i] << endl;
-			cout << "- range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] factor values = " << arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
-			if (arr.arrRange[i] > arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
-			{
-				cout << " range [" << i << "] both values are greater than range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
-			}
-			else
-			{
-				cout << " range [" << i << "] both values are NOT greater than range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
-			}
-
+			cout << "number is NOT greater than encapsulated values" << endl;
 		}
 	}
+	
 
 	cout << endl;
 	cout << "Determine two factor objects are not equal to each other using '!=' operator" << endl;
@@ -631,47 +712,98 @@ void TestOverloadedRelationalOperators(Arrays arr)
 	{
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
-			cout << "- factor [" << i + 1 << "] div value = " << arr.arrFactor[i + 1] << endl;
+			cout << "- factor [" << i << "] encapsulated value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << i + 1 << "] encapsulated value = " << arr.arrFactor[i + 1] << endl;
 			if (arr.arrFactor[i] != arr.arrFactor[i + 1])
 			{
-				cout << " factor [" << i << "] div factor is NOT equals to factor [" << i + 1 << "] div value" << endl;
+				cout << " factor [" << i << "] encapsulated value is NOT equals to factor [" << i + 1 << "]" << endl;
 			}
 			else
 			{
-				cout << " factor [" << i << "] div factor is equals factor [" << i + 1 << "] div value" << endl;
+				cout << " factor [" << i << "] encapsulated value equals factor [" << i + 1 << "]" << endl;
 			}
 
 		}
 		else
 		{
-			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
-			cout << "- factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			cout << "- factor [" << i << "] encapsulated value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] encapsulated value = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			if (arr.arrFactor[i] != arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
 			{
-				cout << " factor [" << i << "] div value is NOT equals to factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
+				cout << " factor [" << i << "] encapsulated value is NOT equals to factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
 			}
 			else
 			{
-				cout << " factor [" << i << "] div value is equals to factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
+				cout << " factor [" << i << "] encapsulated value is equal to factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
 			}
 
 		}
 	}
 
 	cout << endl;
+	cout << "Determine two range objects are not equal to each other using '!=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		if (i < DEFAULT_ARR_SIZE - 1)
+		{
+			cout << "- range [" << i << "] encapsulated values = [" << arr.arrRange[i] <<"]" << endl;
+			cout << "- range [" << i + 1 << "] encapsulated values = [" << arr.arrRange[i + 1] <<"]" << endl;
+			if (arr.arrRange[i] != arr.arrRange[i + 1])
+			{
+				cout << " range [" << i << "] encapsulated values are NOT equals to range [" << i + 1 << "]" << endl;
+			}
+			else
+			{
+				cout << " range [" << i << "] encapsulated values are equals range [" << i + 1 << "]" << endl;
+			}
+
+		}
+		else
+		{
+			cout << "- range [" << i << "] encapsulated values = [" << arr.arrRange[i] <<"]" << endl;
+			cout << "- range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] encapsulated values = [" << arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] <<"]" << endl;
+			if (arr.arrRange[i] != arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
+			{
+				cout << " range [" << i << "] encapsulated values are NOT equals to range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
+			}
+			else
+			{
+				cout << " range [" << i << "] encapsulated values are equals to range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
+			}
+
+		}
+	}
+
+
+	cout << endl;
 	cout << "Determine a factor object is not equal to an unsigned int using '!=' operator" << endl;
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		num = rand() % RAN_MAX + RAN_MIN;
-		cout << "- object [" << i << "] div factor != random integer --> " << arr.arrFactor[i] << " != " << num << endl;
+		cout << "- object [" << i << "] encapsulated value != random integer --> " << arr.arrFactor[i] << " != " << num << endl;
 		if (arr.arrFactor[i] != num)
 		{
 			cout << " encapsulated value is not equals to number" << endl;
 		}
 		else
 		{
-			cout << " encapsulated value is equals to number" << endl;
+			cout << " encapsulated value is equal to number" << endl;
+		}
+	}
+
+	cout << endl;
+	cout << "Determine a range object is not equal to an unsigned int using '!=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- object [" << i << "] encapsulated values != random integer --> [" << arr.arrRange[i] << "] != " << num << endl;
+		if (arr.arrRange[i] != num)
+		{
+			cout << " encapsulated values are not equals to number" << endl;
+		}
+		else
+		{
+			cout << " encapsulated values are equal to number" << endl;
 		}
 	}
 
@@ -680,211 +812,296 @@ void TestOverloadedRelationalOperators(Arrays arr)
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		num = rand() % RAN_MAX + RAN_MIN;
-		cout << "- random integer < object [" << i << "] div factor--> " << num << " != " << arr.arrFactor[i] << endl;
+		cout << "- random integer < object [" << i << "] encapsulated value--> " << num << " != " << arr.arrFactor[i] << endl;
 		if (num != arr.arrFactor[i])
 		{
 			cout << " number is not equals to encapsulated value" << endl;
 		}
 		else
 		{
-			cout << "number is equals to encapsulated value" << endl;
+			cout << "number is equal to encapsulated value" << endl;
 		}
 	}
 
+	cout << endl;
+	cout << "Determine an unsigned int is not equal to a range object using '!=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- random integer < object [" << i << "] encapsulated value--> " << num << " != [" << arr.arrRange[i] <<"]" << endl;
+		if (num != arr.arrRange[i])
+		{
+			cout << " number is not equals to encapsulated values" << endl;
+		}
+		else
+		{
+			cout << "number is equal to encapsulated values" << endl;
+		}
+	}
+
+	
 
 	cout << endl;
-	cout << "Determine two range objects are not equal to each other using '!=' operator" << endl;
+	cout << "Determine one factor object is less than or equals to another factor object using '<=' operator" << endl;
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- range [" << i << "] factor values = " << arr.arrRange[i] << endl;
-			cout << "- range [" << i + 1 << "] factor values = " << arr.arrRange[i + 1] << endl;
-			if (arr.arrRange[i] != arr.arrRange[i + 1])
+			cout << "- factor [" << i << "] encapsulated value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << i + 1 << "] encapsulated value = " << arr.arrFactor[i + 1] << endl;
+			if (arr.arrFactor[i] <= arr.arrFactor[i + 1])
 			{
-				cout << " range [" << i << "] both values are NOT equals to range [" << i + 1 << "]" << endl;
+				cout << " factor [" << i << "] encapsulated valueis less than or equals to factor [" << i + 1 << "]" << endl;
 			}
 			else
 			{
-				cout << " range [" << i << "] both values are equals range [" << i + 1 << "]" << endl;
+				cout << " factor [" << i << "] encapsulated value is NOT less than or equals to factor [" << i + 1 << "]" << endl;
 			}
 
 		}
 		else
 		{
-			cout << "- range [" << i << "] factor values = " << arr.arrRange[i] << endl;
-			cout << "- range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] factor values = " << arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
-			if (arr.arrRange[i] != arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
+			cout << "- factor [" << i << "] encapsulated value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] encapsulated value = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			if (arr.arrFactor[i] <= arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
 			{
-				cout << " range [" << i << "] both values are NOT equals to range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
+				cout << " factor [" << i << "] encapsulated value is less than or equals to factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
 			}
 			else
 			{
-				cout << " range [" << i << "] both values are equals to range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
+				cout << " factor [" << i << "] encapsulated value is NOT less than or equals to factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
 			}
-
 		}
 	}
 
-
-
-
-
-
-
-
 	cout << endl;
-	cout << "Determine one range object is less than or equal to another range object using '<=' operator" << endl;
+	cout << "Determine one range object encapsulated values are less than or equal to another range object using '<=' operator" << endl;
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- range [" << i << "] factor values = " << arr.arrRange[i] << endl;
-			cout << "- range [" << i + 1 << "] factor values = " << arr.arrRange[i + 1] << endl;
+			cout << "- range [" << i << "] encapsulated values = [" << arr.arrRange[i] <<"]" << endl;
+			cout << "- range [" << i + 1 << "] encapsulated values = [" << arr.arrRange[i + 1] <<"]" << endl;
 			if (arr.arrRange[i] <= arr.arrRange[i + 1])
 			{
-				cout << " range [" << i << "] both values are less than or equal to range [" << i + 1 << "]" << endl;
+				cout << " range [" << i << "] encapsulated values are less than or equal to range [" << i + 1 << "]" << endl;
 			}
 			else
 			{
-				cout << " range [" << i << "] both values are NOT less than or equals to range [" << i + 1 << "]" << endl;
+				cout << " range [" << i << "] encapsulated values are NOT less than or equals to range [" << i + 1 << "]" << endl;
 			}
 		}
 		else
 		{
-			cout << "- range [" << i << "] factor values = " << arr.arrRange[i] << endl;
+			cout << "- range [" << i << "] encapsulated values = " << arr.arrRange[i] << endl;
 			cout << "- range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] factor values = " << arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			if (arr.arrRange[i] <= arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
 			{
-				cout << " range [" << i << "] both values are less than or equal to range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
+				cout << " range [" << i << "] encapsulated values are less than or equal to range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
 			}
 			else
 			{
-				cout << " range [" << i << "] both values are NOT less than or equal to range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
+				cout << " range [" << i << "] encapsulated values are NOT less than or equal to range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
 			}
 		}
 	}
 
 	cout << endl;
-	cout << "Determine one range object is greater than or equal to another range object using  '>=' operator" << endl;
+	cout << "Determine a factor object encapsulated value is less than or equals to an unsigned int using '<=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- object [" << i << "] encapsulated value <= random integer --> " << arr.arrFactor[i] << " <= " << num << endl;
+		if (arr.arrFactor[i] <= num)
+		{
+			cout << " encapsulated value is less than or equals to number" << endl;
+		}
+		else
+		{
+			cout << " encapsulated value is NOT less than or equals to number" << endl;
+		}
+	}
+
+	cout << endl;
+	cout << "Determine a range object encapsulated values are less than or equals to an unsigned int using '<=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- object [" << i << "] encapsulated value <= random integer --> [" << arr.arrRange[i] << "] <= " << num << endl;
+		if (arr.arrRange[i] <= num)
+		{
+			cout << " encapsulated values are less than or equals to number" << endl;
+		}
+		else
+		{
+			cout << " encapsulated values are NOT less than or equals to number" << endl;
+		}
+	}
+
+
+	cout << endl;
+	cout 	<< "Determine an unsigned int is less than or equals to a factor object encapsulated value using '<=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- random integer <= object [" << i << "] encapsulated value--> " << num << " <= " << arr.arrFactor[i] << endl;
+		if (num <= arr.arrFactor[i])
+		{
+			cout << " number is less than or equals to encapsulated value" << endl;
+		}
+		else
+		{
+			cout << "number is NOT less than or equals to encapsulated value" << endl;
+		}
+	}
+
+	cout << endl;
+	cout << "Determine an unsigned int is less than or equals to a range object encapsulated values using '<=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- random integer <= object [" << i << "] encapsulated value--> " << num << " <= [" << arr.arrRange[i] <<"]" << endl;
+		if (num <= arr.arrRange[i])
+		{
+			cout << " number is less than or equals to encapsulated values" << endl;
+		}
+		else
+		{
+			cout << "number is NOT less than or equals to encapsulated values" << endl;
+		}
+	}
+	
+	cout << endl;
+	cout << "Determine one factor object encapsulated value is greater than or equal to another factor object using  '>=' operator" << endl;
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		if (i < DEFAULT_ARR_SIZE - 1)
 		{
-			cout << "- range [" << i << "] factor values = " << arr.arrRange[i] << endl;
-			cout << "- range [" << i + 1 << "] factor values = " << arr.arrRange[i + 1] << endl;
+			cout << "- factor [" << i << "] encapsulated value = " << arr.arrFactor[i] << endl;
+			cout << "- factor [" << i + 1 << "] encapsulated value = " << arr.arrFactor[i + 1] << endl;
 			if (arr.arrRange[i] >= arr.arrRange[i + 1])
 			{
-				cout << " range [" << i << "] both values are greater than or equal to range [" << i + 1 << "]" << endl;
+				cout << " factor [" << i << "] encapsulated value is greater than or equal to factor [" << i + 1 << "]" << endl;
 			}
 			else
 			{
-				cout << " range [" << i << "]  both values are NOT greater than or equal to range [" << i + 1 << "]" << endl;
+				cout << " factor [" << i << "] encapsulated value is NOT greater than or equal to factor [" << i + 1 << "]" << endl;
 			}
 		}
 		else
 		{
-			cout << "- range [" << i << "] factor values = " << arr.arrRange[i] << endl;
-			cout << "- range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] factor values = " << arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
-			if (arr.arrRange[i] >= arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
-			{
-				cout << " range [" << i << "] both values are greater than or equal to range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
-			}
-			else
-			{
-				cout << " range [" << i << "] both values are NOT greater than or equal to range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
-			}
-		}
-	}
-
-	
-
-	
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	cout << endl;
-	cout << "Determine one object div factor is less than or equals to the other using '<=' operator" << endl;
-	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
-	{
-		if (i < DEFAULT_ARR_SIZE - 1)
-		{
-			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
-			cout << "- factor [" << i + 1 << "] div value = " << arr.arrFactor[i + 1] << endl;
-			if (arr.arrFactor[i] <= arr.arrFactor[i + 1])
-			{
-				cout << " factor [" << i << "] div value is less than or equals to factor [" << i + 1 << "] div value" << endl;
-			}
-			else
-			{
-				cout << " factor [" << i << "] div value is NOT less than or equals to factor [" << i + 1 << "] div value" << endl;
-			}
-
-		}
-		else
-		{
-			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
-			cout << "- factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
-			if (arr.arrFactor[i] <= arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
-			{
-				cout << " factor [" << i << "] div value is less than or equals to factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
-			}
-			else
-			{
-				cout << " factor [" << i << "] div value is NOT less than or equals to factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
-			}
-		}
-	}
-
-	cout << endl;
-	cout << "Determine one object div factor is greater than or equals to the other using '>=' operator" << endl;
-	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
-	{
-		if (i < DEFAULT_ARR_SIZE - 1)
-		{
-			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
-			cout << "- factor [" << i + 1 << "] div value = " << arr.arrFactor[i + 1] << endl;
-			if (arr.arrFactor[i] >= arr.arrFactor[i + 1])
-			{
-				cout << " factor [" << i << "] div value is greater than or equals to factor [" << i + 1 << "] div value" << endl;
-			}
-			else
-			{
-				cout << " factor [" << i << "] div value is NOT greater than or equals to factor [" << i + 1 << "] div value" << endl;
-			}
-
-		}
-		else
-		{
-			cout << "- factor [" << i << "] div value = " << arr.arrFactor[i] << endl;
-			cout << "- factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
+			cout << "- factor  [" << i << "] encapsulated value = " << arr.arrFactor[i] << endl;
+			cout << "- factor  [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] encapsulated value = " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			if (arr.arrFactor[i] >= arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
 			{
-				cout << " factor [" << i << "] div value is greater than or equals to factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
+				cout << " factor  [" << i << "] encapsulated value is greater than or equal to factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
 			}
 			else
 			{
-				cout << " factor [" << i << "] div value is NOT greater than or equals to factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] div value" << endl;
+				cout << " factor  [" << i << "] encapsulated value is NOT greater than or equal to factor [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
 			}
 		}
 	}
+
+	cout << endl;
+	cout << "Determine one range object encapsulated values are greater than or equal to another range object using  '>=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		if (i < DEFAULT_ARR_SIZE - 1)
+		{
+			cout << "- range [" << i << "] encapsulated values = " << arr.arrRange[i] << endl;
+			cout << "- range [" << i + 1 << "] encapsulated values = " << arr.arrRange[i + 1] << endl;
+			if (arr.arrRange[i] >= arr.arrRange[i + 1])
+			{
+				cout << " range [" << i << "] encapsulated values are greater than or equal to range [" << i + 1 << "]" << endl;
+			}
+			else
+			{
+				cout << " range [" << i << "] both values are NOT greater than or equal to range [" << i + 1 << "]" << endl;
+			}
+		}
+		else
+		{
+			cout << "- range [" << i << "] encapsulated values = [" << arr.arrRange[i] <<"]" << endl;
+			cout << "- range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] encapsulated values = [" << arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] <<"]" << endl;
+			if (arr.arrRange[i] >= arr.arrRange[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE])
+			{
+				cout << " range [" << i << "] encapsulated values are greater than or equal to range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
+			}
+			else
+			{
+				cout << " range [" << i << "] encapsulated values are NOT greater than or equal to range [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << endl;
+			}
+		}
+	}
+
+
+	cout << endl;
+	cout << "Determine a factor object encapsulated value is greater than or equals to an unsigned int using '>=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- object [" << i << "] encapsulated value >= random integer --> " << arr.arrFactor[i] << " >= " << num << endl;
+		if (arr.arrFactor[i] >= num)
+		{
+			cout << " encapsulated value is greater than or equals to number" << endl;
+		}
+		else
+		{
+			cout << " encapsulated value is NOT greater than or equals to number" << endl;
+		}
+	}
+
+	cout << endl;
+	cout << "Determine a range object encapsulated values are greater than or equals to an unsigned int using '>=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- object [" << i << "] encapsulated values >= random integer --> [" << arr.arrRange[i] << "] >= " << num << endl;
+		if (arr.arrRange[i] >= num)
+		{
+			cout << " encapsulated values are greater than or equals to number" << endl;
+		}
+		else
+		{
+			cout << " encapsulated values are NOT greater than or equals to number" << endl;
+		}
+	}
+
+
+	cout << endl;
+	cout << "Determine an unsigned int is greater than or equals to a factor object encapsulated value using '>=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- random integer >= object [" << i << "] encapsulated value--> " << num << " >= " << arr.arrFactor[i] << endl;
+		if (num >= arr.arrFactor[i])
+		{
+			cout << " number is greater than or equals to encapsulated value" << endl;
+		}
+		else
+		{
+			cout << "number is NOT greater than or equals to encapsulated value" << endl;
+		}
+	}
+
+	cout << endl;
+	cout << "Determine an unsigned int is greater than or equals to a range object encapsulated value using '>=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- random integer >= object [" << i << "] encapsulated value--> " << num << " >= [" << arr.arrRange[i] <<"]" << endl;
+		if (num >= arr.arrRange[i])
+		{
+			cout << " number is greater than or equals to encapsulated values" << endl;
+		}
+		else
+		{
+			cout << "number is NOT greater than or equals to encapsulated values" << endl;
+		}
+	}
+	
+
 
 	cout << ASTERISK + "End Test Overloaded Relational Operators " + ASTERISK << endl;
 }
@@ -897,20 +1114,19 @@ void TestOverloadedShortcutOperators(Arrays arr)
 	cout << "Pre increment factor objects using '++object' operator" << endl;
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
-		cout << "- factor [" << i << "] current div value = " << arr.arrFactor[i];
+		cout << "- factor [" << i << "] encapsulated value = " << arr.arrFactor[i];
 		cout << ", call ++object[" << i <<"]" << endl;
-		cout << "  in scope div factor = " << ++arr.arrFactor[i] << endl;
+		cout << "  in scope encapsulated value = " << ++arr.arrFactor[i] << endl;
 	}
 
 	cout << endl;
 	cout << "Pre increment range objects using '++object' operator" << endl;
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
-		cout << "- range [" << i << "] current div factors = [" << arr.arrRange[i] <<"]";
+		cout << "- range [" << i << "] encapsulated values = [" << arr.arrRange[i] <<"]";
 		cout << ", call ++object[" << i << "]" << endl;
-		cout << "  in scope div factors = [" << ++arr.arrRange[i] <<"]" << endl;
+		cout << "  in scope encapsulated values = [" << ++arr.arrRange[i] <<"]" << endl;
 	}
-
 
 
 	cout << endl;
@@ -918,9 +1134,9 @@ void TestOverloadedShortcutOperators(Arrays arr)
 
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
-		cout << "- factor [" << i << "] current div value = " << arr.arrFactor[i];
+		cout << "- factor [" << i << "] encapsulated value = " << arr.arrFactor[i];
 		cout << ", call object[" << i << "]++" << endl;
-		cout << "  in scope div factor = " << arr.arrFactor[i]++ << endl;
+		cout << "  in scope encapsulated value = " << arr.arrFactor[i]++ << endl;
 	}
 
 	cout << endl;
@@ -928,9 +1144,9 @@ void TestOverloadedShortcutOperators(Arrays arr)
 
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
-		cout << "- range [" << i << "] current div factors = [" << arr.arrRange[i];
+		cout << "- range [" << i << "] encapsulated values = [" << arr.arrRange[i];
 		cout << "], call object[" << i << "]++" << endl;
-		cout << "  in scope div factors = [" << arr.arrRange[i]++ << "]" << endl;
+		cout << "  in scope encapsulated values = [" << arr.arrRange[i]++ << "]" << endl;
 	}
 
 
@@ -939,9 +1155,9 @@ void TestOverloadedShortcutOperators(Arrays arr)
 
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
-		cout << "- factor [" << i << "] current div value = " << arr.arrFactor[i];
+		cout << "- factor [" << i << "] encapsulated value = " << arr.arrFactor[i];
 		cout << ", call --object[" << i << "]" << endl;
-		cout << "  in scope returned div factor = " << --arr.arrFactor[i] << endl;
+		cout << "  in scope encapsulated value = " << --arr.arrFactor[i] << endl;
 	}
 
 
@@ -949,9 +1165,9 @@ void TestOverloadedShortcutOperators(Arrays arr)
 	cout << "Pre decrement range objects using '--object' operator" << endl;
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
-		cout << "- range [" << i << "] current div factors = [" << arr.arrRange[i];
+		cout << "- range [" << i << "] encapsulated values = [" << arr.arrRange[i];
 		cout << "], call --object[" << i << "]" << endl;
-		cout << "  in scope div factors = [" << --arr.arrRange[i] << "]" << endl;
+		cout << "  in scope encapsulated values = [" << --arr.arrRange[i] << "]" << endl;
 	}
 
 
@@ -959,18 +1175,18 @@ void TestOverloadedShortcutOperators(Arrays arr)
 	cout << "Post decrement factor objects using 'object--' operator" << endl;
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
-		cout << "- factor [" << i << "] current div value = " << arr.arrFactor[i];
+		cout << "- factor [" << i << "] encapsulated value = " << arr.arrFactor[i];
 		cout << ", call object[" << i << "]--" << endl;
-		cout << "  in scope div value = " << arr.arrFactor[i]-- << endl;
+		cout << "  in scope encapsulated value = " << arr.arrFactor[i]-- << endl;
 	}
 
 	cout << endl;
 	cout << "Post decrement range objects using 'object--' operator" << endl;
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
-		cout << "- range [" << i << "] current div factors = [" << arr.arrRange[i];
+		cout << "- range [" << i << "] encapsulated values = [" << arr.arrRange[i];
 		cout << "], call object[" << i << "]--" << endl;
-		cout << "  in scope div factors = [" << arr.arrRange[i]-- << "]" << endl;
+		cout << "  in scope encapsulated values = [" << arr.arrRange[i]-- << "]" << endl;
 	}
 
 	cout << ASTERISK + "End Test Overloaded Shortcut Operators " + ASTERISK << endl;
@@ -991,13 +1207,13 @@ void TestOverloadedCompounAssignmentOperators(Arrays arr)
 		{
 			cout << "- factor [" << i << "] += object[" << i + 1 << "] --> " << arr.arrFactor[i] << " += " << arr.arrFactor[i + 1] << endl;
 			arr.arrFactor[i] += arr.arrFactor[i + 1];
-			cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
+			cout << "  in scope factor [" << i << "] encapsulated value = " << arr.arrFactor[i] << endl;
 		}
 		else
 		{
 			cout << "- factor [" << i << "] += factor[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " += " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			arr.arrFactor[i] += arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
-			cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
+			cout << "  in scope factor [" << i << "] encapsulated value = " << arr.arrFactor[i] << endl;
 		}
 	}
 
@@ -1008,8 +1224,20 @@ void TestOverloadedCompounAssignmentOperators(Arrays arr)
 		num = rand() % RAN_MAX + RAN_MIN;
 		cout << "- factor [" << i << "] div value +=  random integer --> " << arr.arrFactor[i] << " += " << num << endl;
 		arr.arrFactor[i] += num;
-		cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
+		cout << "  in scope factor [" << i << "] encapsulated value  = " << arr.arrFactor[i] << endl;
 	}
+
+
+	cout << endl;
+	cout << "Add a range object with an unsigned int using '+=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- range [" << i << "] encapsulated values +=  random integer --> [" << arr.arrRange[i] << "] += " << num << endl;
+		arr.arrRange[i] += num;
+		cout << "  in scope encapsulated values  = [" << arr.arrRange[i] <<"]" << endl;
+	}
+
 
 	cout << endl;
 	cout << "Subtract two factor objects using '-=' operator" << endl;
@@ -1019,13 +1247,13 @@ void TestOverloadedCompounAssignmentOperators(Arrays arr)
 		{
 			cout << "- factor [" << i << "] -= factor[" << i + 1 << "] --> " << arr.arrFactor[i] << " -= " << arr.arrFactor[i + 1] << endl;
 			arr.arrFactor[i] -= arr.arrFactor[i + 1];
-			cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
+			cout << "  in scope encapsulated value = " << arr.arrFactor[i] << endl;
 		}
 		else
 		{
 			cout << "- factor [" << i << "] -= factor[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " -= " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			arr.arrFactor[i] -= arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
-			cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
+			cout << "  in scope encapsulated value = " << arr.arrFactor[i] << endl;
 		}
 	}
 
@@ -1034,9 +1262,19 @@ void TestOverloadedCompounAssignmentOperators(Arrays arr)
 	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
 	{
 		num = rand() % RAN_MAX + RAN_MIN;
-		cout << "- factor [" << i << "] div value -=  random integer --> " << arr.arrFactor[i] << " -= " << num << endl;
+		cout << "- factor [" << i << "] encapsulated value -=  random integer --> " << arr.arrFactor[i] << " -= " << num << endl;
 		arr.arrFactor[i] -= num;
-		cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
+		cout << "  in scope encapsulated value  = " << arr.arrFactor[i] << endl;
+	}
+
+	cout << endl;
+	cout << "Subtract an unsigned int from a range object using '-=' operator" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		num = rand() % RAN_MAX + RAN_MIN;
+		cout << "- range [" << i << "] encapsulated values -=  random integer --> [" << arr.arrRange[i] << "] -= " << num << endl;
+		arr.arrRange[i] -= num;
+		cout << "  in scope encapsulated values = [" << arr.arrRange[i] <<"]" << endl;
 	}
 
 
@@ -1048,13 +1286,13 @@ void TestOverloadedCompounAssignmentOperators(Arrays arr)
 		{
 			cout << "- factor [" << i << "] *= factor[" << i + 1 << "] --> " << arr.arrFactor[i] << " *= " << arr.arrFactor[i + 1] << endl;
 			arr.arrFactor[i] *= arr.arrFactor[i + 1];
-			cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
+			cout << "  in scope encapsulated value = " << arr.arrFactor[i] << endl;
 		}
 		else
 		{
 			cout << "- factor [" << i << "] *= factor[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " *= " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
 			arr.arrFactor[i] *= arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
-			cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
+			cout << "  in scope encapsulated value = " << arr.arrFactor[i] << endl;
 		}
 	}
 
@@ -1065,65 +1303,9 @@ void TestOverloadedCompounAssignmentOperators(Arrays arr)
 		num = rand() % RAN_MAX + RAN_MIN;
 		cout << "- factor [" << i << "] div value *=  random integer --> " << arr.arrFactor[i] << " *= " << num << endl;
 		arr.arrFactor[i] *= num;
-		cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
+		cout << "  in scope encapsulated value = " << arr.arrFactor[i] << endl;
 	}
 
-	cout << endl;
-	cout << "Integer division with two factor objects using '/=' operator" << endl;
-	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
-	{
-		if (i < DEFAULT_ARR_SIZE - 1)
-		{
-			cout << "- factor [" << i << "] /= factor[" << i + 1 << "] --> " << arr.arrFactor[i] << " /= " << arr.arrFactor[i + 1] << endl;
-			arr.arrFactor[i] /= arr.arrFactor[i + 1];
-			cout << "  in scope factor [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
-		}
-		else
-		{
-			cout << "- factor [" << i << "] /= factor[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " /= " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
-			arr.arrFactor[i] /= arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
-			cout << "  in scope object [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
-		}
-	}
-
-
-	cout << endl;
-	cout << "Integer division of a factor object by an unsigned int using '/=' operator" << endl;
-	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
-	{
-		num = rand() % RAN_MAX + RAN_MIN;
-		cout << "- factor [" << i << "] div value /=  random integer --> " << arr.arrFactor[i] << " /= " << num << endl;
-		arr.arrFactor[i] /= num;
-		cout << "  in scope object [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
-	}
-
-	cout << endl;
-	cout << "Integer modulus with two factor objects using '%=' operator" << endl;
-	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
-	{
-		if (i < DEFAULT_ARR_SIZE - 1)
-		{
-			cout << "- factor [" << i << "] %= factor[" << i + 1 << "] --> " << arr.arrFactor[i] << " %= " << arr.arrFactor[i + 1] << endl;
-			arr.arrFactor[i] %= arr.arrFactor[i + 1];
-			cout << "  in scope object [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
-		}
-		else
-		{
-			cout << "- factor [" << i << "] %= object[" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "] --> " << arr.arrFactor[i] << " %= " << arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] << endl;
-			arr.arrFactor[i] %= arr.arrFactor[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE];
-			cout << "  in scope object [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
-		}
-	}
-
-	cout << endl;
-	cout << "Integer modulus of a factor object by an unsigned int using '%=' operator" << endl;
-	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
-	{
-		num = rand() % RAN_MAX + RAN_MIN;
-		cout << "- factor [" << i << "] div value %=  random integer --> " << arr.arrFactor[i] << " %= " << num << endl;
-		arr.arrFactor[i] %= num;
-		cout << "  in scope object [" << i << "] updated div value = " << arr.arrFactor[i] << endl;
-	}
 
 	cout << ASTERISK + "End Test Overloaded Compound Assignment Operators " + ASTERISK << endl;
 }

@@ -49,37 +49,54 @@ public:
 	friend ostream& operator<<(ostream& os, const range & r); //completed
 
 
-
-	/////////////////Mathematical//////////////////////
+	/////////////////////////MATHEMATICAL OPERATORS//////////////////////////////
 	range operator+(unsigned int x); //completed
-	friend range operator+(unsigned int x, const range & rhs); //completed
-	
+	//friend range operator+(unsigned int x, const range & rhs); //completed
 
-	range operator-(const range & rhs); //complete
 	range operator-(unsigned int x); //complete
-	friend range operator-(unsigned int x, const range & rhs); //complete
-
-	//range operator*(const range & rhs);//complete
-	//range operator*(unsigned int x);
-	//friend factor operator*(unsigned int x, const factor & rhs);
+	//friend range operator-(unsigned int x, const range & rhs); //complete
 
 
-	///////////////////RELATION OPERATOR////////////////////////////
-	bool operator == (const range & rhs);
-	bool operator<(const range & rhs); 
+	//////////////////////////RELATION OPERATOR////////////////////////////////////
+	bool operator == (const range & rhs); //completed
+	bool operator== (unsigned int x); //completed
+	friend bool operator== (unsigned int x, const range& rhs); 
+
+	bool operator<(const range & rhs); //completed
+	bool operator<(unsigned int x);  //completed
+	friend bool operator<(unsigned int x, const range& rhs); //completed
+
 	bool operator>(const range & rhs);
+	bool operator>(unsigned int x);
+	friend bool operator>(unsigned int x, const range& rhs);
+
 	bool operator!=(const range & rhs);
+	bool operator!=(unsigned int x);
+	friend bool operator!=(unsigned int x, const range& rhs);
+
 	bool operator<=(const range & rhs);
+	bool operator<=(unsigned int x);
+	friend bool operator<=(unsigned int x, const range& rhs);
+
+
+
 	bool operator>=(const range & rhs); 
+	bool operator>=(unsigned int x);
+	friend bool operator>=(unsigned int x, const range& rhs);
 
 
-	////////////////////SHORTCUT OPERATORS///////////////////////////
+	////////////////////////SHORTCUT OPERATORS///////////////////////////////////////
 	//++, --
 	range operator++();
 	range operator++(int x);
 
 	range operator--();
 	range operator--(int x);
+
+	/////////////////////////////////COMPOUNDED ASSIGNMENT///////////////////////////
+	void operator+=(unsigned int x);
+
+	void operator-=(unsigned int x);
 
 
 };
