@@ -43,10 +43,10 @@ int main()
 	TestNumberIsMultiplierFactor(p5Arr);
 	TestOverloaded_StreamIO_Operators(p5Arr); 
 	TestOverloadedMathematicalOperators(p5Arr);
-	//TestOverloaded_StreamIO_Operators(p5Arr);
-	//TestOverloadedRelationalOperators(p5Arr);
-	//TestOverloadedShortcutOperators(p5Arr);
-	//TestOverloadedCompounAssignmentOperators(p5Arr);
+	TestOverloaded_StreamIO_Operators(p5Arr);
+	TestOverloadedRelationalOperators(p5Arr);
+	TestOverloadedShortcutOperators(p5Arr);
+	TestOverloadedCompounAssignmentOperators(p5Arr);
 
 
 	return 0;
