@@ -47,9 +47,15 @@ multiQ& multiQ::operator=(const multiQ& src)
 {
 	if (this != &src)
 	{
-		delete arrFactor;
+		delete[] arrFactor;
 		factorIndex = src.factorIndex;
 		array_Size = src.array_Size;
+		min_Query = src.min_Query;
+		max_Query = src.max_Query;
+		query_Count = src.query_Count;
+		sum_Query = src.sum_Query;
+		isObjectActive = src.isObjectActive;
+
 
 		for (unsigned int i = 0; i < array_Size; i++)
 		{
@@ -74,14 +80,10 @@ multiQ::multiQ(const multiQ& src)
 
 bool multiQ::PopFactorObject()
 {
-	if (isObjectActive)
+	if (isObjectActive && !IsEmpty())
 	{
-		if (!IsEmpty())
-		{
-			//arrFactor[factorIndex] = NULL;
 			factorIndex--;
 			return true;
-		}
 	}
 	return false;
 }
@@ -152,7 +154,6 @@ unsigned int multiQ::Query(unsigned int num)
 }
 
 
-
 bool multiQ::operator!=(const multiQ& rhs)
 { 
 	return (arrFactor != rhs.arrFactor);
@@ -200,6 +201,7 @@ unsigned int multiQ::GetAvgQuery() { return sum_Query / query_Count;}
 
 unsigned int multiQ::GetTotalQueryCount(){ return query_Count;}
 
+//re-examine 
 void multiQ::Reset()
 {
 	isObjectActive = true;
@@ -215,3 +217,81 @@ void multiQ::Reset()
 }
 
 bool multiQ::IsEmpty(){ return ((int)factorIndex <= INIT_FACTOR_INDEX);}
+
+multiQ& multiQ::operator+=(unsigned int x)
+{
+	for (unsigned int i = 0; i < factorIndex; i++)
+	{
+		arrFactor[i] += x;
+	}
+
+	return *this;
+}
+
+multiQ& multiQ::operator+=(const factor& fObj)
+{
+	PushFactorObj(fObj);
+	return *this;
+}
+
+//Not sure, double check
+multiQ& multiQ::operator++()
+{
+	bool inserted = false;
+	factor newFactor(5);
+	inserted = PushFactorObj(newFactor);
+	
+	return *this;
+	
+	/*
+	for (unsigned int i = 0; i < factorIndex; i++)
+	{
+		++arrFactor[i];
+	}
+	return *this;*/
+}
+
+//Not sure, double check
+multiQ& multiQ::operator++(int x)
+{
+	multiQ local(*this);
+	operator++();
+	return local;
+}
+
+
+bool multiQ::operator==(const multiQ& m)
+{
+	bool isEqual = true;
+
+	if (factorIndex == m.factorIndex)
+	{
+		for (unsigned int i = 0; i < factorIndex; i++)
+		{
+			if (arrFactor[i] != m.arrFactor[i])
+			{
+				isEqual = false;
+			}
+		}
+	}
+	else
+	{
+		isEqual = false;
+	}
+	
+	return isEqual;
+}
+
+
+
+/////////////////////// I/O OPERATORS/////////////////////////
+ostream& operator<<(ostream& os, const multiQ& m)
+{
+	for (unsigned int i = 0; i < m.factorIndex; i++)
+	{
+		os << m.arrFactor[i];
+	}
+
+	return os;
+}
+

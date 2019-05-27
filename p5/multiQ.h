@@ -44,7 +44,7 @@ private:
 public:
 	multiQ(unsigned int arrSize = INIT_ARRAY_SIZE);
 	~multiQ();
-	multiQ & operator=(const multiQ & src);
+	
 	multiQ(const multiQ& src);
 
 	bool PushFactorObj(factor obj);
@@ -57,8 +57,20 @@ public:
 	void Reset();
 	bool IsEmpty();
 
+	///////////////////////////OVERLOADED OPERATORS//////////////////////////
+	multiQ& operator+=(unsigned int x);
+	multiQ& operator+=(const factor& fOjb);
+	multiQ& operator++(); ////DOUBLE CHECK, NOT COMPLETED
+	multiQ& operator++(int x); //DOUBLE CHECK, NOT COMPLETED
+	//multiQ& operator--(); //NOT COMPLETED
+	//multiQ& operator--(int x); //NOT COMPLETED
 
+
+
+	multiQ & operator=(const multiQ & src);
+	bool operator==(const multiQ& m);
 	bool operator!=(const multiQ & rhs);
+	friend ostream& operator<<(ostream& os, const multiQ& m);
 };
 #endif 
 
