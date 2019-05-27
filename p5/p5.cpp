@@ -1,3 +1,10 @@
+/*
+Developers: Don Dang
+
+
+*/
+
+
 #include "factor.h"
 #include "range.h"
 #include <iostream>
