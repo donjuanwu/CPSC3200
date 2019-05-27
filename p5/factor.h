@@ -54,44 +54,23 @@ public:
 	////////////////////////////MATHEMATICAL/////////////////////////////////
 	factor operator+(const factor & rhs); //completed
 	factor operator+(unsigned int x); //completed
-	friend factor operator+(unsigned int x, const factor & rhs);
+	//friend factor operator+(unsigned int x, const factor & rhs);
 
 	factor operator-(const factor & rhs); //completed
 	factor operator-(unsigned int x); //complete
-	friend factor operator-(unsigned int x, const factor & rhs);
+	//friend factor operator-(unsigned int x, const factor & rhs);
 
-	//friend class range; 
-	
-
-
-	/************************MODIFIED MATHEMATICAL**************************/
-	//int operator+(const factor & rhs); //completed
-	//int operator+(unsigned int x); //completed
-	//friend int operator+(unsigned int x, const factor & rhs); //completed
-
-	//int operator-(const factor & rhs); //completed
-	//int operator-(unsigned int x); //complete
-	//friend int operator-(unsigned int x, const factor & rhs); //complete
-
-	/*************************************************************************/
 	factor operator*(const factor & rhs);//complete
 	factor operator*(unsigned int x);
-	friend factor operator*(unsigned int x, const factor & rhs);
-
-	factor operator/(const factor & rhs);//complete
-	factor operator/(unsigned int x);//complete
-	friend factor operator/(unsigned int x, const factor & rhs);
-
-	factor operator%(const factor & rhs);//complete
-	factor operator%(unsigned int x);//complete
-	friend factor operator%(unsigned int x, const factor & rhs);
+	//friend factor operator*(unsigned int x, const factor & rhs);
 
 
 	
-	//////////////////////////////Compound Assignments///////////////////////////////
+	//////////////////////////////COMPOUND ASSIGNMENTS///////////////////////////////
 	//=, +=, *=, -=, /=
   void operator+=(const factor & rhs);
 	void operator+=(unsigned int x);
+
 
 	void operator-=(const factor & rhs);
 	void operator-=(unsigned int x);
@@ -99,35 +78,40 @@ public:
 	void operator*=(const factor & rhs);
 	void operator*=(unsigned int x);
 
-	void operator/=(const factor & rhs);
-	void operator/=(unsigned int x);
 
-	void operator%=(const factor & rhs);
-	void operator%=(unsigned int x);
-
-	///////////////////////////////Shortcuts////////////////////////////////////////
+	///////////////////////////////SHORTCUTS OPERATORS//////////////////////////////
 	//++, --
-	//factor operator++();
-	//factor operator++(int x);
+	factor operator++();
+	factor operator++(int x);
 
-	//factor operator--();
-	//factor operator--(int x);
+	factor operator--();
+	factor operator--(int x);
 
-/**************************Modified Shortcuts*****************************/
- int operator++();
- int operator++(int x);
- int operator--();
- int operator--(int x);
+	//////////////////////////RELATIONAL/////////////////////////////////////
+	bool operator== (const factor & rhs); //completed
+	bool operator== (unsigned int x); //completed
+	friend bool operator== (unsigned int x, const factor& rhs); //completed
 
-/**************************************************************************/
-
-	///////////////Relational////////////////////////
-	bool operator == (const factor & rhs); //completed
 	bool operator<(const factor & rhs); //completed
+	bool operator<(unsigned int x);  //completed
+	friend bool operator<(unsigned int x, const factor& rhs); //completed
+
 	bool operator>(const factor & rhs); //completed
+	bool operator> (unsigned int x); //completed
+	friend bool operator>(unsigned int x, const factor& rhs); //completed
+	
 	bool operator!=(const factor & rhs); //completed
+	bool operator!=(unsigned int x); //completed
+	friend bool operator!=(unsigned int x, const factor& rhs); //completed
+
+
 	bool operator<=(const factor & rhs); //completed
+	bool operator<=(unsigned int x); //completed
+	friend bool operator<=(unsigned int x, const factor& rhs); //completed
+
 	bool operator>=(const factor & rhs); //completed
+	bool operator>=(unsigned int x);
+	friend bool operator>=(unsigned int x, const factor& rhs);
 
 };
 

@@ -96,18 +96,18 @@ factor factor::operator+(const factor & rhs)
 
 factor factor::operator+(unsigned int x)
 {
-	factor local(x);
-	local.divFactor += divFactor;
+	factor local(*this);
+	local.divFactor += x;
 	return local;
 
 }
 
-factor operator+(unsigned int x, const factor & rhs)
-{
-	factor local(x);
-	local.divFactor += rhs.divFactor;
-	return local;
-}
+//factor operator+(unsigned int x, const factor & rhs)
+//{
+//	factor local(x);
+//	local.divFactor += rhs.divFactor;
+//	return local;
+//}
 
 
 factor factor::operator-(const factor & rhs)
@@ -132,13 +132,13 @@ factor factor::operator-(unsigned int x)
 }
 
 
-factor operator-(unsigned int x, const factor & rhs)
-{
-	factor local(x);
-	if (local.divFactor <= rhs.divFactor + 1) { local.divFactor = 2; }
-	else { local.divFactor -= rhs.divFactor; }
-	return local;
-}
+//factor operator-(unsigned int x, const factor & rhs)
+//{
+//	factor local(x);
+//	if (local.divFactor <= rhs.divFactor + 1) { local.divFactor = 2; }
+//	else { local.divFactor -= rhs.divFactor; }
+//	return local;
+//}
 
 
 factor factor::operator*(const factor & rhs)
@@ -149,64 +149,6 @@ factor factor::operator*(const factor & rhs)
 }
 
 
-
-
-////////////////////////////////MODIFIED MATH//////////////////////////////////
-//int factor::operator+(const factor & rhs)
-//{
-//	factor local(rhs.divFactor);
-//	local.divFactor += divFactor;
-//	return local.divFactor;
-//	//return divFactor += rhs.divFactor; //local.divFactor;
-//}
-
-
-//int factor::operator+(unsigned int x)
-//{
-//	factor local(x);
-//	local.divFactor += divFactor;
-//	return local.divFactor;
-//}
-//
-//int operator+(unsigned int x, const factor & rhs)
-//{
-//	factor local(x);
-//	local.divFactor += rhs.divFactor;
-//	return local.divFactor;
-//}
-
-
-//int factor::operator-(const factor & rhs)
-//{
-//	factor local(divFactor);
-//	if (local.divFactor <= rhs.divFactor + 1) { local.divFactor = 2;}
-//	else { local.divFactor -= rhs.divFactor;}
-//	return local.divFactor;
-//}
-
-
-//int factor::operator-(unsigned int x)
-//{
-//	factor local(divFactor);
-//	if (local.divFactor <= x + 1) { local.divFactor = 2;}
-//	else {local.divFactor -= x;}
-//	return local.divFactor;
-//}
-
-//int operator-(unsigned int x, const factor & rhs)
-//{
-//	factor local(x);
-//	if (local.divFactor <= rhs.divFactor + 1) { local.divFactor = 2; }
-//	else { local.divFactor -= rhs.divFactor; }
-//	return local.divFactor;
-//}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////
-
-
 factor factor::operator*(unsigned int x)
 {
 	factor local(x);
@@ -215,121 +157,39 @@ factor factor::operator*(unsigned int x)
 	return local;
 }
 
-factor operator*(unsigned int x, const factor & rhs)
-{
-	factor local(x);
-	local.divFactor *= rhs.divFactor;
-	return local;
-}
-
-factor factor::operator/(const factor & rhs)
-{
-	factor local(divFactor);
-	local.divFactor /= rhs.divFactor;
-	if (local.divFactor <= 1) local.divFactor = 2;
-	return local;
-
-}
-
-factor factor::operator/(unsigned int x)
-{
-	factor local(divFactor);
-	local.divFactor /= x;
-	if (local.divFactor <= 1) local.divFactor = 2;
-	return local;
-}
-
-factor operator/(unsigned int x, const factor & rhs)
-{
-	factor local(x);
-	local.divFactor /= rhs.divFactor;
-	if (local.divFactor <= 1) local.divFactor = 2;
-	return local;
-}
-
-factor factor::operator%(const factor & rhs)
-{
-	factor local(divFactor);
-	local.divFactor %= rhs.divFactor;
-	if (local.divFactor <= 1) local.divFactor = 2;
-	return local;
-}
-
-factor factor::operator%(unsigned int x)
-{
-	factor local(divFactor);
-	local.divFactor %= x;
-	if (local.divFactor <= 1) local.divFactor = 2;
-	return local;
-}
-
-factor operator%(unsigned int x, const factor & rhs)
-{
-	factor local(x);
-	local.divFactor %= rhs.divFactor;
-	if (local.divFactor <= 1) local.divFactor = 2;
-	return local;
-}
+//factor operator*(unsigned int x, const factor & rhs)
+//{
+//	factor local(x);
+//	local.divFactor *= rhs.divFactor;
+//	return local;
+//}
 
 /////////////////////////SHORTCUT OPERATORS/////////////////
-//factor factor::operator++()
-//{
-//	divFactor += 1;
-//	return *this;
-//}
-
-//factor factor::operator++(int x)
-//{
-//	factor local = *this;
-//	divFactor++;
-//	return local;
-//}
-
-//factor factor::operator--()
-//{
-//	if (divFactor > 2) divFactor--;
-//	return *this;
-//
-//
-//	
-//}
-
-//factor factor::operator--(int x)
-//{
-//	factor local = *this;
-//	if (divFactor > 2) divFactor--;
-//	return local;
-//}
-
-
-/////////////////////////MODIFIED SHORTCUT OPERATORS///////////////////////////
-int factor::operator++()
+factor factor::operator++()
 {
 	divFactor += 1;
-	return divFactor;
+	return *this;
 }
 
-int factor::operator++(int x)
+factor factor::operator++(int x)
 {
-	int local = divFactor;
+	factor local = *this;
 	divFactor++;
 	return local;
 }
 
-int factor::operator--()
+factor factor::operator--()
 {
 	if (divFactor > 2) divFactor--;
-	return divFactor;
+	return *this;
 }
 
-int factor::operator--(int x)
+factor factor::operator--(int x)
 {
-	int local = divFactor;
+	factor local = *this;
 	if (divFactor > 2) divFactor--;
 	return local;
 }
-
-
 
 
 /////////////////COMPOUND ASSIGNMENT OPERATORS//////////////////////
@@ -340,18 +200,12 @@ void factor::operator+=(const factor & rhs)
 
 }
 
-void factor::operator+=(unsigned int x)
-{
-	divFactor += x;
-
-}
+void factor::operator+=(unsigned int x){ divFactor += x;}
 
 void factor::operator-=(const factor & rhs)
 {
 	if (divFactor <= rhs.divFactor + 1) divFactor = 2;
 	else divFactor -= rhs.divFactor;
-	
-
 }
 
 void factor::operator-=(unsigned int x)
@@ -374,38 +228,31 @@ void factor::operator*=(unsigned int x)
 	
 }
 
-void factor::operator/=(const factor & rhs)
-{
-	divFactor /= rhs.divFactor;
-	if (divFactor <= 1) divFactor = 2;
-}
-
-void factor::operator/=(unsigned int x)
-{
-	divFactor /= x;
-	if (divFactor <= 1) divFactor = 2;
-}
-
-void factor::operator%=(const factor & rhs)
-{
-	divFactor %= rhs.divFactor;
-	if (divFactor <= 1) divFactor = 2;
-}
-
-void factor::operator%=(unsigned int x)
-{
-	divFactor %= x;
-	if (divFactor <= 1) divFactor = 2;
-}
-
 
 ///////////////RELATIONAL OPERATORS////////////////////////
 bool factor::operator == (const factor & rhs) { return (divFactor == rhs.divFactor);} 
+bool factor::operator== (unsigned int x){ return (divFactor == x);}
+bool operator== (unsigned int x, const factor& rhs) { return (x == rhs.divFactor);}
+
 bool factor::operator<(const factor & rhs){ return (divFactor < rhs.divFactor);}
+bool factor::operator<(unsigned int x) { return (divFactor < x); }
+bool operator<(unsigned int x, const factor& rhs) { return (x < rhs.divFactor); }
+
 bool factor::operator>(const factor & rhs){ return (divFactor > rhs.divFactor);}
+bool factor::operator> (unsigned int x) { return (divFactor > x); }
+bool operator>(unsigned int x, const factor& rhs) { return (x > rhs.divFactor); }
+
 bool factor::operator!=(const factor & rhs){return (divFactor != rhs.divFactor);}
+bool factor::operator!=(unsigned int x) {return (divFactor != x);}
+bool operator!=(unsigned int x, const factor& rhs) { return (x != rhs.divFactor); }
+
 bool factor::operator<=(const factor & rhs) {return (divFactor <= rhs.divFactor);}
+bool factor::operator<=(unsigned int x){ return (divFactor <= x);}
+bool operator<=(unsigned int x, const factor& rhs){ return (x <= rhs.divFactor);}
+
 bool factor::operator>=(const factor & rhs){return (divFactor >= rhs.divFactor);}
+bool factor::operator>=(unsigned int x){ return (divFactor >= x);}
+bool operator>=(unsigned int x, const factor& rhs) { return (x >= rhs.divFactor); }
 
 
 
