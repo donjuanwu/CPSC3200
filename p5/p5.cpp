@@ -8,6 +8,7 @@ Filename  : p5.cpp
 
 #include "factor.h"
 #include "range.h"
+#include "multiQ.h"
 #include <iostream>
 #include <cstdlib>
 
@@ -23,7 +24,7 @@ const int MAX_ARRAYS_IDX = 1;
 struct Arrays {
 	factor arrFactor[DEFAULT_ARR_SIZE];
 	range arrRange[DEFAULT_ARR_SIZE];
-
+	multiQ arrMultiQ[DEFAULT_ARR_SIZE];
 };
 
 void InitArrays(Arrays& obj);
@@ -33,6 +34,7 @@ void TestOverloadedMathematicalOperators(Arrays arr);
 void TestOverloadedRelationalOperators(Arrays arr);
 void TestOverloadedShortcutOperators(Arrays arr);
 void TestOverloadedCompounAssignmentOperators(Arrays arr);
+ void TestAllInOneMultiQ(Arrays arr);
 
 
 
@@ -48,6 +50,7 @@ int main()
 	TestOverloadedRelationalOperators(p5Arr);
 	TestOverloadedShortcutOperators(p5Arr);
 	TestOverloadedCompounAssignmentOperators(p5Arr);
+	 TestAllInOneMultiQ(p5Arr);
 
 
 	return 0;
@@ -75,6 +78,11 @@ void InitArrays(Arrays& arr)
 
 		arr.arrRange[i] = range(num, num2);
 		cout << i + 1 << ") range object " << i  << " initialized values [" << num << "," << num2 << "]" << endl;
+
+		arr.arrMultiQ[i] = multiQ();
+		cout << i + 1 << ") multiQ object " << i << " initialized value" << endl;
+
+
 		cout << "- display factor object " << i << " encapsulated value = " << arr.arrFactor[i] << endl;
 		cout << "- display range object " << i << " encapsulated values = [" << arr.arrRange[i] << "]"  << endl;
 		cout << endl;
@@ -82,6 +90,8 @@ void InitArrays(Arrays& arr)
 	cout << ASTERISK + "End initialize P5 arrays" + ASTERISK << endl;
 
 }
+
+
 
 void TestNumberIsMultiplierFactor(Arrays& arr)
 {
@@ -182,28 +192,6 @@ void TestOverloadedMathematicalOperators(Arrays arr)
 			cout << "  in scope encapsulated values = " << "[" << rObject << "]" << endl;
 		}
 
-
-		/*cout << endl;
-		cout << "Adding a random unsigned integer to a factor object" << endl;
-		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
-		{
-			num = rand() % RAN_MAX + RAN_MIN;
-			cout << "- random integer + " << "object [" << i << "] encapsulated value --> " << num << " + " << arr.arrFactor[i] << endl;
-			fObject = num + arr.arrFactor[i];
-			cout << "  in scope encapsulated value = " << fObject << endl;
-		}*/
-
-
-		/*cout << endl;
-		cout << "Adding a random unsigned integer to a range object" << endl;
-		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
-		{
-			num = rand() % RAN_MAX + RAN_MIN;
-			cout << "- random integer + " << "object [" << i << "] encapsulated values --> " << num << " + [" << arr.arrRange[i] <<"]" << endl;
-			rObject = num + arr.arrRange[i];
-			cout << "  in scope encapsulated values = " << "[" << rObject << "]" << endl;
-		}*/
-
 		cout << endl;
 		cout << "Subtracting two factor objects" << endl;
 		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
@@ -244,27 +232,7 @@ void TestOverloadedMathematicalOperators(Arrays arr)
 		}
 
 
-		/*cout << endl;
-		cout << "Subtract a factor object from an unsigned int" << endl;
-		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
-		{
-			num = rand() % RAN_MAX + RAN_MIN;
-			cout << "- random integer - " << "object [" << i << "] encapsulated value --> " << num << " - " << arr.arrFactor[i] << endl;
-			fObject = num - arr.arrFactor[i];
-			cout << "  in scope encapsulated value = " << fObject << endl;
-		}*/
-
-		//cout << endl;
-		//cout << "Subtract a range object from an unsigned int" << endl;
-		//for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
-		//{
-		//	num = rand() % RAN_MAX + RAN_MIN;
-		//	cout << "- random integer - " << "object [" << i << "] encapsulated values --> " << num << " - [" << arr.arrRange[i] <<"]" << endl;
-		//	rObject = num - arr.arrRange[i];
-		//	cout << "  in scope encapsulated values = " << "[" << rObject << "]" << endl;
-		//}
-
-
+		
 		cout << endl;
 		cout << "Multiply two factor objects" << endl;
 		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
@@ -293,15 +261,6 @@ void TestOverloadedMathematicalOperators(Arrays arr)
 			cout << "  in scope encapsulated value = " << fObject << endl;
 		}
 
-		/*cout << endl;
-		cout << "Multiply an unsigned int to a factor object" << endl;
-		for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
-		{
-			num = rand() % RAN_MAX + RAN_MIN;
-			cout << "- random integer * " << "object [" << i << "] encapsulated value --> " << num << " * " << arr.arrFactor[i] << endl;
-			fObject = num * arr.arrFactor[i];
-			cout << "  in scope encapsulated value = " << fObject << endl;
-		}*/
 
 	cout << ASTERISK + "End Test Overloaded Mathematical Operators" + ASTERISK << endl;
 }
@@ -1316,4 +1275,193 @@ void TestOverloadedCompounAssignmentOperators(Arrays arr)
 
 
 	cout << ASTERISK + "End Test Overloaded Compound Assignment Operators " + ASTERISK << endl;
+}
+
+
+void TestAllInOneMultiQ(Arrays arr)
+{
+	srand(static_cast<unsigned>(time(0)));
+	int num;
+	
+	cout << endl;
+	cout << ASTERISK + "Begin Test MultiQ Objects With Overloaded Operators " + ASTERISK << endl;
+
+	multiQ m;
+	multiQ t1;
+	multiQ t2;
+	multiQ t3;
+	multiQ t4;
+
+	int rNum = rand() % RAN_MAX + RAN_MIN;
+	int vNum = rand() % RAN_MAX + RAN_MIN;
+	factor f1(rand() % RAN_MAX + RAN_MIN);
+	factor f2(rand() % RAN_MAX + RAN_MIN);
+
+	multiQ arrQ[DEFAULT_ARR_SIZE];
+
+	cout << "Create multiQ objects" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		arrQ[i] = m + (i + 1);
+		
+	}
+
+	cout << endl;
+	cout << "- add encapsulated value to multiQ" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++) 
+	{
+		for (int j = 0; j < DEFAULT_ARR_SIZE; j++)
+		{
+			num = rand() % RAN_MAX + RAN_MIN;
+			arrQ[i].PushFactorObj(num);
+			cout << "encapsulated value in multiQ [" << i << "]" << arrQ[i] << endl;
+		}
+		
+	}
+
+	cout << endl;
+	cout << " test object += int" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		cout << "object[" << i << "] + = " << rNum << ", then encapsulated values are " << (arrQ[i] += rNum) << endl;
+	}
+
+	cout << endl;
+	cout << " test ++object" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		cout << "++object[" << i << "] " << ", then encapsulated values are " << (++arrQ[i]) << endl;
+	}
+
+	cout << endl;
+	cout << " test object = object + int" << endl;
+	cout << "integer = " << rNum << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		
+		cout << "object[" << i << "] = object + int" << ", then encapsulated values are " << (arrQ[i] = arrQ[i] + rNum) << endl;
+	}
+	
+	cout << endl;
+	cout << " test object = int + object" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		
+		cout << "object[" << i << "] = int + object" << ", then encapsulated values are " << (arrQ[i] = rNum + arrQ[i]) << endl;
+	}
+
+	
+
+	cout << endl;
+	cout << " test object1 = object2 + int" << endl;
+	cout << "integer = " << rNum << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		if (i < DEFAULT_ARR_SIZE - 1)
+		{
+			
+			cout << "object [" << i << "] = object [" << i + 1 << "] + " << rNum << ", encapsulated values are " << (arrQ[i] = arrQ[i + 1] + rNum) << endl;
+		}
+		else
+		{
+			
+			cout << "object [" << i << "] = object [" << i + 1 << "] + " << rNum << ", encapsulated values are " << (arrQ[i] = arrQ[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] + rNum) << endl;
+			
+		}
+	}
+
+	cout << endl;
+	cout << " test object1 = int + object2" << endl;
+	cout << "integer = " << vNum << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		if (i < DEFAULT_ARR_SIZE - 1)
+		{
+			
+			cout << "object [" << i << "] = " << vNum << " + object [" << i + 1 << "]" << ", encapsulated values are " << (arrQ[i] = vNum + arrQ[i + 1]) << endl;
+		}
+		else
+		{
+			
+			cout << "object [" << i << "] = " << vNum << " + object [" << i + 1 << "]" << ", encapsulated values are " << (arrQ[i] = vNum + arrQ[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE]) << endl;
+
+		}
+	}
+
+	cout << endl;
+	cout << " test multiQ += factor" << endl;
+	cout << "f1 value = " << f1 << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		
+		cout << "multiQ[" << i << "] +  f1" << ", then encapsulated values are " << (arrQ[i] += f1) << endl;
+	}
+
+	cout << endl;
+	cout << " test multiQ = multiQ + factor" << endl;
+	cout << "f1 value = " << f1 << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+
+		cout << "multiQ[" << i << "] = multiQ + f1" << ", then encapsulated values are " << (arrQ[i] = arrQ[i] + f1) << endl;
+	}
+
+	cout << endl; 
+	cout << " test multiQ1 = multiQ2 + f2" << endl;
+	cout << "f2 value = " << f2 << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		if (i < DEFAULT_ARR_SIZE - 1)
+		{
+
+			cout << "multiQ [" << i << "] = multiQ [" << i + 1 << "] + " << f2 << ", encapsulated values are " << (arrQ[i] = arrQ[i + 1] + f2) << endl;
+		}
+		else
+		{
+
+			cout << "multiQ [" << i << "] = multiQ [" << i + 1 << "] + " << f2 << ", encapsulated values are " << (arrQ[i] = arrQ[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE] + f2) << endl;
+
+		}
+	}
+
+	/*cout << endl;
+	cout << " Compare two objects, true = 0 and false = 1" << endl;
+	cout << "Compare multiQ == multiQ" <<endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		if (i < DEFAULT_ARR_SIZE - 1)
+		{
+
+			cout << "multiQ [" << i << "] == multiQ [" << i + 1 << "]" << " return " << (arrQ[i] == arrQ[i + 1]) << endl;
+		}
+		else
+		{
+
+			cout << "multiQ [" << i << "] == multiQ [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << " return " << (arrQ[i] == arrQ[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE]) << endl;
+
+		}
+	}*/
+
+	/*cout << endl;
+	cout << " Compare two objects, true = 0 and false = 1" << endl;
+	cout << "Compare multiQ != multiQ" << endl;
+	for (int i = 0; i < DEFAULT_ARR_SIZE; i++)
+	{
+		if (i < DEFAULT_ARR_SIZE - 1)
+		{
+
+			cout << "multiQ [" << i << "] != multiQ [" << i + 1 << "]" << " return " << (arrQ[i] != arrQ[i + 1]) << endl;
+		}
+		else
+		{
+
+			cout << "multiQ [" << i << "] != multiQ [" << DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE << "]" << " return " << (arrQ[i] != arrQ[DEFAULT_ARR_SIZE - DEFAULT_ARR_SIZE]) << endl;
+
+		}
+	}*/
+
+
+
+	cout << ASTERISK + "End Test MultiQ Objects With Overloaded Operators " + ASTERISK << endl;
+
 }
