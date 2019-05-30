@@ -12,7 +12,7 @@ namespace Project6
             strPhrase = password;
         }
 
-        public string flipChar(uint index)
+        public string FlipChar(uint index)
         {
             string strFlipped ="";
             if (index > strPhrase.Length)
