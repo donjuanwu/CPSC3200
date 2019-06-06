@@ -2,11 +2,7 @@
 
 namespace Project6
 {
-    interface IPwdCheck
-    {
-        bool ValidatePassword(string strAlphaNumeric);
-    }
-
+   
     class FlipPwdCheck: Flip, IPwdCheck
     {
         PwdCheck pObj; //delay instantiation
@@ -20,5 +16,32 @@ namespace Project6
         {
             return pObj.ValidatePassword(strAlphaNumeric);
         }
+
+        public bool GetIsCharForbidden()
+        {
+            return pObj.GetIsCharForbidden();
+        }
+
+        public int GetPasswordLength()
+        {
+            return pObj.GetPasswordLength();
+        }
+
+        public bool IsObjectActive()
+        {
+            return pObj.IsObjectActive();
+        }
+
+        public bool IsPasswordLength(string pWord)
+        {
+            return pObj.IsPasswordLength(pWord);
+        }
+
+        public void SetForbiddenCharacters(char[] cForBidden)
+        {
+            pObj.SetForbiddenCharacters(cForBidden);
+        }
+
+
     }
 }

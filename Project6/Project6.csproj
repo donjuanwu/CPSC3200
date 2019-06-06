@@ -47,6 +47,7 @@
     <Compile Include="ExcessC.cs" />
     <Compile Include="Flip.cs" />
     <Compile Include="FlipPwdCheck.cs" />
+    <Compile Include="IPwdCheck.cs" />
     <Compile Include="P6.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PwdCheck.cs" />
