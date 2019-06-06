@@ -5,9 +5,9 @@ namespace Project6
    
     class FlipPwdCheck: Flip, IPwdCheck
     {
-        PwdCheck pObj; //delay instantiation
+        IPwdCheck pObj; //delay instantiation
 
-        public FlipPwdCheck(PwdCheck obj, string pd) : base(pd)
+        public FlipPwdCheck(IPwdCheck obj, string pd) : base(pd)
         {
             pObj = obj;
         }
@@ -40,6 +40,11 @@ namespace Project6
         public void SetForbiddenCharacters(char[] cForBidden)
         {
             pObj.SetForbiddenCharacters(cForBidden);
+        }
+
+        public bool FlipAndValidatePassword(uint index)
+        {
+            return ValidatePassword(FlipChar(index));
         }
 
 

@@ -83,11 +83,12 @@ namespace Project6
             PwdClass = 0,
             CompundC = 1,
             ExcessC = 2,
-            FlipPwdCheck = 3
+            FLIP = 3,
+            FlipPwdCheck = 4
         };
         const int RAND_MIN = 10;
         const int RAND_MAX = 20;
-        const int ARR_SIZE = 3;
+        const int ARR_SIZE = 4;
         const int ARR_MULTIPLIER = 3;
         const int REDUCED_LENGTH = 1;
         const string ASTERISK = "***************";
@@ -96,6 +97,9 @@ namespace Project6
         const string INVALID_CHARS = " ~(){}[]Æ»ØøÅåß¶";
         const int ONECYLE = 2;
         const string NON_ASCII = "ÆæØøÅåß¶";
+        const int INDEX_ZERO = 0;
+        const int INDEX_ONE = 1;
+        const int INDEX_TWO = 2;
 
 
         static void Main(string[] args)
@@ -103,8 +107,11 @@ namespace Project6
             Random rand = new Random();
             ProgramIntro();
 
-            //IPwdCheck[] arrPwdObj = InitPwdHeterogeneousObjects(rand);
-            IPwdCheck[] arrPwdObj = InitIPwdHeterogeneousObjects(rand);
+            PwdCheck[] arrPwdObj = InitPwdHeterogeneousObjects(rand);
+            Flip[] arrFlipObj = InitFlipHeterogeneousObjects(rand, arrPwdObj);
+
+
+           // IPwdCheck[] arrPwdObj = InitIPwdHeterogeneousObjects(rand);
             //TestPasswordLength(arrPwdObj, rand);
             //TestPwdClassWithInValidPassword(arrPwdObj, rand);
             //TestCheckPassword(arrPwdObj, rand);
@@ -161,32 +168,32 @@ namespace Project6
         // PRE : a random object is already created
         //       a PwdCheck[] variable is declared
         // POST: state of PwdCheck obj, CompundC object and ExcessC are initialized and set
-        public static IPwdCheck[] InitPwdHeterogeneousObjects(Random rand)
+        public static PwdCheck[] InitPwdHeterogeneousObjects(Random rand)
         {
             Console.WriteLine("");
-            Console.WriteLine(ASTERISK + "BEGIN INITIALIZED IPWDCLASS HETEROGENOUS OBJECTS" + ASTERISK);
+            Console.WriteLine(ASTERISK + "BEGIN INITIALIZE PWDCLASS HETEROGENOUS OBJECTS" + ASTERISK);
             int augmentedArraySize = ARR_SIZE * ARR_MULTIPLIER;
             Console.WriteLine("Initialize " + (augmentedArraySize/ARR_MULTIPLIER) + " PwdCheck, CompundC & Excess");
             uint randPwdLength;
-            IPwdCheck[] arr_IPwdObj = new IPwdCheck[augmentedArraySize];
+            PwdCheck[] arr_PwdObj = new PwdCheck[augmentedArraySize];
             for (int i = 0; i < augmentedArraySize; i++) // 0 - 4
             {
-                if (i < (augmentedArraySize) / ARR_SIZE)
+                if (i < (augmentedArraySize) / ARR_MULTIPLIER)
                 {
 
                     randPwdLength = (uint)rand.Next(RAND_MIN, RAND_MAX);
-                    arr_IPwdObj[i] = new PwdCheck(randPwdLength);
-                    Console.WriteLine(" {0} object [{1}], password length = {2}, status = {3}", ObjectName.PwdClass, i, arr_IPwdObj[i].GetPasswordLength(), arr_IPwdObj[i].IsObjectActive() ? "active" : "inactive");
+                    arr_PwdObj[i] = new PwdCheck(randPwdLength);
+                    Console.WriteLine(" {0} object [{1}], password length = {2}, status = {3}", ObjectName.PwdClass, i, arr_PwdObj[i].GetPasswordLength(), arr_PwdObj[i].IsObjectActive() ? "active" : "inactive");
 
                 }
-                else if (i >= (augmentedArraySize / ARR_SIZE) && i < (augmentedArraySize) - (augmentedArraySize / ARR_SIZE)) // 4 - 8
+                else if (i >= (augmentedArraySize / ARR_MULTIPLIER) && i < (augmentedArraySize) - (augmentedArraySize / ARR_MULTIPLIER)) // 4 - 8
                 {
                     if (i == augmentedArraySize / ARR_MULTIPLIER){Console.WriteLine("");}
 
                     randPwdLength = (uint)rand.Next(RAND_MIN, RAND_MAX);
                     uint toggleCycle = (uint)rand.Next(RAND_MIN, RAND_MAX);
-                    arr_IPwdObj[i] = new CompundC(randPwdLength, toggleCycle);
-                    Console.WriteLine(" {0} object [{1}], password length = {2}, toggle cycle = {3}, toggle limit = {4}, status = {5} ", ObjectName.CompundC, i, randPwdLength, toggleCycle, toggleCycle * ONECYLE * randPwdLength, (arr_IPwdObj[i].IsObjectActive() ? "active" : "inactive"));
+                    arr_PwdObj[i] = new CompundC(randPwdLength, toggleCycle);
+                    Console.WriteLine(" {0} object [{1}], password length = {2}, toggle cycle = {3}, toggle limit = {4}, status = {5} ", ObjectName.CompundC, i, randPwdLength, toggleCycle, toggleCycle * ONECYLE * randPwdLength, (arr_PwdObj[i].IsObjectActive() ? "active" : "inactive"));
                 }
                 else //8 - 12
                 {
@@ -195,28 +202,58 @@ namespace Project6
 
                     bool objStatus = false;
                     randPwdLength = (uint)rand.Next(RAND_MIN, RAND_MAX);
-                    arr_IPwdObj[i] = new ExcessC(randPwdLength, objStatus);
+                    arr_PwdObj[i] = new ExcessC(randPwdLength, objStatus);
                     Console.WriteLine(" {0} object[{1}], password length = {2}, status = {3} ", ObjectName.ExcessC, i, randPwdLength, (objStatus ? "active" : "inactive"));
                 }
                 
             }
-            Console.WriteLine(ASTERISK + "END INITIALIZED IPWDCLASS HETEROGENOUS OBJECTS" + ASTERISK);
-            return arr_IPwdObj;
+            Console.WriteLine(ASTERISK + "END INITIALIZE PWDCLASS HETEROGENOUS OBJECTS" + ASTERISK);
+            return arr_PwdObj;
         }
+
+
+      public static Flip[] InitFlipHeterogeneousObjects(Random rand, PwdCheck[] arrPwdObj)
+        {
+            Console.WriteLine("");
+            Console.WriteLine(ASTERISK + "BEGIN INITIALIZE FLIP HETEROGENOUS OBJECTS" + ASTERISK);
+            Console.WriteLine("Initialize " + (ARR_SIZE/INDEX_TWO) + " FLIP & FLIPPWDCHECK OBJECTS");
+
+            Flip[] flipObj = new Flip[ARR_SIZE];
+            uint index;
+            string psdWord;
+
+            for (int i = 0; i < ARR_SIZE; i++)
+            {
+                psdWord = GenerateRandomMixedString(rand);
+                if (i < INDEX_TWO)
+                {
+                    Console.WriteLine("{0} object [{1}], password = {2}", ObjectName.FLIP, i, psdWord);
+                    flipObj[i] = new Flip(psdWord);
+                }
+                index = (uint)rand.Next(ARR_SIZE * ARR_MULTIPLIER);
+                flipObj[i] = new FlipPwdCheck(arrPwdObj[index],psdWord);
+            }
+            Console.WriteLine(ASTERISK + "END INITIALIZE FLIP HETEROGENOUS OBJECTS" + ASTERISK);
+            return flipObj;
+        }
+
+
+
+
+
 
 
         public static IPwdCheck[] InitIPwdHeterogeneousObjects(Random rand)
         {
             Console.WriteLine("");
             Console.WriteLine(ASTERISK + "BEGIN INITIALIZED IPWDCLASS HETEROGENOUS OBJECTS" + ASTERISK);
-            int augmentedArraySize = ARR_SIZE * ARR_MULTIPLIER;
             Console.WriteLine("Initialize " + (ARR_SIZE) + " PwdCheck, CompundC & Excess");
             uint randPwdLength;
-            IPwdCheck[] arr_IPwdObj = new IPwdCheck[augmentedArraySize];
+            IPwdCheck[] arr_IPwdObj = new IPwdCheck[ARR_SIZE];
             for (int i = 0; i < ARR_SIZE; i++) // 
             {
                 
-                if (i == 0) //0
+                if (i == INDEX_ZERO) //0
                 {
 
                     randPwdLength = (uint)rand.Next(RAND_MIN, RAND_MAX);
@@ -224,7 +261,7 @@ namespace Project6
                     Console.WriteLine(" {0} object [{1}], password length = {2}, status = {3}", ObjectName.PwdClass, i, arr_IPwdObj[i].GetPasswordLength(), arr_IPwdObj[i].IsObjectActive() ? "active" : "inactive");
 
                 }
-                else if (i == 1) // 1
+                else if (i == INDEX_ONE) // 1
                 {
 
                     randPwdLength = (uint)rand.Next(RAND_MIN, RAND_MAX);
@@ -232,12 +269,47 @@ namespace Project6
                     arr_IPwdObj[i] = new CompundC(randPwdLength, toggleCycle);
                     Console.WriteLine(" {0} object [{1}], password length = {2}, toggle cycle = {3}, toggle limit = {4}, status = {5} ", ObjectName.CompundC, i, randPwdLength, toggleCycle, toggleCycle * ONECYLE * randPwdLength, (arr_IPwdObj[i].IsObjectActive() ? "active" : "inactive"));
                 }
-                else //2
+                else if (i == INDEX_TWO) //2
                 {
                     bool objStatus = false;
                     randPwdLength = (uint)rand.Next(RAND_MIN, RAND_MAX);
                     arr_IPwdObj[i] = new ExcessC(randPwdLength, objStatus);
                     Console.WriteLine(" {0} object[{1}], password length = {2}, status = {3} ", ObjectName.ExcessC, i, randPwdLength, (objStatus ? "active" : "inactive"));
+                }
+                else
+                {
+                    string pWord = GenerateRandomMixedString(rand);
+                    string obj = "none";
+                    uint index = (uint)rand.Next(INDEX_TWO + INDEX_ONE);
+                    if (arr_IPwdObj[index] is PwdCheck)
+                    {
+                        obj = "PwdCheck";
+                    }
+                    else if (arr_IPwdObj[index] is ExcessC)
+                    {
+                        obj = "ExcessC";
+                    }
+                    else if (arr_IPwdObj[index] is CompundC)
+                    {
+                        obj = "CompundC";
+                    }
+
+
+                    //if (arr_IPwdObj[index] is ExcessC)
+                    //{
+                    //    obj = "PwdCheck"; 
+                    //}
+                    //else if (arr_IPwdObj[index] is PwdCheck)
+                    //{
+                    //    obj = "ExcessC";
+                    //}
+                    //else if (arr_IPwdObj[index] is CompundC)
+                    //{
+                    //    obj = "CompundC";
+                    //}
+
+                    arr_IPwdObj[i] = new FlipPwdCheck(arr_IPwdObj[index], pWord);
+                    Console.WriteLine(" {0} object[{1}], initialized with object = {2}, status = {3} ", ObjectName.FlipPwdCheck, i, obj, (arr_IPwdObj[index].IsObjectActive() ? "active" : "inactive"));
                 }
 
             }
