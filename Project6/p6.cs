@@ -230,16 +230,33 @@ namespace Project6
                     Console.WriteLine("{0} object [{1}], password = {2}", ObjectName.FLIP, i, psdWord);
                     flipObj[i] = new Flip(psdWord);
                 }
-                index = (uint)rand.Next(ARR_SIZE * ARR_MULTIPLIER);
-                flipObj[i] = new FlipPwdCheck(arrPwdObj[index],psdWord);
+                else
+                {
+                    index = (uint)rand.Next(ARR_SIZE * ARR_MULTIPLIER);
+                    flipObj[i] = new FlipPwdCheck(arrPwdObj[index], psdWord);
+                     //Console.WriteLine("Index {0}", index);
+                    if (arrPwdObj[index].GetType() == typeof(PwdCheck))
+                    {
+                        Console.WriteLine("{0} object [{1}], password = {2}", ObjectName.PwdClass, i, psdWord);
+                    }
+                    else if (arrPwdObj[index].GetType() == typeof(ExcessC))
+                    {
+                        Console.WriteLine("{0} object [{1}], password = {2}", ObjectName.ExcessC, i, psdWord);
+                    }
+                    else if (arrPwdObj[index].GetType() == typeof(CompundC))
+                    {
+                        Console.WriteLine("{0} object [{1}], password = {2}", ObjectName.CompundC, i, psdWord);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Unknown object [{1}], password = {2}", i, psdWord);
+                    }
+                }
+              
             }
             Console.WriteLine(ASTERISK + "END INITIALIZE FLIP HETEROGENOUS OBJECTS" + ASTERISK);
             return flipObj;
         }
-
-
-
-
 
 
 
@@ -316,8 +333,6 @@ namespace Project6
             Console.WriteLine(ASTERISK + "END INITIALIZED IPWDCLASS HETEROGENOUS OBJECTS" + ASTERISK);
             return arr_IPwdObj;
         }
-
-
 
         // Return a random string that contains both valid and invalid strings
         //PRE : A random already declare and initialized
