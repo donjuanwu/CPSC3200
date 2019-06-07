@@ -2,14 +2,23 @@
 
 namespace Project6
 {
-   
+    interface IPwdCheck
+    {
+        bool ValidatePassword(string strAlphaNumeric);
+        int GetPasswordLength(); 
+        bool GetObjectActive();
+        bool GetIsCharForbidden();
+        void SetForbiddenCharacters(char[] cForBidden);
+    }
+
     class FlipPwdCheck: Flip, IPwdCheck
     {
         IPwdCheck pObj; //delay instantiation
 
-        public FlipPwdCheck(IPwdCheck obj, string pd) : base(pd)
+        public FlipPwdCheck(PwdCheck obj, string pd) : base(pd)
         {
             pObj = obj;
+            obj = null; 
         }
 
         public bool ValidatePassword(string strAlphaNumeric)
@@ -27,14 +36,9 @@ namespace Project6
             return pObj.GetPasswordLength();
         }
 
-        public bool IsObjectActive()
+        public bool GetObjectActive()
         {
-            return pObj.IsObjectActive();
-        }
-
-        public bool IsPasswordLength(string pWord)
-        {
-            return pObj.IsPasswordLength(pWord);
+            return pObj.GetObjectActive();
         }
 
         public void SetForbiddenCharacters(char[] cForBidden)
@@ -44,9 +48,7 @@ namespace Project6
 
         public bool FlipAndValidatePassword(uint index)
         {
-            return ValidatePassword(FlipChar(index));
+            return ValidatePassword(base.FlipChar(index));
         }
-
-
     }
 }

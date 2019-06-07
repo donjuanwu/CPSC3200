@@ -25,8 +25,13 @@ namespace Project6
                 if (index > 0)
                 {
                     strFlipped += strPhrase[(int)index - 1];
+                    index--;
                 }
-                strFlipped += strPhrase[i];
+                else
+                {
+                    strFlipped += strPhrase[i];
+                }
+                
             }
 
             return strFlipped;

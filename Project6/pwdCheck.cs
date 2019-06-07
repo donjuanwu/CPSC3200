@@ -165,7 +165,7 @@ namespace Project6
         {
             if (IsObjectStateChanged())
             {
-                if (IsPasswordLength(strAlphaNumeric))
+                if (IsValidPasswordLength(strAlphaNumeric))
                 {
                     return !IsForbiddenCharacter(strAlphaNumeric);
                 }
@@ -195,7 +195,7 @@ namespace Project6
 
         // PRE : Minimum password length already defined
         // POST : N/A
-        public bool IsPasswordLength(string pWord)
+        private bool IsValidPasswordLength(string pWord)
         {
             return (pWord.Length >= pwdLength);
         }
@@ -240,7 +240,7 @@ namespace Project6
 
         //PRE :Object status is assigned and known
         //POST:N/A
-        public bool IsObjectActive()
+        public bool GetObjectActive()
         {
             return isObjectActive;
         }

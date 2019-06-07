@@ -208,7 +208,7 @@ namespace Project6
 
         //PRE : Object status is assigned
         //POST: N/A
-        public bool GetExObjectStatus()
+        public bool GetObjectActive()
         {
             return exActiveStatus;
         }
