@@ -74,8 +74,6 @@ Return true when password meets following requirements:
  
 */
 
-
-
 using System;
 namespace Project6
 {

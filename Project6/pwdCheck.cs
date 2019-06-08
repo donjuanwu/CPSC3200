@@ -62,6 +62,9 @@ SetForbiddenCharacters()
 
 ---------------------------------------------------------------------------------
 IMPLEMENTATION INVARIANTS:
+
+-IPwdCheck Interface
+
 pwdCheck()
 - intialized private data members to their default value
 
@@ -97,11 +100,9 @@ IsObjectStateChanged()
 GetPasswordLength()
 - accessor function to return predefined set password
 
-IsObjectActive()
+GetObjectActive()
 - accessor function to return object status
 
-GetASCIINumber()
-- protected function to return const ASCII max value
 
 GetIsCharForbidden()
 - accessor to return password contain forbidden characters status
@@ -114,17 +115,9 @@ Return true when password meets following requirements:
 1. Object is status is active
 2. Password length meets minimum password length
 3. Password doesn't contain forbidden character(s)
---------------------------------GRADER COMMENTS ON P3, PWDCHECK-------------------
-    -1 Forbidden characters are not passed into the constructor
-    -1 data member isCharForbidden is not reset for every password
-    -2 If requests causes state change object should behave as if it was on for this request
-    -1 ASCII_NUM is unused
-    -1 SetForbiddenCharacters does not copy the list passed in
-    -0 confusing method names
-    -1 Overview and Design Decisions and Assumptions should be in invariants
 
 
-----------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
    WHEN    WHO	WHAT
    5/29/19  DD      Created p6
                     Added pwdCheck.cs from project3
@@ -240,7 +233,7 @@ namespace Project6
 
         //PRE :Object status is assigned and known
         //POST:N/A
-        public bool GetObjectActive()
+        public virtual bool GetObjectActive()
         {
             return isObjectActive;
         }

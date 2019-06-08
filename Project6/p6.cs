@@ -8,62 +8,37 @@
 -- Course Name  : CPSC 3200
 ----------------------------------------------------------------------------
 OVERVIEW: 
-   This driver will sequentially perform the following test cases:
-   1) InitPwdObject(rand)
-      - Create a heterogenous array and initialized PwdCheck, CompundC and ExcessC objects
-      - Return the heterogenous arary back to the calling function
-   2) TestPasswordLength(arrPwdObj, rand)
-      - Specific test to see if password meet the minimum password length defined during 
-        firing each object constructor
-   3) TestPwdClassWithInValidPassword(arrPwdObj, rand)
-      - Specific test to see if password has invalid characters. These invalid characters
-        were initialized during firing constructor of the PwdCheck 
-   4) TestCheckPassword(arrPwdObj, rand)
-      - General password test to determine if password meet each class specific password conditions
-   5) TestForbiddenCharsInPwd(arrPwdObj, rand, NON_ASCII)
-      - Update the initialized forbidden characters during firing PwdCheck constructor with new 
-        NON ASCII characters
-      - Determine if password contains any of these forbidden characters
-   6) TestToggleObject(arrPwdObj,rand)
-      - Toggle the state of each initialized object in the heterogenous array.
-
+   This driver will sequentially perform the following test cases for each object in the Flip[] Heterogenous array:
+   1. Create and instantiate one Flip[] Heterogenous array.
+        - a Flip[] HG array will contain 4 flip and 8 FlipPwdCheck objects
+        - The FlipPwdCheck objects will contain PwdCheck, CompundC and ExcessC objects
+   2) Test the FlipChar() for each flip object
+      - Send an index value to flip the character(s) in the encapsulated password.
+      - The return password should be flipped at the index value passed in
+   3) TestFlipPwdCheckObjects()
+      - Loop through the Flip[] HG array then FlipAndValidatePassword() each encapsulated password for each FlipPwdCheck object
+        The returned password should be either true/false
+      - Loop through the Flip[] HG array and display each FlipPwdCheck object password length
+      - Loop through the Flip[] HG array ValidatePassword() each encapsulated password for each FlipPwdCheck object
+        The returned password should be either true/false
+      - Loop through the Flip[] HG array and display each FlipPwdCheck object password length
+      - Loop through the Flip[] HG array and display each FlipPwdCheck object state
+      - Loop through the Flip[] HG array and force each FlipPwdCheck object state to change
+      
+   4) Repeat step 3
+    
 ---------------------------------------------------------------------------------
 Design Decisions and Assumptions:
 - All objects initialized with password length greater than 0
 - Password length is randomly generated using RAND_MIN & RAND_MAX values
-- Password is randomly generated from a predefined string using random generator
-- Objects are added to heterogenous array in group of 1/3. 
-  First third is reserved for PwdCheck object
-  Second third is reserved for CompundC object
-  Third third is reserved for ExcessC object
-- Down cast was used when need access to CompundC and ExcessC object's public functions
-- Every invalid password validation will be displayed with failed reasons
-- This design applies to CompundC
-  Each toggle = K cycle * 2
-  Max validation = password length * K cycle * 2
-- Initialization of ExcessC object status is inactive.
-
-
-DATA MEMBERS DICTIONARY:
- enum ObjectName                       -- Use to display objet name
-        {
-            pwdClass = 0,
-            CompundC = 1,
-            ExcessC = 2
-        };
-        const int RAND_MIN = 2          -- Minimum random value   
-        const int RAND_MAX = 20;        -- Maximum random value
-        const int ARR_SIZE = 3;         -- Default array size
-        const int ARR_MULTIPLIER = 3;   -- Multiplier to increase array size
-        const int REDUCED_LENGTH = 1;   -- Decrement value
-        const string ASTERISK = "***************";  -- Prefix and suffix to aling caption
-        const string VALID_CHARS ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkl" +
-            "mnopqrstuvwxyz0123456789#_<>!+*&@^=.?|\\";
-        const string INVALID_CHARS = " ~(){}[]Æ»ØøÅåß¶";   -- Mixed invalid character
-        const int ONECYLE = 2;                             -- indicate one cycle
-        const string NON_ASCII = "ÆæØøÅåß¶";               -- NON-ASCII characters
-
-
+- Password is randomly generated using RAND_MIN & RAND_MAX values
+- Objects are added to heterogenous array in group of 4. 
+  First QUARTER is reserved for Flip object
+  Second QUARTER is reserved for PwdCheck object
+  Third QUARTER is reserved for CompundC object
+  Fourth QUARTER is reserved for Excessc object
+- Down cast was used when need access to PwdCheck, CompundC and ExcessC object
+- Every invalid password validation will be displayed with password length requirement
 
 ----------------------------------------------------------------------------------
     WHEN     WHO		WHAT
@@ -109,7 +84,7 @@ namespace Project6
             Console.ReadKey();
         }
 
-        //Display Project 3 descriptions
+        //Display Project 6 descriptions
         //PRE : N/A
         //POST: N/A
         public static void ProgramIntro()
@@ -141,6 +116,10 @@ namespace Project6
             Console.WriteLine("Use C#, the interface construct AND PROGRAMMING BY CONTRACT. ");
         }
 
+        //Pre : Constant array size must be declared and assigned
+        //Post: Return a new Flip Heterogenous Array 
+        //      Objects in HG array contains Flip & FlipPwdCheck (PwdCheck, ExcessC & CompundC)
+        //      ExcessC object state is initial set to false
         public static Flip[] InitFlipHeterogeneousArray(Random rand)
         {
             Console.WriteLine("");
@@ -186,19 +165,21 @@ namespace Project6
                 else
                 {
                     if (i == A_SIZE - QUARTER) { Console.WriteLine(""); }
-                    bool objStatus = true;
+                    bool objStatus = false;
                     randPwdLength = (uint)rand.Next(RAND_MIN, RAND_MAX);
                     eObj = new ExcessC(randPwdLength, objStatus);
                     flipObj[i] = new FlipPwdCheck(eObj, psdWord);
-                    Console.WriteLine(" {0} object[{1}], password length = {2}, status = {3} ", ObjectName.ExcessC, i, randPwdLength, (objStatus ? "active" : "inactive"));
+                    Console.WriteLine(" {0} object[{1}], password length = {2}, status = {3} ", ObjectName.ExcessC, i, randPwdLength, (eObj.GetObjectActive() ? "active" : "inactive"));
                 }
-
             }
             Console.WriteLine(ASTERISK + "END INITIALIZE FLIP HETEROGENOUS ARRAY" + ASTERISK);
             return flipObj;
         }
 
-
+        //Pre : Flip[] HG array must not be null
+        //      Only test flip object
+        //Post: Testing result will be displayed on console
+        //      Object may change state    
         public static void TestFlipObjects(Flip[] obj, Random rand)
         {
             Console.WriteLine("");
@@ -227,6 +208,9 @@ namespace Project6
 
         }
 
+        //Pre : Flip[] HG array must not be null
+        //     Only test FlipPwdCheck object
+        //Post: Testing result will be displayed on console
         public static void TestFlipPwdCheckObjects(Flip[] obj, Random rand)
         {
             Console.WriteLine("");
@@ -256,7 +240,9 @@ namespace Project6
 
         }
 
-
+        //Pre : Flip[] HG array must not be null
+        //     Only test FlipPwdCheck object
+        //Post: Testing result will be displayed on console
         public static void HelperTestFlipAndValidatePassword(Flip[] obj, Random rand)
         {
             Console.WriteLine("");
@@ -287,6 +273,9 @@ namespace Project6
 
         }
 
+        //Pre : Flip[] HG array must not be null
+        //     Only test FlipPwdCheck object
+        //Post: Testing result will be display on console
         public static void HelperDisplayPwdLength(Flip[] obj)
         {
             Console.WriteLine("");
@@ -304,6 +293,9 @@ namespace Project6
             Console.WriteLine("End display FlipPwdCheck objects password length");
         }
 
+        //Pre : Flip[] HG array must not be null
+        //     Only test FlipPwdCheck object
+        //Post: Testing result will be display on console
         public static void HelperDisplayFlipPwdObjectStatus(Flip[] obj)
         {
             Console.WriteLine("");
@@ -321,6 +313,9 @@ namespace Project6
             Console.WriteLine("End display FlipPwdCheck objects state");
         }
 
+        //Pre : Flip[] HG array must not be null
+        //     Only test FlipPwdCheck object
+        //Post: Testing result will be display on console
         public static void HelperForceFlipPwdObjectStateChange(Flip[] obj, Random rand)
         {
             Console.WriteLine("");
@@ -346,6 +341,9 @@ namespace Project6
             Console.WriteLine("End force FlipPwdCheck objects state change");
         }
 
+        //Pre : Flip[] HG array must not be null
+        //     Only test FlipPwdCheck object
+        //Post: Testing result will be display on console
         public static void HelperTestValidatePassword(Flip[] obj, Random rand)
         {
             Console.WriteLine("");
@@ -375,6 +373,9 @@ namespace Project6
             Console.WriteLine("End validate password using ValidatePassword()");
         }
 
+        //Pre : Flip[] HG array must not be null
+        //     Only test FlipPwdCheck object
+        //Post: Testing result will be display on console
         public static void HelperUpdateForbiddenCharacters(Flip[] obj)
         {
             char[] charForbidden = INVALID_CHARS.ToCharArray();
@@ -394,7 +395,9 @@ namespace Project6
             Console.WriteLine("End  Update Forbidden Charcters");
         }
 
-
+        //Pre : Flip[] HG array must not be null
+        //     Only test FlipPwdCheck object
+        //Post: Testing result will be display on console
         public static void HelperTestForbiddenCharacters(Flip[] obj)
         {
             Console.WriteLine("");

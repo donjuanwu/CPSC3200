@@ -27,18 +27,6 @@ Design Decisions and Assumptions:
  - During firing constructor all data members will be initialized
  - call the pwdCheck constructor and pass it the Pth lenght
      
-
-
-DATA MEMBERS DICTIONARY:
-private uint exPwdLength;         - keep track of excessC object length
-bool exActiveStatus { get; set; } - keept rack of excessC object status
-bool isInteger;                   - keep track of password contains a digit
-bool isMixedCase;                 - keep track of password contains mixed case
-const uint INIT_PASSWORD_LENGTH = 4;
-const uint ASCII_ZERO = 0;
-const uint ASCII_NINE = 9;
-const char DOLLAR_SIGN = '$'; 
-
 ----------------------------------------------------------------------------------
 INTERFACE INVARIANTS:
 override ValidatePassword()
@@ -114,9 +102,10 @@ namespace Project6
     class ExcessC : PwdCheck
     {
         private uint exPwdLength;
-        public bool exActiveStatus { get; set; }
+        private bool exActiveStatus;
         private bool isInteger;
         private bool isMixedCase;
+        private uint countNumValidation;
         private const uint INIT_PASSWORD_LENGTH = 4;
         private const uint ASCII_ZERO = 0;
         private const uint ASCII_NINE = 9;
@@ -132,6 +121,7 @@ namespace Project6
             exActiveStatus = isOn;
             isInteger = false;
             isMixedCase = false;
+            countNumValidation = 0;
 
         }
 
@@ -140,7 +130,7 @@ namespace Project6
         public override bool ValidatePassword(string pwd)
         {
            
-            if (exActiveStatus)
+            if (SetObjectState())
             {
                 return IsPasswordValid(pwd);
                 
@@ -208,7 +198,7 @@ namespace Project6
 
         //PRE : Object status is assigned
         //POST: N/A
-        public bool GetObjectActive()
+        public override bool GetObjectActive()
         {
             return exActiveStatus;
         }
@@ -225,6 +215,27 @@ namespace Project6
         public bool GetIsMixedCase()
         {
             return isMixedCase;
+        }
+
+        //Pre : Password length is assigned, countNumValidation is intialized
+        //Post: ExcessC state may changed
+        private bool SetObjectState()
+        {
+            countNumValidation++;
+            if (countNumValidation == exPwdLength)
+            {
+                if (exActiveStatus)
+                {
+                    exActiveStatus = false;
+                    countNumValidation = 0;
+                }
+                else
+                {
+                    exActiveStatus = true;
+                    countNumValidation = 0;
+                }
+            }
+            return exActiveStatus;
         }
     }
 }
