@@ -5,12 +5,14 @@
 
 using namespace std;
 
+void PracticeOverLoading();
+
 
 
 int main()
 {
 
-	cout << "Hello darkness my old friend" << endl;
+	cout << "This is review for cpsc 3200" << endl;
 
 
 
@@ -23,4 +25,9 @@ int main()
 
 	
 	return 0;
+}
+
+void PracticeOverLoading()
+{
+	cout << "Overloading Operators" << endl;
 }
