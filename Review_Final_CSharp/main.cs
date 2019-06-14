@@ -3,9 +3,6 @@
 
 namespace Review_Final_CSharp
 {
-
-    
-
     class main
     {
 
@@ -13,8 +10,6 @@ namespace Review_Final_CSharp
         const int ARR_SIZE = 5;
         const int RAN_MAX = 50;
         const int RAN_MIN = 1;
-
-
 
         static void Main(string[] args)
         {
@@ -66,7 +61,6 @@ namespace Review_Final_CSharp
             b3 = b1 + 9; //same result as b1 + b2
             Console.WriteLine("Add box1 + 9 = {0}", b3);
             Console.WriteLine("Display box3 dimensions: {0}", b3);
-
 
 
             Console.WriteLine("");
