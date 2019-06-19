@@ -11,7 +11,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "p4", "..\p4\p4.vcxproj", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "p5", "..\p5\p5.vcxproj", "{D7B5BA62-D175-49B2-AEBF-363A9480C15C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithm Practice", "..\Algorithm Practice\Algorithm Practice.csproj", "{47596F01-446B-416B-99C5-D059AB1E9B6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interview Practice", "..\Algorithm Practice\Interview Practice.csproj", "{47596F01-446B-416B-99C5-D059AB1E9B6A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project6", "..\Project6\Project6.csproj", "{F64BDFB6-F35B-4B2E-8F4B-CEDB8E05BB0C}"
 EndProject
