@@ -1,2 +1,2 @@
 # CPSC3200
-OOD
+Objected-Oriented Design
